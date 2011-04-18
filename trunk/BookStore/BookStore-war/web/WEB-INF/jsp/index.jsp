@@ -12,12 +12,26 @@
     </head>
     
     <body>
-        ${livres}
-        <p>Hello! This is the default welcome page for a Spring Web MVC project.</p>
-        <p><i>To display a different welcome page for this project, modify</i>
-          <tt>index.jsp</tt> <i>, or create your own welcome page then change
-          the redirection in</i> <tt>redirect.jsp</tt> <i>to point to the new
-          welcome page and also update the welcome-file setting in</i>
-          <tt>web.xml</tt>.</p>
+        Hello:
+        Top 10:
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Résumé</th>
+                <th>nb Vente</th>
+                <th>parution</th>
+                <th>couvetrure</th>
+            </tr>
+             <c:forEach items="${livres}" var="livre" >
+                <tr>
+                    <td> ${livre.livretitre} </td>
+                    <td> ${livre.livreresume}</td>
+                    <td> ${livre.livrenbvente}</td>
+                    <td> ${livre.livreparution}</td>
+                    <td> ${livre.livrecouverture}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
     </body>
 </html>

@@ -32,8 +32,8 @@ public class accueilController {
        // try{
              
             //String lol = LivreEjbLocal.toString();
-            String lol = LivreEjbLocal.about();
-            mv.addObject("livres", lol);
+            //String lol = LivreEjbLocal.about();
+            mv.addObject("livres", LivreEjbLocal.selectionnerLivre(0, 10));
             //mv.addObject("livres", "coucocuoucouc");
             
 //       }

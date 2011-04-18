@@ -7,6 +7,7 @@ package metier.livre;
 
 import ejb.entity.Livre;
 import ejb.transition.LivreJpaController;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -21,7 +22,12 @@ public class LivreEjb implements LivreEjbRemote, LivreEjbLocal {
 
     public List<Livre> selectionnerLivre(int min, int max){
 
-        return jpaLivre.findLivreEntities(max, min);
+        //return jpaLivre.findLivreEntities(max, min);
+        Livre livre = new Livre(1);
+        livre.setLivretitre("lalalala");
+        List<Livre> livres = new ArrayList<Livre>(0);
+        livres.add(livre);
+        return livres;
     }
 
    public String about(){
