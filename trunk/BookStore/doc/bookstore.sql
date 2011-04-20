@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Lun 18 Avril 2011 à 13:19
+-- Généré le : Mer 20 Avril 2011 à 12:18
 -- Version du serveur: 5.1.30
 -- Version de PHP: 5.2.8
 
@@ -20,11 +20,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `auteur` (
-  `auteurid` int(11) NOT NULL,
+  `auteurid` int(11) NOT NULL AUTO_INCREMENT,
   `auteurnom` varchar(20) DEFAULT NULL,
   `auteurprenom` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`auteurid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `auteur`
@@ -40,18 +40,18 @@ INSERT INTO `auteur` (`auteurid`, `auteurnom`, `auteurprenom`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `categorie` (
-  `categorieid` int(11) NOT NULL,
+  `categorieid` int(11) NOT NULL AUTO_INCREMENT,
   `categorietype` text,
   `categoriedescription` text,
   PRIMARY KEY (`categorieid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `categorie`
 --
 
 INSERT INTO `categorie` (`categorieid`, `categorietype`, `categoriedescription`) VALUES
-(0, 'fiction', 'sicence fiction ');
+(1, 'fiction', 'sicence fiction ');
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ INSERT INTO `categorie` (`categorieid`, `categorietype`, `categoriedescription`)
 --
 
 CREATE TABLE IF NOT EXISTS `client` (
-  `clientid` int(11) NOT NULL,
+  `clientid` int(11) NOT NULL AUTO_INCREMENT,
   `clientlogin` varchar(20) DEFAULT NULL,
   `clientmdp` varchar(20) DEFAULT NULL,
   `clientnom` varchar(20) DEFAULT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `clientcodepostal` int(7) DEFAULT NULL,
   `clientville` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`clientid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Contenu de la table `client`
@@ -129,13 +129,13 @@ INSERT INTO `ecrivain` (`auteurid`, `livreid`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `journal` (
-  `journalId` int(11) NOT NULL,
+  `journalId` int(11) NOT NULL AUTO_INCREMENT,
   `journaldescription` text,
   `journaldate` datetime DEFAULT NULL,
   `libraireid` int(11) NOT NULL,
   PRIMARY KEY (`journalId`),
   KEY `FK_Journal_libraireid` (`libraireid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Contenu de la table `journal`
@@ -149,11 +149,11 @@ CREATE TABLE IF NOT EXISTS `journal` (
 --
 
 CREATE TABLE IF NOT EXISTS `libraire` (
-  `libraireid` int(11) NOT NULL,
+  `libraireid` int(11) NOT NULL AUTO_INCREMENT,
   `librairenom` text,
   `librairemdp` text,
   PRIMARY KEY (`libraireid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Contenu de la table `libraire`
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `libraire` (
 --
 
 CREATE TABLE IF NOT EXISTS `livre` (
-  `livreid` int(11) NOT NULL,
+  `livreid` int(11) NOT NULL AUTO_INCREMENT,
   `livretitre` varchar(20) DEFAULT NULL,
   `livreresume` text,
   `livrenbvente` int(11) DEFAULT NULL,
@@ -182,14 +182,14 @@ CREATE TABLE IF NOT EXISTS `livre` (
   `categorieid` int(11) NOT NULL,
   PRIMARY KEY (`livreid`),
   KEY `FK_Livre_categorieid` (`categorieid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `livre`
 --
 
 INSERT INTO `livre` (`livreid`, `livretitre`, `livreresume`, `livrenbvente`, `livreparution`, `livresommaire`, `livrecouverture`, `livrestock`, `livreprix`, `livrestockalerte`, `livreediteur`, `livreetat`, `categorieid`) VALUES
-(1, 'livre1', 'resume du livre 1 ^fvonefùblon^sfn\r\nqfbv qùpdfi nqùldfbnùqdlvn ', 1, '2011-04-14 13:52:04', '1 un\r\n2 deux\r\n3 trois', 'image.jpg', 10, 10, 10, '10', 10, 0);
+(1, 'livre1', 'resume du livre 1 ^fvonefùblon^sfn\r\nqfbv qùpdfi nqùldfbnùqdlvn ', 1, '2011-04-14 13:52:04', '1 un\r\n2 deux\r\n3 trois', 'image.jpg', 10, 10, 10, '10', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -198,13 +198,13 @@ INSERT INTO `livre` (`livreid`, `livretitre`, `livreresume`, `livrenbvente`, `li
 --
 
 CREATE TABLE IF NOT EXISTS `parametres` (
-  `paranblivrepage` int(11) NOT NULL,
+  `paranblivrepage` int(11) NOT NULL AUTO_INCREMENT,
   `paranblivreaccueil` int(11) DEFAULT NULL,
   `paraimage` tinyint(1) DEFAULT NULL,
   `parastockdefault` int(11) DEFAULT NULL,
   `paraalertedefault` int(11) DEFAULT NULL,
   PRIMARY KEY (`paranblivrepage`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Contenu de la table `parametres`
