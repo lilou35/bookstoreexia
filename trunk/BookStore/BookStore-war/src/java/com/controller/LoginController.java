@@ -51,7 +51,7 @@ public class LoginController {
     
     
     @RequestMapping(value="login.htm", method=RequestMethod.POST)
-    public ModelAndView testerLogin(@Valid @ModelAttribute("user") LoginForm loginForm, BindingResult binder){
+    public ModelAndView testerLogin(@Valid @ModelAttribute("login") LoginForm loginForm, BindingResult binder){
 
         if(binder.hasErrors()){
             return this.afficherLogin();
