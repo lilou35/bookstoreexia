@@ -83,6 +83,12 @@ public class LoginController {
         }
        
     }
+    
+    @RequestMapping(value="deconnexion.htm", method=RequestMethod.GET)
+    public ModelAndView deconnxion(){
+        session.deconnexion();
+        return afficherLogin();
+    }
 
     public void setClientEjbLocal(ClientEjbLocal ClientEjbLocal) {
         this.ClientEjbLocal = ClientEjbLocal;
