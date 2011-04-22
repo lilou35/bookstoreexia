@@ -29,8 +29,13 @@
 
 
 <div id="connection">
+    Bienvenue
+    <c:if test="${sessionScope['scopedTarget.session'].client.clientid!=null}">
+          ${sessionScope['scopedTarget.session'].client.clientprenom} ${sessionScope['scopedTarget.session'].client.clientnom} <br>
+         
+    </c:if>
     
-    Bienvenue <%--${sessionScope['scopedTarget.session'].user.prenomUser} ${sessionScope['scopedTarget.session'].user.nomUser}--%> <br>
+   
     <a class="bouton" href="<c:url value="/accueil/accueil.htm" />"><div id="boutonMenu" class="boutonMenu">accueil</div></a>
 
     
@@ -38,6 +43,10 @@
     <c:if test="${sessionScope['scopedTarget.session'].client.clientid==null}">
         
          <a class="bouton" href="<c:url value="/login/login.htm" />"><div id="boutonMenu" class="boutonMenu">Connexion</div></a>
+    </c:if>
+    <c:if test="${sessionScope['scopedTarget.session'].client.clientid!=null}">
+        
+         <a class="bouton" href="<c:url value="/login/deconnexion.htm" />"><div id="boutonMenu" class="boutonMenu">Déconnexion</div></a>
     </c:if>
     
     
