@@ -16,5 +16,6 @@ import javax.ejb.Remote;
 @Remote
 public interface LivreEjbRemote {
     public List<Livre> selectionnerLivre(int min, int max);
-     public String about();
+    public Livre selectionnerLivre(int id);
+    public String about();
 }

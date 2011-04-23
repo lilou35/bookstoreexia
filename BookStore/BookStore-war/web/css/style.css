@@ -70,15 +70,20 @@ a.bouton{
 
 
 
-li {
-  display: list-item;
-  list-style-image: url(images/puce.png);
+#connection
+{
+    float: left;
+    width:150px;
+
+/*    border-style: ridge;*/
+/*background-color:#ffffff;*/
 }
 
-#separationTableau{
+
+/*#separationTableau{
     background-color:#FCAE2F;
     height: 3px;
-}
+}*/
 
 
 #tete
@@ -94,26 +99,7 @@ li {
 }
 
 
-#connection
-{
-    float: left;
-    width:150px;
 
-/*    border-style: ridge;*/
-/*background-color:#ffffff;*/
-}
-
-#corpsConnexion
-{
-    margin-top: 140px;
-    float: left;
-    background-color:#B2E853;
-    margin-left: 170px;
-    width:848px;
-    
-
-
-}
 
 
 #corps
@@ -161,10 +147,54 @@ li {
     color: #009900;
     font-style: italic;
  }
+ 
+ div.listeArticle{
+     float: left;
+     
+     display: table;
+     
+     
+ }
+ 
+ div.article{
+     background-color: #ff0000;
+     float: left;
+     margin: 5px;
+     display: inline;
+     
+ }
+ 
+ div.articleDetail{
+     background-color: #ffff00;
+     margin: 5px;
+     display: inline;
+ }
+ 
+ .panier{
+     background-color: #ffff00;
+ }
+ 
+.panierIn{
+
+     
+     border-right-style: inset;
+    border-left-style: inset;
+    border-bottom-style: inset;
+    border-top-style: inset;
+    border-right-width: 6px;
+    border-left-width: 6px;
+    border-bottom-width: 6px;
+    border-top-width: 6px;
+}
+ 
+.panierOut{
+     background-color: #0000ff;
+ }
+ 
 
 
  
- .ligneSurvoler
+/* .ligneSurvoler
 {
     background-color: #ff9900;
      
@@ -196,7 +226,7 @@ li {
 .contactNonDansLaListeSurvole
 {
     background-color: #ff9900;
-}
+}*/
 
 
 .warning{

@@ -32,6 +32,10 @@ public class LivreEjb implements LivreEjbRemote, LivreEjbLocal {
         System.out.print("###################### nb Livre: "+ livres.size()+" #################");
         return livres;
     }
+    
+    public Livre selectionnerLivre(int id){
+        return jpaLivre.findLivre(id);
+    }
 
    public String about(){
        return "tu es bon ";

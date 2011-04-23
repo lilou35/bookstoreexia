@@ -35,6 +35,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Journal.findAll", query = "SELECT j FROM Journal j")})
 public class Journal implements Serializable {
+    @Column(name = "journaldate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date journaldate;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +49,6 @@ public class Journal implements Serializable {
     @Size(max = 65535)
     @Column(name = "journaldescription")
     private String journaldescription;
-    @Column(name = "journaldate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date journaldate;
     @JoinColumn(name = "libraireid", referencedColumnName = "libraireid")
     @ManyToOne(optional = false)
     private Libraire libraire;
@@ -76,14 +76,6 @@ public class Journal implements Serializable {
 
     public void setJournaldescription(String journaldescription) {
         this.journaldescription = journaldescription;
-    }
-
-    public Date getJournaldate() {
-        return journaldate;
-    }
-
-    public void setJournaldate(Date journaldate) {
-        this.journaldate = journaldate;
     }
 
     public Libraire getLibraire() {
@@ -125,6 +117,14 @@ public class Journal implements Serializable {
     @Override
     public String toString() {
         return "ejb.entity.Journal[ journalId=" + journalId + " ]";
+    }
+
+    public Date getJournaldate() {
+        return journaldate;
+    }
+
+    public void setJournaldate(Date journaldate) {
+        this.journaldate = journaldate;
     }
     
 }

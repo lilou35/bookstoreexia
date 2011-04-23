@@ -37,6 +37,7 @@
     
    
     <a class="bouton" href="<c:url value="/accueil/accueil.htm" />"><div id="boutonMenu" class="boutonMenu">accueil</div></a>
+    <a class="bouton" href="<c:url value="/categorie/categories.htm" />"><div id="boutonMenu" class="boutonMenu">Categories</div></a>
 
     
    
@@ -52,10 +53,7 @@
     
     
    
-
+     <div id="panier" class="panier" style="height: 100%; width: 100%;">
+        Votre Panier: <br/><br/><br/>
+    </div>
 </div>
-
-
-    
-
-        
