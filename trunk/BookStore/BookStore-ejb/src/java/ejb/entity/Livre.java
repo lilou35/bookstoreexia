@@ -36,6 +36,12 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Livre.findAll", query = "SELECT l FROM Livre l")})
 public class Livre implements Serializable {
+    @Column(name = "livreparution")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date livreparution;
+    @Size(max = 50)
+    @Column(name = "livreetat")
+    private String livreetat;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,9 +58,6 @@ public class Livre implements Serializable {
     private String livreresume;
     @Column(name = "livrenbvente")
     private Integer livrenbvente;
-    @Column(name = "livreparution")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date livreparution;
     @Lob
     @Size(max = 65535)
     @Column(name = "livresommaire")
@@ -72,8 +75,6 @@ public class Livre implements Serializable {
     @Size(max = 20)
     @Column(name = "livreediteur")
     private String livreediteur;
-    @Column(name = "livreetat")
-    private Integer livreetat;
     @ManyToMany(mappedBy = "livreList")
     private List<Auteur> auteurList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "livre")
@@ -119,14 +120,6 @@ public class Livre implements Serializable {
 
     public void setLivrenbvente(Integer livrenbvente) {
         this.livrenbvente = livrenbvente;
-    }
-
-    public Date getLivreparution() {
-        return livreparution;
-    }
-
-    public void setLivreparution(Date livreparution) {
-        this.livreparution = livreparution;
     }
 
     public String getLivresommaire() {
@@ -177,14 +170,6 @@ public class Livre implements Serializable {
         this.livreediteur = livreediteur;
     }
 
-    public Integer getLivreetat() {
-        return livreetat;
-    }
-
-    public void setLivreetat(Integer livreetat) {
-        this.livreetat = livreetat;
-    }
-
     public List<Auteur> getAuteurList() {
         return auteurList;
     }
@@ -232,6 +217,22 @@ public class Livre implements Serializable {
     @Override
     public String toString() {
         return "ejb.entity.Livre[ livreid=" + livreid + " ]";
+    }
+
+    public Date getLivreparution() {
+        return livreparution;
+    }
+
+    public void setLivreparution(Date livreparution) {
+        this.livreparution = livreparution;
+    }
+
+    public String getLivreetat() {
+        return livreetat;
+    }
+
+    public void setLivreetat(String livreetat) {
+        this.livreetat = livreetat;
     }
     
 }

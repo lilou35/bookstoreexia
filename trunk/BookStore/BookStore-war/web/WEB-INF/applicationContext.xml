@@ -65,6 +65,12 @@ business-interface="metier.livre.LivreEjbLocal" />
 	<property name="businessInterface"><value>metier.client.ClientEjbLocal</value></property>
 </bean>
 
+<bean id="CategorieEjb"
+		class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+	<property name="jndiName"><value>CategorieEjb</value></property>
+	<property name="businessInterface"><value>metier.categorie.CategorieEjbLocal</value></property>
+</bean>
+
 
 <bean id="LoginController" class="com.controller.LoginController" scope="prototype">
 	<property name="clientEjbLocal"><ref bean="ClientEjb"/></property>
@@ -76,6 +82,22 @@ business-interface="metier.livre.LivreEjbLocal" />
 	<property name="livreEjbLocal"><ref bean="LivreEjb"/></property>
 
 </bean>
+
+<bean id="CategorieController" class="com.controller.CategorieController" scope="prototype">
+	<property name="categorieEjbLocal"><ref bean="CategorieEjb"/></property>
+
+</bean>
+
+<bean id="LivreController" class="com.controller.LivreController" scope="prototype">
+	<property name="livreEjbLocal"><ref bean="LivreEjb"/></property>
+
+</bean>
+
+<bean id="PanierController" class="com.controller.PanierController" scope="prototype">
+	<property name="livreEjbLocal"><ref bean="LivreEjb"/></property>
+
+</bean>
+
 <!--<context:component-scan base-package="com.controller"/>-->
 
     	
@@ -95,8 +117,8 @@ business-interface="metier.livre.LivreEjbLocal" />
          <mvc:resources mapping="/js/**" location="/js/"/>
          <!-- style CSS -->
          <mvc:resources mapping="/css/**" location="/css/"/>
-         <!-- Logo des entreprises -->
-<!--         <mvc:resources mapping="/logo/**" location="/logo/"/>-->
+         <!-- Image des Livres -->
+         <mvc:resources mapping="/images/**" location="/images/"/>
          <!-- Smiley -->
 <!--         <mvc:resources mapping="/smiley/**" location="/smiley/"/>-->
 

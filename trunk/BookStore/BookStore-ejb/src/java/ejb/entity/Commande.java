@@ -27,17 +27,17 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Commande.findAll", query = "SELECT c FROM Commande c")})
 public class Commande implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected CommandePK commandePK;
-    @Column(name = "commandeid")
-    private Integer commandeid;
     @Column(name = "commandedate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date commandedate;
     @Column(name = "commandedatelivraison")
     @Temporal(TemporalType.TIMESTAMP)
     private Date commandedatelivraison;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected CommandePK commandePK;
+    @Column(name = "commandeid")
+    private Integer commandeid;
     @Column(name = "commandequantite")
     private Integer commandequantite;
     @Size(max = 20)
@@ -78,22 +78,6 @@ public class Commande implements Serializable {
 
     public void setCommandeid(Integer commandeid) {
         this.commandeid = commandeid;
-    }
-
-    public Date getCommandedate() {
-        return commandedate;
-    }
-
-    public void setCommandedate(Date commandedate) {
-        this.commandedate = commandedate;
-    }
-
-    public Date getCommandedatelivraison() {
-        return commandedatelivraison;
-    }
-
-    public void setCommandedatelivraison(Date commandedatelivraison) {
-        this.commandedatelivraison = commandedatelivraison;
     }
 
     public Integer getCommandequantite() {
@@ -159,6 +143,22 @@ public class Commande implements Serializable {
     @Override
     public String toString() {
         return "ejb.entity.Commande[ commandePK=" + commandePK + " ]";
+    }
+
+    public Date getCommandedate() {
+        return commandedate;
+    }
+
+    public void setCommandedate(Date commandedate) {
+        this.commandedate = commandedate;
+    }
+
+    public Date getCommandedatelivraison() {
+        return commandedatelivraison;
+    }
+
+    public void setCommandedatelivraison(Date commandedatelivraison) {
+        this.commandedatelivraison = commandedatelivraison;
     }
     
 }
