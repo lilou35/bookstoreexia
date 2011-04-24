@@ -28,7 +28,7 @@ $(document).ready(function(){
                         $.post("../panier/ajoutLivre.htm", {id: obj.id} ,  function(data)
                                                                             {
                                                                                 //alert(data);
-                                                                                $('#panier').html($('#panier').html() +"<hr/>"+ data);
+                                                                                $('#panier').html(data);
                                                                             }
                         );
                             

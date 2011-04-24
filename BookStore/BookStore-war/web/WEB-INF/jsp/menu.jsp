@@ -54,6 +54,6 @@
     
    
      <div id="panier" class="panier" style="height: 100%; width: 100%;">
-        Votre Panier: <br/><br/><br/>
+        Votre Panier: <br/><br/><br/>${sessionScope['scopedTarget.session'].panier.affichagePanier}
     </div>
 </div>

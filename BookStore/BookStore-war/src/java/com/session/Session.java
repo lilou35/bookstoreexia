@@ -5,21 +5,19 @@
 package com.session;
 
 import ejb.entity.Client;
-import ejb.entity.Commande;
-
 /**
  *
  * @author Wikola
  */
 public interface Session {
-    
+       
     public Client getClient() ;
 
     public void setClient(Client client) ;
 
-    public Commande getCommande() ;
+    public Panier getPanier() ;
 
-    public void setCommande(Commande commande) ;
+    public void setPanier(Panier panier) ;
     
     public void deconnexion();
     
