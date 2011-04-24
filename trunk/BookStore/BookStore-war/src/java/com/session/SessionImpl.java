@@ -5,17 +5,17 @@
 package com.session;
 
 import ejb.entity.Client;
-import ejb.entity.Commande;
 
 /**
  *
  * @author Wikola
  */
 public class SessionImpl implements Session {
-    
+        
     private Client client;
     
-    private Commande commande;
+    private Panier panier = new Panier();
+    
 
     public Client getClient() {
         return client;
@@ -25,17 +25,21 @@ public class SessionImpl implements Session {
         this.client = client;
     }
 
-    public Commande getCommande() {
-        return commande;
+    public Panier getPanier() {
+        return panier;
     }
 
-    public void setCommande(Commande commande) {
-        this.commande = commande;
+    public void setPanier(Panier panier) {
+        this.panier = panier;
     }
+    
+    
+    
+    
 
     @Override
     public void deconnexion() {
-        commande = null;
+        panier = new Panier();;
         client = null;
     }
     

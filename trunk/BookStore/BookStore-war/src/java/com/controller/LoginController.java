@@ -72,7 +72,7 @@ public class LoginController {
         else{
 
            //chargement des parametres en session
-            session.deconnexion();
+            
             session.setClient(clients.get(0));
            
 

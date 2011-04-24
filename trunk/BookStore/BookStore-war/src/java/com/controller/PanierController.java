@@ -10,6 +10,7 @@ package com.controller;
 
 import com.session.Session;
 import metier.livre.LivreEjbLocal;
+import ejb.entity.Livre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
