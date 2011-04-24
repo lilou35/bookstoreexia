@@ -35,10 +35,12 @@ public class PanierController {
     @RequestMapping(value="ajoutLivre.htm", method=RequestMethod.POST)
     public ModelAndView chargementLivreAjax(@RequestParam(value="id", required=true) int idLivre){
         
-        //ajout dans la commande
+        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        
+        session.getPanier().ajouterLivre(livre);
         
         ModelAndView mv = new ModelAndView("panier/livreAjoutAjax");
-        mv.addObject("livre", LivreEjbLocal.selectionnerLivre(idLivre));
+        mv.addObject("panier", session.getPanier().getAffichagePanier() );
         return mv;
        
     }
