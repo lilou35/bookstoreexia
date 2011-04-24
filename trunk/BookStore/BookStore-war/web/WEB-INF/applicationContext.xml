@@ -71,6 +71,12 @@ business-interface="metier.livre.LivreEjbLocal" />
 	<property name="businessInterface"><value>metier.categorie.CategorieEjbLocal</value></property>
 </bean>
 
+<bean id="AuteurEjb"
+		class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+	<property name="jndiName"><value>AuteurEjb</value></property>
+	<property name="businessInterface"><value>metier.auteur.AuteurEjbLocal</value></property>
+</bean>
+
 
 <bean id="LoginController" class="com.controller.LoginController" scope="prototype">
 	<property name="clientEjbLocal"><ref bean="ClientEjb"/></property>
@@ -85,6 +91,11 @@ business-interface="metier.livre.LivreEjbLocal" />
 
 <bean id="CategorieController" class="com.controller.CategorieController" scope="prototype">
 	<property name="categorieEjbLocal"><ref bean="CategorieEjb"/></property>
+
+</bean>
+
+<bean id="AuteurController" class="com.controller.AuteurController" scope="prototype">
+	<property name="auteurEjbLocal"><ref bean="AuteurEjb"/></property>
 
 </bean>
 

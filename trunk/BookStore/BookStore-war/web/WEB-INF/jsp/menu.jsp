@@ -38,6 +38,7 @@
    
     <a class="bouton" href="<c:url value="/accueil/accueil.htm" />"><div id="boutonMenu" class="boutonMenu">accueil</div></a>
     <a class="bouton" href="<c:url value="/categorie/categories.htm" />"><div id="boutonMenu" class="boutonMenu">Categories</div></a>
+    <a class="bouton" href="<c:url value="/auteur/auteurs.htm" />"><div id="boutonMenu" class="boutonMenu">Auteurs</div></a>
 
     
    
@@ -54,6 +55,11 @@
     
    
      <div id="panier" class="panier" style="height: 100%; width: 100%;">
-        Votre Panier: <br/><br/><br/>${sessionScope['scopedTarget.session'].panier.affichagePanier}
+         
+         <c:if test="${sessionScope['scopedTarget.session'].panier.affichagePanier==null}">
+             Votre Panier: <br/><br/><br/>
+         </c:if>
+         ${sessionScope['scopedTarget.session'].panier.affichagePanier}
+         
     </div>
 </div>

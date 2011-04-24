@@ -7,7 +7,6 @@ package metier.categorie;
 
 
 import ejb.entity.Categorie;
-import ejb.entity.Client;
 import java.util.List;
 import javax.ejb.Remote;
 

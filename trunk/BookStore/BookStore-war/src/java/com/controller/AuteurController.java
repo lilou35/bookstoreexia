@@ -8,11 +8,13 @@ package com.controller;
 
 
 
+import metier.auteur.AuteurEjbLocal;
 import metier.livre.LivreEjbLocal;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -21,37 +23,40 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Scope("prototype")
-@RequestMapping(value="/accueil/*")
+@RequestMapping(value="/auteur/*")
 public class AuteurController {
 
     
     
-    private LivreEjbLocal LivreEjbLocal;
+    private AuteurEjbLocal AuteurEjbLocal;
 
-    @RequestMapping(value="accueil.htm", method=RequestMethod.GET)
+    @RequestMapping(value="auteurs.htm", method=RequestMethod.GET)
     public ModelAndView accueil(){
-        ModelAndView mv = new ModelAndView("index");
-       // try{
-             
-            //String lol = LivreEjbLocal.toString();
-            //String lol = LivreEjbLocal.about();
-            mv.addObject("livres", LivreEjbLocal.selectionnerLivre(0, 10));
-            //mv.addObject("livres", "coucocuoucouc");
-            
-//       }
-//       catch(UndeclaredThrowableException e)
-//        {
-//
-//             mv.addObject("livres", "Une exception s'est produite : " + e.getUndeclaredThrowable());
-//        }
+        ModelAndView mv = new ModelAndView("auteur/auteurListe");
+
+        mv.addObject("auteurs", AuteurEjbLocal.selectionnerAuteur(-1, -1));
+          
         return mv;
        
     }
+    
+    @RequestMapping(value="auteur.htm", method=RequestMethod.GET)
+    public ModelAndView afficherAuteur(@RequestParam(value="id", required=true) int idAuteur){
+        ModelAndView mv = new ModelAndView("auteur/auteur");
+        System.out.print("######################## nb livre: "+ AuteurEjbLocal.selectionnerAuteur(idAuteur).getLivreList().size() + "###########################");
+        mv.addObject("auteur", AuteurEjbLocal.selectionnerAuteur(idAuteur));
+        
+        return mv;
+       
+    }
+    
+    
 
-    public void setLivreEjbLocal(LivreEjbLocal LivreEjbLocal) {
-        this.LivreEjbLocal = LivreEjbLocal;
+    public void setAuteurEjbLocal(AuteurEjbLocal AuteurEjbLocal) {
+        this.AuteurEjbLocal = AuteurEjbLocal;
     }
 
+    
    
 
    
