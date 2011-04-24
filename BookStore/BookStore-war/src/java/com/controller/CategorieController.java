@@ -9,7 +9,6 @@ package com.controller;
 
 
 import metier.categorie.CategorieEjbLocal;
-import metier.livre.LivreEjbLocal;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +49,8 @@ public class CategorieController {
     public void setCategorieEjbLocal(CategorieEjbLocal CategorieEjbLocal) {
         this.CategorieEjbLocal = CategorieEjbLocal;
     }
+
+
 
     
 

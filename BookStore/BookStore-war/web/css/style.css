@@ -8,6 +8,11 @@ body
     /*font-size: 13px;*/
 }
 
+li {
+  display: list-item;
+  list-style-image: url(images/puce.png);
+}
+
 div.boutonMenu{
     
     

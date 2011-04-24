@@ -27,22 +27,17 @@
             <div id="titre">
                 Categories:
             </div>
-            <div id="contenu" align="center">
+            <div id="contenu">
                 
-            <table>
-                <tr>
-                    <th>Categorie</th>
-                    <th>Descritpion</th>
-                    
-                </tr>
+            
                  <c:forEach items="${categories}" var="categorie" >
-                    <tr>
-                        <td><a href="categorie.htm?id=${categorie.categorieid}"> ${categorie.categorietype}</a> </td>
-                        <td> ${categorie.categoriedescription} </td>
-                        
-                    </tr>
+                    <dl>
+                        <dt><a href="categorie.htm?id=${categorie.categorieid}"> ${categorie.categorietype}</a> </dt>
+                        <dd> ${categorie.categoriedescription} </dd>
+
+                    </dl>
                 </c:forEach>
-            </table>
+            
        
 
 

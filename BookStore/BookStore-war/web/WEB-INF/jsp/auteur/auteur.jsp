@@ -20,20 +20,22 @@
         <script src="<c:url value="/js/click/chargementLivre.js" />" type="text/javascript" > </script>
         <script src="<c:url value="/js/click/panier.js" />" type="text/javascript" > </script>
 
-        <title>Accueil</title>
+        <title>Auteur: ${auteur.auteurprenom} ${auteur.auteurnom}</title>
     </head>
 
     <body>
-         <%@include file="menu.jsp" %>
+         <%@include file="../menu.jsp" %>
         <div id="corps">
 
 
             <div id="titre">
-                Accueil
+                Auteur: ${auteur.auteurprenom} ${auteur.auteurnom}
             </div>
             <div id="contenu" align="center">
-            <div class="listeArticle" >
-                 <c:forEach items="${livres}" var="livre" >
+                <div > ${auteur.auteurprenom} ${auteur.auteurnom} a écrit: </div>
+                <div> Pour ajouter un acticle faite le glisser jusqu'au panier.</div>
+                <div class="listeArticle" >
+                 <c:forEach items="${auteur.livreList}" var="livre" >
                      <div class="article" id="article-${livre.livreid}" data="{id :'${livre.livreid}'}" >
                          <img src="<c:url value="/images/${livre.livrecouverture}" />" />
                          Titre: ${livre.livretitre} <br/>
@@ -42,7 +44,8 @@
                      </div>
                 </c:forEach>
                     
-            </div>
+                </div>
+       
 
 
 

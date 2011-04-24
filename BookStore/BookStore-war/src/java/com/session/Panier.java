@@ -69,10 +69,11 @@ public class Panier {
   
   
   public String miseAJourPanier(){
-      String panier = "Votre Panier: <br/><br/><br/>";
+      String panier = "Votre Panier: <br/>";
       for(Livre livre : livres){
           panier= panier + livre.getLivretitre() +" <br/> Quantité: "+ qtt.get(livres.indexOf(livre))+ "<hr/>"; 
       }
+      panier = panier + "<a href=\"validerCommande.htm\">Terminer la Commande</a>";
       affichagePanier = panier;
       System.out.print("##########panier: "+ panier +"########################");
       return panier;

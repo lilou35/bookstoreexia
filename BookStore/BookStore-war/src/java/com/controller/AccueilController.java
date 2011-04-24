@@ -8,7 +8,9 @@ package com.controller;
 
 
 
+import com.session.Session;
 import metier.livre.LivreEjbLocal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,25 +27,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class AccueilController {
 
     
+    @Autowired
+    Session session;
     
     private LivreEjbLocal LivreEjbLocal;
 
     @RequestMapping(value="accueil.htm", method=RequestMethod.GET)
     public ModelAndView accueil(){
         ModelAndView mv = new ModelAndView("index");
-       // try{
-             
-            //String lol = LivreEjbLocal.toString();
-            //String lol = LivreEjbLocal.about();
-            mv.addObject("livres", LivreEjbLocal.selectionnerLivre(0, 10));
-            //mv.addObject("livres", "coucocuoucouc");
-            
-//       }
-//       catch(UndeclaredThrowableException e)
-//        {
-//
-//             mv.addObject("livres", "Une exception s'est produite : " + e.getUndeclaredThrowable());
-//        }
+
+        mv.addObject("livres", LivreEjbLocal.selectionnerLivre(0, 10));
+
         return mv;
        
     }
