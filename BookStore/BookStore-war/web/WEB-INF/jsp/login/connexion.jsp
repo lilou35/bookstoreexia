@@ -15,26 +15,23 @@
     <head>
 
         <script src="<c:url value="/js/jquery-1.5.1.min.js" />" type="text/javascript" > </script>
-        <script src="<c:url value="/js/jquery.metadata.js" />" type="text/javascript" > </script>
-        <script src="<c:url value="/js/click/article.js" />" type="text/javascript" > </script>
-        <script src="<c:url value="/js/mouse/panier.js" />" type="text/javascript" > </script>
 
-
-        <title>Panier</title>
+        <title>Login</title>
     </head>
 
     <body>
          <%@include file="../menu.jsp" %>
         <div id="corps">
-            
+
 
             <div id="titre">
-                Panier
+                Connexion
             </div>
             <div id="contenu" align="center">
-                
-                    <%@include file="articles.jsp" %>
-                
+                <li>
+                    <ul><a href="<c:url value="/panier/panier.htm"/>"> Valider votre Commande </a></ul>
+                    <ul><a href="<c:url value="/login/monCompte.htm"/>"> Modifier vos paramètres </a></ul>
+                </li>
        
 
 

@@ -76,7 +76,7 @@ public class LoginController {
             session.setClient(clients.get(0));
            
 
-            ModelAndView mv = new ModelAndView("index");
+            ModelAndView mv = new ModelAndView("login/connexion");
             return mv;
 
            
@@ -88,6 +88,35 @@ public class LoginController {
     public ModelAndView deconnxion(){
         session.deconnexion();
         return afficherLogin();
+    }
+    
+    
+    
+    
+    @RequestMapping(value="monCompte.htm", method=RequestMethod.GET)
+    public ModelAndView afficherMonCompte(String erreur){
+        ModelAndView mv = new ModelAndView("login/monCompte");
+        mv.addObject("client", session.getClient()); 
+        mv.addObject("error", erreur);
+        return mv;
+       
+    }
+    
+    @RequestMapping(value="monCompte.htm", method=RequestMethod.POST)
+    public ModelAndView ModifierMonCompte(@Valid @ModelAttribute("cleint") Client clientForm, BindingResult binder){
+
+        if(binder.hasErrors()){
+            return this.afficherMonCompte("Les champs ne sont pas valides");
+        }
+        clientForm.setClientid(session.getClient().getClientid());
+        
+        ClientEjbLocal.updateClient(clientForm);
+        session.setClient(clientForm);
+        ModelAndView mv = new ModelAndView("login/monCompte");
+        mv.addObject("client", session.getClient());
+        mv.addObject("valide", "Modification Effectuées");
+        return mv;
+       
     }
 
     public void setClientEjbLocal(ClientEjbLocal ClientEjbLocal) {

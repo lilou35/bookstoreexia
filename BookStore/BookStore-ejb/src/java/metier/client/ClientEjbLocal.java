@@ -18,4 +18,5 @@ public interface ClientEjbLocal {
      
 
     public List<Client> login(String login , String pass);
+    public void updateClient(Client client);
 }
