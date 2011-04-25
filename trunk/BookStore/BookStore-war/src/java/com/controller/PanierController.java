@@ -39,7 +39,7 @@ public class PanierController {
     public ModelAndView chargementLivreAjax(@RequestParam(value="id", required=true) int idLivre){
         
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
-        
+       // System.out.print("############" + livre.getLivretitre() + "###############");
         session.getPanier().ajouterLivre(livre);
         
         ModelAndView mv = new ModelAndView("panier/livreAjoutAjax");
