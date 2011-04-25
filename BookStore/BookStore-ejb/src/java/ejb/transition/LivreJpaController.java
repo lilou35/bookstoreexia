@@ -14,6 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import ejb.entity.Categorie;
@@ -21,6 +22,7 @@ import ejb.entity.Auteur;
 import java.util.ArrayList;
 import java.util.List;
 import ejb.entity.Commande;
+import ejb.entity.Livre_;
 
 /**
  *
@@ -270,6 +272,26 @@ public class LivreJpaController {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    public List<Livre> topDix(int nbr){
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Livre> cq = cb.createQuery( Livre.class );
+            Root<Livre> livreRoot = cq.from(Livre.class);
+            
+            //restriction de la requete
+            cq.select(livreRoot)
+                .orderBy(cb.desc(livreRoot.get(Livre_.livrenbvente)),cb.desc(livreRoot.get(Livre_.livreparution)));
+            
+            //resultat de la requete
+            Query q = em.createQuery(cq);
+            q.setMaxResults(nbr);
+            return ((List<Livre>) q.getResultList());
         } finally {
             em.close();
         }
