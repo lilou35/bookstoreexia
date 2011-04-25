@@ -28,6 +28,9 @@
                 Connexion
             </div>
             <div id="contenu" align="center">
+                <span class="error">${error}</span>
+                <span class="valide">${valide}</span>
+                ${message}
                 <li>
                     <ul><a href="<c:url value="/panier/panier.htm"/>"> Valider votre Commande </a></ul>
                     <ul><a href="<c:url value="/login/monCompte.htm"/>"> Modifier vos paramètres </a></ul>

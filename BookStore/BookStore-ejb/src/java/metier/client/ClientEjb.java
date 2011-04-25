@@ -9,6 +9,7 @@ import ejb.entity.Client;
 import ejb.transition.ClientJpaController;
 import ejb.transition.exceptions.IllegalOrphanException;
 import ejb.transition.exceptions.NonexistentEntityException;
+import ejb.transition.exceptions.PreexistingEntityException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,16 @@ public class ClientEjb implements ClientEjbRemote, ClientEjbLocal {
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(ClientEjb.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ClientEjb.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ClientEjb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addClient(Client client){
+        try {
+            jpaClient.create(client);
+        } catch (PreexistingEntityException ex) {
             Logger.getLogger(ClientEjb.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(ClientEjb.class.getName()).log(Level.SEVERE, null, ex);
