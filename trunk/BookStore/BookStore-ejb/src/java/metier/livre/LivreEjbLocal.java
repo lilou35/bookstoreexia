@@ -18,4 +18,5 @@ public interface LivreEjbLocal {
     public String about();
     public Livre selectionnerLivre(int id);
     public List<Livre> selectionnerLivre(int min, int max);
+    public List<Livre> topDix(int nbr);
 }
