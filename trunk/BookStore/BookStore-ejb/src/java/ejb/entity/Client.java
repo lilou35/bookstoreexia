@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -38,26 +39,33 @@ public class Client implements Serializable {
     private Integer clientid;
     @Size(max = 20)
     @Column(name = "clientlogin")
+    @NotEmpty
     private String clientlogin;
     @Size(max = 20)
     @Column(name = "clientmdp")
+    @NotEmpty
     private String clientmdp;
     @Size(max = 20)
     @Column(name = "clientnom")
+    @NotEmpty
     private String clientnom;
     @Size(max = 20)
     @Column(name = "clientprenom")
+    @NotEmpty
     private String clientprenom;
     @Size(max = 20)
     @Column(name = "clientmail")
     private String clientmail;
     @Size(max = 40)
     @Column(name = "clientrue")
+    @NotEmpty
     private String clientrue;
     @Column(name = "clientcodepostal")
+    @NotEmpty
     private Integer clientcodepostal;
     @Size(max = 20)
     @Column(name = "clientville")
+    @NotEmpty
     private String clientville;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Commande> commandeList;
