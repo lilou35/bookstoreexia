@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Lun 25 Avril 2011 à 14:50
+-- Généré le : Lun 25 Avril 2011 à 16:51
 -- Version du serveur: 5.1.30
 -- Version de PHP: 5.2.8
 
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `livre` (
   `livrecouverture` varchar(20) DEFAULT NULL,
   `livrestock` int(6) DEFAULT NULL,
   `livreprix` float DEFAULT NULL,
-  `livrestockalerte` tinyint(1) DEFAULT NULL,
+  `livrestockalerte` int(11) DEFAULT NULL,
   `livreediteur` varchar(20) DEFAULT NULL,
   `livreetat` varchar(50) DEFAULT 'nouveauté',
   `categorieid` int(11) NOT NULL,
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `livre` (
 INSERT INTO `livre` (`livreid`, `livretitre`, `livreresume`, `livrenbvente`, `livreparution`, `livresommaire`, `livrecouverture`, `livrestock`, `livreprix`, `livrestockalerte`, `livreediteur`, `livreetat`, `categorieid`) VALUES
 (1, 'livre1', 'resume du livre 1 ^fvonefùblon^sfn\r\nqfbv qùpdfi nqùldfbnùqdlvn ', 1, '2011-04-14 13:52:04', '1 un\r\n2 deux\r\n3 trois', 'mag100.jpg', 0, 10, 10, '10', 'en stock', 1),
 (2, 'livre2', 'fdbdogibghih', 2, '2011-04-04 14:27:50', 'rogiuehpgih', 'mag101.jpg', 10, 10, 10, 'mi', 'nouveauté', 1),
-(3, 'livre3', 'efbodsibldkbh', 10, '2011-04-05 14:28:24', 'dfyvgzlbvhj', 'mag102.jpg', 10, 10, 10, 'toi', 'nouveauté', 1),
+(3, 'livre3', 'efbodsibldkbh', 10, '2011-04-05 14:28:24', 'dfyvgzlbvhj', 'mag102.jpg', 5, 10, 10, 'toi', 'nouveauté', 1),
 (4, 'livre4', 'dfbvodfibg', 10, '2011-04-05 14:28:58', 'fbdbkjqdbhvlkdhbfvldkhbv', 'mag97.jpg', 10, 10, 10, 'lui', 'nouveauté', 1);
 
 -- --------------------------------------------------------
