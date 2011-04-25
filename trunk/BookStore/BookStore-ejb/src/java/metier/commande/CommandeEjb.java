@@ -39,7 +39,14 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
     public Commande selectionnerCommande(CommandePK commandePK){
         return jpaCommande.findCommande(commandePK);
     }
-
+    
+    public Integer lastCommandeId(){
+        return jpaCommande.lastCommandeId();
+    }
+    public Integer newCommandeId(){
+        return (lastCommandeId()+ 1);
+    }
+    
    public String about(){
        return "tu es bon ";
    }

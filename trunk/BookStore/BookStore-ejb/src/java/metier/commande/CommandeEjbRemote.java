@@ -17,5 +17,7 @@ import javax.ejb.Remote;
 public interface CommandeEjbRemote {
 //    public List<Livre> selectionnerLivre(int min, int max);
     public Commande selectionnerCommande(CommandePK commandePK);
+    public Integer lastCommandeId();
+    public Integer newCommandeId();
     public String about();
 }

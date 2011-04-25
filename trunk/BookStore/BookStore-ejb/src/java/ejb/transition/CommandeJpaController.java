@@ -15,11 +15,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import ejb.entity.Livre;
 import ejb.entity.Journal;
 import ejb.entity.Client;
+import ejb.entity.Commande_;
 
 /**
  *
@@ -234,6 +236,26 @@ public class CommandeJpaController {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public int lastCommandeId() {
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Commande> rt = cq.from(Commande.class);
+            
+            //restriction de la requete
+            cq.select(rt)
+                .orderBy(cb.desc(rt.get(Commande_.commandeid))); 
+            
+            //resultat de la requete          
+            Query q = em.createQuery(cq);
+            return ((Commande) q.getSingleResult()).getCommandeid();
         } finally {
             em.close();
         }
