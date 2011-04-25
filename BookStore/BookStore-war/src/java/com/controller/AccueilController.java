@@ -36,7 +36,7 @@ public class AccueilController {
     public ModelAndView accueil(){
         ModelAndView mv = new ModelAndView("index");
 
-        mv.addObject("livres", LivreEjbLocal.selectionnerLivre(0, 10));
+        mv.addObject("livres", LivreEjbLocal.topDix(10));
 
         return mv;
        
