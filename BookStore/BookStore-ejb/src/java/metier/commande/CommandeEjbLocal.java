@@ -17,5 +17,7 @@ import javax.ejb.Local;
 public interface CommandeEjbLocal {
     public String about();
     public Commande selectionnerCommande(CommandePK commandePK);
+    public Integer lastCommandeId();
+    public Integer newCommandeId();
 //    public List<Livre> selectionnerLivre(int min, int max);
 }
