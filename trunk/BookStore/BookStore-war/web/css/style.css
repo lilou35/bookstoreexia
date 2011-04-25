@@ -175,6 +175,11 @@ a.bouton{
      display: inline;
  }
  
+ .panierLien{
+    text-decoration: none;
+    color: #000000;
+ }
+ 
  .panier{
      background-color: #ffff00;
  }
