@@ -18,4 +18,5 @@ import javax.ejb.Remote;
 public interface ClientEjbRemote {
    public List<Client> login(String login , String pass);
    public void updateClient(Client client);
+   public void addClient(Client client);
 }

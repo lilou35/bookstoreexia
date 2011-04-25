@@ -12,6 +12,7 @@ package com.controller;
 import com.formulaire.LoginForm;
 import com.session.Session;
 import ejb.entity.Client;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import metier.client.ClientEjbLocal;
@@ -59,13 +60,13 @@ public class LoginController {
 
         List<Client> clients = ClientEjbLocal.login(loginForm.getLogin(), loginForm.getPass());
         if(clients.isEmpty()){
-            ModelAndView mv =new ModelAndView("login");
+            ModelAndView mv =new ModelAndView("login/login");
             mv.addObject("erreurLogin", "Le couple Login/Mot de passe n'est pas bon");
             return mv;
             
         }
         else if(clients.size()>1){
-            ModelAndView mv =new ModelAndView("login");
+            ModelAndView mv =new ModelAndView("login/login");
             mv.addObject("erreurLogin", "Erreur des données le login est en double");
             return mv;
         }
@@ -103,19 +104,61 @@ public class LoginController {
     }
     
     @RequestMapping(value="monCompte.htm", method=RequestMethod.POST)
-    public ModelAndView ModifierMonCompte(@Valid @ModelAttribute("cleint") Client clientForm, BindingResult binder){
+    public ModelAndView modifierMonCompte(@Valid @ModelAttribute("client") Client clientForm, BindingResult binder){
 
         if(binder.hasErrors()){
             return this.afficherMonCompte("Les champs ne sont pas valides");
         }
         clientForm.setClientid(session.getClient().getClientid());
-        
-        ClientEjbLocal.updateClient(clientForm);
-        session.setClient(clientForm);
-        ModelAndView mv = new ModelAndView("login/monCompte");
-        mv.addObject("client", session.getClient());
-        mv.addObject("valide", "Modification Effectuées");
+        List<Client> clients = new ArrayList<Client>(0);//TODO flo vérification login unique
+        if(clients.size()==0){
+            ClientEjbLocal.updateClient(clientForm);
+            session.setClient(clientForm);
+            ModelAndView mv = new ModelAndView("login/connexion");
+
+            mv.addObject("valide", "Modification Effectuées");
+            return mv;
+       }
+        else{
+            return afficherMonCompte("Le login existe déjà, utilisé votre adresse Email");
+        }
+    }
+    
+    
+    
+    
+    @RequestMapping(value="inscription.htm", method=RequestMethod.GET)
+    public ModelAndView afficherInscription(String erreur){
+        ModelAndView mv = new ModelAndView("login/inscription");
+        mv.addObject("client", new Client(-1)); 
+        mv.addObject("error", erreur);
         return mv;
+       
+    }
+    
+    @RequestMapping(value="inscription.htm", method=RequestMethod.POST)
+    public ModelAndView ajouterInscription(@Valid @ModelAttribute("client") Client clientForm, BindingResult binder){
+
+        if(binder.hasErrors()){
+            return this.afficherMonCompte("Les champs ne sont pas valides");
+        }
+        
+        
+        List<Client> clients = new ArrayList<Client>(0);//TODO flo vérification login unique
+        if(clients.size()==0){
+            ClientEjbLocal.addClient(clientForm);
+            System.out.print("############## client id: "+ clientForm.getClientid() + "#################");
+            session.setClient(clientForm);
+            ModelAndView mv = new ModelAndView("login/connexion");
+            
+            mv.addObject("message", "Votre inscription a bien été prise en compte. <br/> Maitenant vous pouvez:<br/>");
+            return mv;
+            
+        }
+        else{
+            return afficherInscription("Le login existe déjà, utilisé votre adresse Email");
+        }
+        
        
     }
 

@@ -36,19 +36,19 @@
     </c:if>
     
    
-    <a class="bouton" href="<c:url value="/accueil/accueil.htm" />"><div id="boutonMenu" class="boutonMenu">accueil</div></a>
+    <a class="bouton" href="<c:url value="/accueil/accueil.htm" />"><div id="boutonMenu" class="boutonMenu">Accueil</div></a>
     <a class="bouton" href="<c:url value="/categorie/categories.htm" />"><div id="boutonMenu" class="boutonMenu">Categories</div></a>
     <a class="bouton" href="<c:url value="/auteur/auteurs.htm" />"><div id="boutonMenu" class="boutonMenu">Auteurs</div></a>
 
     
    
     <c:if test="${sessionScope['scopedTarget.session'].client.clientid==null}">
-        
-         <a class="bouton" href="<c:url value="/login/login.htm" />"><div id="boutonMenu" class="boutonMenu">Connexion</div></a>
+        <a class="bouton" href="<c:url value="/login/inscription.htm" />"><div id="boutonMenu" class="boutonMenu">Inscription</div></a>
+        <a class="bouton" href="<c:url value="/login/login.htm" />"><div id="boutonMenu" class="boutonMenu">Connexion</div></a>
     </c:if>
     <c:if test="${sessionScope['scopedTarget.session'].client.clientid!=null}">
-        
-         <a class="bouton" href="<c:url value="/login/deconnexion.htm" />"><div id="boutonMenu" class="boutonMenu">Déconnexion</div></a>
+        <a class="bouton" href="<c:url value="/login/monCompte.htm" />"><div id="boutonMenu" class="boutonMenu">Mon compte</div></a>
+        <a class="bouton" href="<c:url value="/login/deconnexion.htm" />"><div id="boutonMenu" class="boutonMenu">Déconnexion</div></a>
     </c:if>
     
     
