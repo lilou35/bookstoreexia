@@ -169,6 +169,14 @@ a.bouton{
      
  }
  
+  div.articleRupture{
+     background-color: #ff00ff;
+     float: left;
+     margin: 5px;
+     display: inline;
+     
+ }
+ 
  div.articleDetail{
      background-color: #ffff00;
      margin: 5px;

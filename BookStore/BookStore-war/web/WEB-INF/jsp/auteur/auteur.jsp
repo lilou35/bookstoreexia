@@ -36,11 +36,12 @@
                 <div> Pour ajouter un acticle faite le glisser jusqu'au panier.</div>
                 <div class="listeArticle" >
                  <c:forEach items="${auteur.livreList}" var="livre" >
-                     <div class="article" id="article-${livre.livreid}" data="{id :'${livre.livreid}'}" >
-                         <img src="<c:url value="/images/${livre.livrecouverture}" />" />
+                     <div class="article<c:if test="${livre.livrestock<=0}">Rupture</c:if>" id="article-${livre.livreid}" data="{id :'${livre.livreid}'}" >
+                         <img src="<c:url value="/images/${livre.livrecouverture}" />" /><br/>
                          Titre: ${livre.livretitre} <br/>
                          Etat: ${livre.livreetat} <br/>
                          Prix: ${livre.livreprix} <br/>
+                         <c:if test="${livre.livrestock<=0}">Rupture</c:if><br/>
                      </div>
                 </c:forEach>
                     

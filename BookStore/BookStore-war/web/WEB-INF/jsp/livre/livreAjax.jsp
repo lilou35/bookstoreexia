@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<div class="article" id="detail-${livre.livreid}" data="{id :'${livre.livreid}'}">
+<div class="article<c:if test="${livre.livrestock<=0}">Rupture</c:if>" id="detail-${livre.livreid}" data="{id :'${livre.livreid}'}">
     <table style="background-color: #ffff00">
         <tr>
             <th>Titre</th>
@@ -15,6 +15,7 @@
             <td> ${livre.livrenbvente}</td>
             <td> ${livre.livreparution}</td>
             <td> <img src="<c:url value="/images/${livre.livrecouverture}" />" /></td>
+            <td><c:if test="${livre.livrestock<=0}">Rupture</c:if></td>
         </tr>
 
     </table>
