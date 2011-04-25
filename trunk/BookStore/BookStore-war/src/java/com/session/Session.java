@@ -19,6 +19,10 @@ public interface Session {
 
     public void setPanier(Panier panier) ;
     
+    public Boolean getAdmin() ;
+
+    public void setAdmin(Boolean admin) ;
+    
     public void deconnexion();
     
 }

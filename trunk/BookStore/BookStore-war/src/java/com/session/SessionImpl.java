@@ -16,6 +16,16 @@ public class SessionImpl implements Session {
     
     private Panier panier = new Panier();
     
+    private Boolean admin = false;
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+    
 
     public Client getClient() {
         return client;

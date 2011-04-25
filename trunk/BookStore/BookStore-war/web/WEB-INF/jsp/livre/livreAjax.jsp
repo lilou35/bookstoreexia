@@ -17,7 +17,7 @@
             <td> <c:if test="${livre.livreetat=='Nouveauté'}"><span class="nouveau"></c:if>${livre.livreetat}<c:if test="${livre.livreetat=='Nouveauté'}"></span></c:if></td>
             <td> ${livre.livreparution}</td>
             <td> <img src="<c:url value="/images/${livre.livrecouverture}" />" /></td>
-            <td><c:if test="${livre.livrestock <= livre.livrestockalerte}">Il reste ${livre.livrestock} exemplaire(s)</c:if><c:if test="${livre.livrestock<=0}">Rupture</c:if></td>
+            <td><c:if test="${livre.livrestock <= livre.livrestockalerte && livre.livrestock>0 }">Il reste ${livre.livrestock} exemplaire(s)</c:if><c:if test="${livre.livrestock<=0}">Rupture</c:if></td>
         </tr>
 
     </table>

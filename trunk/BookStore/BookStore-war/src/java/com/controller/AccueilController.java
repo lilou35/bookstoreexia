@@ -41,6 +41,23 @@ public class AccueilController {
         return mv;
        
     }
+    
+    /*
+     * #####################################################################################################################
+     *                                      Separation de l'administration
+     * #####################################################################################################################
+     */
+    //TODO NicoExia ajouter la vérification client = admin
+    
+    @RequestMapping(value="admin.htm", method=RequestMethod.GET)
+    public ModelAndView admin(){
+        ModelAndView mv = new ModelAndView("admin/admin");
+
+        mv.addObject("livres", LivreEjbLocal.topDix(10));
+
+        return mv;
+       
+    }
 
     public void setLivreEjbLocal(LivreEjbLocal LivreEjbLocal) {
         this.LivreEjbLocal = LivreEjbLocal;

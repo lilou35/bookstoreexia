@@ -12,7 +12,6 @@ package com.controller;
 import com.formulaire.LoginForm;
 import com.session.Session;
 import ejb.entity.Client;
-import ejb.entity.Libraire;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
@@ -32,8 +31,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Scope("prototype")
-@RequestMapping(value="/login/*")
-public class LoginController {
+@RequestMapping(value="/admin/*")
+public class AdminController {
 
     
     @Autowired
@@ -162,64 +161,6 @@ public class LoginController {
         
        
     }
-    
-    
-    
-    /*
-     * #####################################################################################################################
-     *                                      Separation de l'administration
-     * #####################################################################################################################
-     */
-    
-    
-    @RequestMapping(value="adminLogin.htm", method=RequestMethod.GET)
-    public ModelAndView afficherAdminLogin(){
-        ModelAndView mv = new ModelAndView("admin/login/login");
-        mv.addObject("login", new LoginForm()); 
-        return mv;
-       
-    }
-    
-    @RequestMapping(value="adminLogin.htm", method=RequestMethod.POST)
-    public ModelAndView testerAdminLogin(@Valid @ModelAttribute("login") LoginForm loginForm, BindingResult binder){
-
-        if(binder.hasErrors()){
-            return this.afficherAdminLogin();
-        }
-        //TODO flo login des libraire
-        List<Libraire> libraires = new ArrayList<Libraire>(0);//ClientEjbLocal.login(loginForm.getLogin(), loginForm.getPass());
-        if(libraires.isEmpty()){
-            ModelAndView mv =new ModelAndView("admin/login/login");
-            mv.addObject("erreurLogin", "Le couple Login/Mot de passe n'est pas bon");
-            return mv;
-            
-        }
-        else if(libraires.size()>1){
-            ModelAndView mv =new ModelAndView("admin/login/login");
-            mv.addObject("erreurLogin", "Erreur des données le login est en double");
-            return mv;
-        }
-        else{
-
-           //chargement des parametres en session
-            Client client = new Client(-1);
-            client.setClientnom(libraires.get(0).getLibrairenom());
-            session.setAdmin(true);
-            session.setClient(client);
-            
-           
-
-            ModelAndView mv = new ModelAndView("admin/admin");
-            return mv;
-
-           
-        }
-       
-    }
-    
-    
-    
-    
 
     public void setClientEjbLocal(ClientEjbLocal ClientEjbLocal) {
         this.ClientEjbLocal = ClientEjbLocal;
