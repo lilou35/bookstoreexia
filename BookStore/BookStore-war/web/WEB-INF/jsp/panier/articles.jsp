@@ -22,7 +22,7 @@
                  <tr align="center">
                      <td><img height="100px" width="75px" src="<c:url value="/images/${article.livre.livrecouverture}" />" /></td>
                      <td>${article.livre.livretitre}</td>
-                     <td><input type="button" id="moins" value="-" data="{id:'${article.livre.livreid}'}"/>${article.qtt}<input type="button" id="plus" value="+" data="{id:'${article.livre.livreid}'}"/></td>
+                     <td><input type="button" id="moins" value="-" data="{id:'${article.livre.livreid}'}"/>${article.qtt}<input type="button" id="plus" value="+" <c:if test="${article.livre.livrestock<=article.qtt}">disabled="true"</c:if> data="{id:'${article.livre.livreid}'}"/><c:if test="${article.livre.livrestock<=article.qtt}">Stock Insuffisant</c:if></td>
                      <td>${article.livre.livreprix}</td>
                      <td align="right">${article.sousTotal}</td>
                      <td><input type="button" value="Retirer" id="retirer" data="{id:'${article.livre.livreid}'}" />

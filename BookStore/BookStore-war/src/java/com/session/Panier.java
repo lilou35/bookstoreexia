@@ -24,16 +24,23 @@ public class Panier {
       
     
 
-   public void ajouterLivre(Livre livre){
+   public Boolean ajouterLivre(Livre livre){
        if(livres.contains(livre)){
            int index = livres.indexOf(livre);
+           if(qtt.get(index)>= livre.getLivrestock()){
+                miseAJourPanier("Il n\'y a pas assez de livre en stock. <br/>");
+                return false;
+           }
            qtt.set(index, qtt.get(index)+1);
+           
        }
        else{
            livres.add(livre);
            qtt.add(1);
+           
        }
-       miseAJourPanier();
+       miseAJourPanier("Article Ajouté<br/>");
+       return true;
    }
    
     public boolean moinsUnQttLivre(Livre livre){
@@ -44,7 +51,7 @@ public class Panier {
                return retirerLivre(livre);
            }
            else{
-               miseAJourPanier();
+               miseAJourPanier("Article Ajouté<br/>");
                return true;
            }
            
@@ -59,7 +66,7 @@ public class Panier {
   public void modifierQtt(Livre livre , int nvQtt){
       int index = livres.indexOf(livre);
       qtt.set(index, nvQtt);
-      miseAJourPanier();
+      miseAJourPanier("Article Ajouté<br/>");
   }
   
   public boolean retirerLivre(Livre livre){
@@ -67,7 +74,7 @@ public class Panier {
           int index = livres.indexOf(livre);
           livres.remove(livre);
           qtt.remove(index);
-          miseAJourPanier();
+          miseAJourPanier("Article Ajouté<br/>");
           return true;
       }
       else{
@@ -88,8 +95,9 @@ public class Panier {
   }
   
   
-  public String miseAJourPanier(){
-      String panier = "Votre Panier: <br/>";
+  public String miseAJourPanier(String message){
+      String panier = message;
+      panier = panier + "Votre Panier: <br/>";
       if(livres.size()==0){
           panier = panier + "<br/><br/>";
       }
