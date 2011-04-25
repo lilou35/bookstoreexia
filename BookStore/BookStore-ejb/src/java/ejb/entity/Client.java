@@ -5,6 +5,7 @@
 package ejb.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -61,14 +62,14 @@ public class Client implements Serializable {
     @NotEmpty
     private String clientrue;
     @Column(name = "clientcodepostal")
-    @NotEmpty
+    @NotNull
     private Integer clientcodepostal;
     @Size(max = 20)
     @Column(name = "clientville")
     @NotEmpty
     private String clientville;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
-    private List<Commande> commandeList;
+    private List<Commande> commandeList =  new ArrayList<Commande>(0);
 
     public Client() {
     }
