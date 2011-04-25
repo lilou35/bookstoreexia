@@ -14,10 +14,12 @@ public class Article {
     
     private Livre livre;
     private int qtt;
+    private float sousTotal;
 
     public Article(Livre livre, int qtt) {
         this.livre = livre;
         this.qtt = qtt;
+        this.sousTotal = livre.getLivreprix() * qtt;
     }
 
     public Livre getLivre() {
@@ -35,6 +37,16 @@ public class Article {
     public void setQtt(int qtt) {
         this.qtt = qtt;
     }
+
+    public float getSousTotal() {
+        this.sousTotal = livre.getLivreprix() * qtt;
+        return sousTotal;
+    }
+
+    public void setSousTotal(float sousTotal) {
+        this.sousTotal = sousTotal;
+    }
+    
     
     
 }

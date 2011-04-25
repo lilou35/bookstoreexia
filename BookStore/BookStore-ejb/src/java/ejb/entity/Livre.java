@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -75,7 +76,7 @@ public class Livre implements Serializable {
     @Size(max = 20)
     @Column(name = "livreediteur")
     private String livreediteur;
-    @ManyToMany(mappedBy = "livreList")
+    @ManyToMany(mappedBy = "livreList", fetch= FetchType.EAGER)
     private List<Auteur> auteurList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "livre")
     private List<Commande> commandeList;

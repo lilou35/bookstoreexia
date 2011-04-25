@@ -36,6 +36,26 @@ public class Panier {
        miseAJourPanier();
    }
    
+    public boolean moinsUnQttLivre(Livre livre){
+       if(livres.contains(livre)){
+           int index = livres.indexOf(livre);
+           qtt.set(index, qtt.get(index)-1);
+           if(qtt.get(index)<=0){
+               return retirerLivre(livre);
+           }
+           else{
+               miseAJourPanier();
+               return true;
+           }
+           
+           
+       }
+       else{
+           return false;
+       }
+       
+   }
+   
   public void modifierQtt(Livre livre , int nvQtt){
       int index = livres.indexOf(livre);
       qtt.set(index, nvQtt);
@@ -70,10 +90,16 @@ public class Panier {
   
   public String miseAJourPanier(){
       String panier = "Votre Panier: <br/>";
-      for(Livre livre : livres){
-          panier= panier + livre.getLivretitre() +" <br/> Quantité: "+ qtt.get(livres.indexOf(livre))+ "<hr/>"; 
+      if(livres.size()==0){
+          panier = panier + "<br/><br/>";
       }
-      panier = panier + "<a href=\"validerCommande.htm\">Terminer la Commande</a>";
+      else{
+          for(Livre livre : livres){
+              panier= panier + livre.getLivretitre() +" <br/> Quantité: "+ qtt.get(livres.indexOf(livre))+ "<hr/>"; 
+          }
+      }
+      
+      
       affichagePanier = panier;
       System.out.print("##########panier: "+ panier +"########################");
       return panier;
