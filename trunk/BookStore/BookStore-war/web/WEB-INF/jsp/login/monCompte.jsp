@@ -29,7 +29,7 @@
             </div>
             <div id="contenu" align="center">
                 <form:form method="POST" action="monCompte.htm" commandName="client">
-                    
+                    <form:hidden path="clientid" />
                 <table>
                     <tr>
                         <td colspan="3" align="center">
