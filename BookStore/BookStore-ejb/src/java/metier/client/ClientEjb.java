@@ -26,7 +26,10 @@ public class ClientEjb implements ClientEjbRemote, ClientEjbLocal {
     ClientJpaController jpaClient = new ClientJpaController();
 
     public List<Client> login(String login , String pass){
-        return jpaClient.findClientEntities();
+        return jpaClient.login(login, pass);
+    }
+    public List<Client> loginUnique(String login){
+        return jpaClient.loginUnique(login);
     }
     
     public void updateClient(Client client){

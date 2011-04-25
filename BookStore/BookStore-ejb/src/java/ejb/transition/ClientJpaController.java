@@ -9,6 +9,7 @@ import ejb.transition.exceptions.IllegalOrphanException;
 import ejb.transition.exceptions.NonexistentEntityException;
 import ejb.transition.exceptions.PreexistingEntityException;
 import ejb.entity.Client;
+import ejb.entity.Client_;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -19,6 +20,7 @@ import javax.persistence.criteria.Root;
 import ejb.entity.Commande;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  *
@@ -201,6 +203,46 @@ public class ClientJpaController {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Client> loginUnique(String login) {
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Client> cq = cb.createQuery( Client.class );
+            Root<Client> clientRoot = cq.from(Client.class);
+            
+            //restriction de la requete
+            cq.select(clientRoot)
+                    .where(cb.equal(clientRoot.get(Client_.clientlogin), login));
+            
+            //resultat de la requete
+            Query q = em.createQuery(cq);
+            return ((List<Client>) q.getResultList());
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Client> login(String login, String pass) {
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Client> cq = cb.createQuery( Client.class );
+            Root<Client> clientRoot = cq.from(Client.class);
+            
+            //restriction de la requete
+            cq.select(clientRoot)
+                    .where(cb.equal(clientRoot.get(Client_.clientlogin), login), cb.equal(clientRoot.get(Client_.clientmdp), pass));
+            
+            //resultat de la requete
+            Query q = em.createQuery(cq);
+            return ((List<Client>) q.getResultList());
         } finally {
             em.close();
         }
