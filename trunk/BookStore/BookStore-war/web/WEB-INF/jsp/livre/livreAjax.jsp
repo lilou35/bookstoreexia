@@ -15,7 +15,7 @@
             <td> ${livre.livrenbvente}</td>
             <td> ${livre.livreparution}</td>
             <td> <img src="<c:url value="/images/${livre.livrecouverture}" />" /></td>
-            <td><c:if test="${livre.livrestock<=0}">Rupture</c:if></td>
+            <td><c:if test="${livre.livrestock <= livre.livrestockalerte}">Il reste ${livre.livrestock} exemplaire(s)</c:if><c:if test="${livre.livrestock<=0}">Rupture</c:if></td>
         </tr>
 
     </table>

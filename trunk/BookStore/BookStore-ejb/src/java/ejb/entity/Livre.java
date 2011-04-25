@@ -72,7 +72,7 @@ public class Livre implements Serializable {
     @Column(name = "livreprix")
     private Float livreprix;
     @Column(name = "livrestockalerte")
-    private Boolean livrestockalerte;
+    private Integer livrestockalerte;
     @Size(max = 20)
     @Column(name = "livreediteur")
     private String livreediteur;
@@ -155,11 +155,11 @@ public class Livre implements Serializable {
         this.livreprix = livreprix;
     }
 
-    public Boolean getLivrestockalerte() {
+    public Integer getLivrestockalerte() {
         return livrestockalerte;
     }
 
-    public void setLivrestockalerte(Boolean livrestockalerte) {
+    public void setLivrestockalerte(Integer livrestockalerte) {
         this.livrestockalerte = livrestockalerte;
     }
 
