@@ -162,7 +162,7 @@ a.bouton{
  }
  
  div.article{
-     background-color: #ff0000;
+     background-color: #9999ff;
      float: left;
      margin: 5px;
      display: inline;
@@ -176,6 +176,20 @@ a.bouton{
      display: inline;
      
  }
+ 
+ div.articleRuptureVenir{
+     background-color: #0000ff;
+     float: left;
+     margin: 5px;
+     display: inline;
+     
+ }
+ 
+ .nouveau{
+    color:#ff0000;
+    text-decoration: underline overline blink;
+    font-weight: bolder;
+}
  
  div.articleDetail{
      background-color: #ffff00;
