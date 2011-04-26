@@ -22,5 +22,5 @@ public interface AuteurEjbLocal {
        
     public Auteur selectionnerAuteur(int id);
     public void updateAuteur(Auteur Auteur);
-    public void addAuteur(Auteur Auteur);
+    public Auteur addAuteur(Auteur Auteur);
 }
