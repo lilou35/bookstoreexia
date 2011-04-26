@@ -160,6 +160,15 @@ public class LivreController {
        
     }
     
+    
+    
+    private List<Auteur> chargementDesAuteurNonEcrivain(Livre livre){
+        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);//TODO flo orde alphabétique pour les auteurs
+        auteurs.removeAll(livre.getAuteurList());
+        return auteurs;
+        
+    }
+    
     @RequestMapping(value="ajouterLivreAdmin.htm", method=RequestMethod.POST)
     public ModelAndView AjouterLivreAdmin(@Valid @ModelAttribute("livre") LivreAdmin livreForm, BindingResult binder){
 
