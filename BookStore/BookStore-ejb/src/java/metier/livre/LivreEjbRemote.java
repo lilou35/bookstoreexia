@@ -20,4 +20,6 @@ public interface LivreEjbRemote {
     public List<Livre> topDix(int nbr);
     public List<Livre> selectionnerLivre(String recherche, Integer initLigne, Integer maxLigne);
     public String about();
+    public void updateLivre(Livre Livre);
+    public void addLivre(Livre Livre);
 }
