@@ -304,5 +304,35 @@ public class LivreJpaController {
             em.close();
         }
     }
+    
+    public List<Livre> findLivre(String lettre, Integer initLigne, Integer maxLigne) {
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Livre> cq = cb.createQuery( Livre.class );
+            Root<Livre> livreRoot = cq.from(Livre.class);
+            
+            //restriction de la requete
+            cq.select(livreRoot);
+                    if(lettre.length()==1)
+                    {//si recherche par 1 seul lettre
+                        cq.where(cb.like(livreRoot.get(Livre_.livretitre), lettre+"*"));
+                    }
+                    else{//si recherche par mot complet
+                        cq.where(cb.like(livreRoot.get(Livre_.livretitre), "*"+lettre+"*"));
+                    }
+                cq.orderBy(cb.asc(livreRoot.get(Livre_.livretitre)));
+            
+            //resultat de la requete
+            Query q = em.createQuery(cq);
+            q.setFirstResult(initLigne);
+            q.setMaxResults(maxLigne);
+            return ((List<Livre>) q.getResultList());
+        } finally {
+            em.close();
+        }
+        
+    }
 
 }
