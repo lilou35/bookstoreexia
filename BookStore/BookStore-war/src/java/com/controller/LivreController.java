@@ -64,7 +64,7 @@ public class LivreController {
     @RequestMapping(value="livreListe.htm", method=RequestMethod.POST)
     public ModelAndView afficherListeLivreParLettre(@RequestParam(value="lettre", required=true) String lettre){
         ModelAndView mv = new ModelAndView("livre/livreListe");
-        List<Livre> livres = LivreEjbLocal.selectionnerLivre(lettre, -1, -1);//TODO flo rechercher sur le tritre like lettre%
+        List<Livre> livres = LivreEjbLocal.selectionnerLivre(lettre, -1, -1);
         mv.addObject("livres", livres); 
         if(livres.isEmpty()){
             mv.addObject("message", "il n'y a pas de livre commançant par:");
@@ -101,7 +101,7 @@ public class LivreController {
     @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.POST)
     public ModelAndView afficherListeLivreParLettreAdmin(@RequestParam(value="lettre", required=true) String lettre){
         ModelAndView mv = new ModelAndView("admin/livre/livreListe");
-        List<Livre> livres = LivreEjbLocal.selectionnerLivre(-1, -1);//TODO flo rechercher sur le tritre like lettre%
+        List<Livre> livres = LivreEjbLocal.selectionnerLivre(lettre, -1, -1);
         mv.addObject("livres", livres); 
         if(livres.isEmpty()){
             mv.addObject("message", "il n'y a pas de livre commançant par:");
