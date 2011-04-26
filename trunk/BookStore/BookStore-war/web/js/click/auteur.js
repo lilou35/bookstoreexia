@@ -13,9 +13,9 @@ function cliquable(){
                         );
     });
     
-    $("#terminer").click(function(){
+    $('#terminer').click(function(){
         var obj = $(this).metadata({type:'attr',name:'data'});
-        window.location.href='livreListeAdminLettre.htm.htm?lettre=' + obj.lettre.charAt(1);
+        window.location.href='livreListeAdminLettre.htm?lettre=' + obj.lettre.charAt(1);
     });
     
 }

@@ -10,7 +10,9 @@ package com.controller;
 
 import com.formulaire.LivreAdmin;
 import ejb.entity.Auteur;
+import ejb.entity.Commande;
 import ejb.entity.Livre;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import metier.auteur.AuteurEjbLocal;
@@ -202,9 +204,11 @@ public class LivreController {
     public ModelAndView ajoutAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
         
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        livre.setCommandeList(new ArrayList<Commande>(0));
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
         
-        if(!livre.getAuteurList().isEmpty() && !livre.getAuteurList().contains(auteur)){
+        if(!livre.getAuteurList().contains(auteur)){
+            
             livre.getAuteurList().add(auteur);
         }
         
@@ -223,9 +227,10 @@ public class LivreController {
     public ModelAndView retirerAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
         
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        livre.setCommandeList(new ArrayList<Commande>(0));
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
         
-        if((livre.getAuteurList().isEmpty()==false) && (livre.getAuteurList().contains(auteur))){
+        if(livre.getAuteurList().contains(auteur)){
             livre.getAuteurList().remove(auteur);
         }
         
@@ -253,6 +258,7 @@ public class LivreController {
         }
         
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        livre.setCommandeList(new ArrayList<Commande>(0));
         Auteur auteur =  new Auteur(-1);
         auteur.setAuteurnom(nom);
         auteur.setAuteurprenom(prenom);
