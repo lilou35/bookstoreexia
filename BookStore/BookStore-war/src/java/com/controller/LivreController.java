@@ -209,6 +209,40 @@ public class LivreController {
     }
     
     
+    @RequestMapping(value="ajoutAuteur.htm", method=RequestMethod.POST)
+    public ModelAndView ajoutAuteurALivreAjax(@RequestParam(value="nomAuteur", required=true) String nom, 
+                                                @RequestParam(value="prenomAuteur", required=true) String prenom,
+                                                @RequestParam(value="idLivre", required=true) int idLivre){
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
+        
+        if(nom.isEmpty()|| prenom.isEmpty()){
+            mv.addObject("erreur", "les 2 champs sont obligatoires");
+            mv.addObject("nom", nom);
+            mv.addObject("prenom", prenom);
+        }
+        
+        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        Auteur auteur =  new Auteur(-1);
+        auteur.setAuteurnom(nom);
+        auteur.setAuteurprenom(prenom);
+        
+        //TODO flo (ajouter l'auteur en base ) je ne sais pas si juste en ajoutant l'auteur dans le livre il persistera le nouvel auteur
+        
+        if(!livre.getAuteurList().contains(auteur)){
+            livre.getAuteurList().add(auteur);
+        }
+        
+        //TODO flo merttre à jour livre
+        
+        
+        mv.addObject("livre", livre);
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
+        return mv;
+       
+    }
+    
+    
     
     
     public void setLivreEjbLocal(LivreEjbLocal LivreEjbLocal) {
