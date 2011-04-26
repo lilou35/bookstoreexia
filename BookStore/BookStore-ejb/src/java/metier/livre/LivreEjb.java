@@ -62,13 +62,16 @@ public class LivreEjb implements LivreEjbRemote, LivreEjbLocal {
         }
     }
     
-    public void addLivre(Livre Livre){
+    public Livre addLivre(Livre Livre){
         try {
             jpaLivre.create(Livre);
+            return Livre;
         } catch (PreexistingEntityException ex) {
             Logger.getLogger(LivreEjb.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } catch (Exception ex) {
             Logger.getLogger(LivreEjb.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
