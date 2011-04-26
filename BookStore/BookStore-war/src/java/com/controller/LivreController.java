@@ -8,11 +8,18 @@ package com.controller;
 
 
 
+import com.formulaire.LivreAdmin;
+import ejb.entity.Auteur;
 import ejb.entity.Livre;
 import java.util.List;
+import javax.validation.Valid;
+import metier.auteur.AuteurEjbLocal;
+import metier.categorie.CategorieEjbLocal;
 import metier.livre.LivreEjbLocal;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +37,10 @@ public class LivreController {
     
     
     private LivreEjbLocal LivreEjbLocal;
+    
+    private CategorieEjbLocal categorieEjbLocal;
+    
+    private AuteurEjbLocal auteurEjbLocal;
 
     @RequestMapping(value="chargementLivre.htm", method=RequestMethod.POST)
     public ModelAndView chargementLivreAjax(@RequestParam(value="id", required=true) int idLivre){
@@ -122,11 +133,33 @@ public class LivreController {
     
     @RequestMapping(value="ajouterLivreAdmin.htm", method=RequestMethod.GET)
     public ModelAndView afficherAjouterLivreAdmin(){
-        ModelAndView mv = new ModelAndView("admin/livre/livreAjout");
-        Livre livre = new Livre(-1);
+        ModelAndView mv = new ModelAndView("admin/livre/livreAjouter");
+        LivreAdmin livre = new LivreAdmin(-1);
         livre.setLivrestock(20);//TODO NicoExia paramètre
         livre.setLivrestockalerte(5);//TODO NicoExia paramètre
+        livre.setLivreetat("Nouveauté");
         mv.addObject("livre", livre);
+        mv.addObject("categories", categorieEjbLocal.selectionnerCategories(-1, -1));
+        return mv;
+       
+    }
+    
+    @RequestMapping(value="ajouterLivreAdmin.htm", method=RequestMethod.POST)
+    public ModelAndView AjouterLivreAdmin(@Valid @ModelAttribute("livre") LivreAdmin livreForm, BindingResult binder){
+
+        if(binder.hasErrors()){
+            return this.afficherAjouterLivreAdmin();
+        }
+        //TODO flo convertir le livreAdmin en Livre
+        //TODO flo ajouter livreForm en base il n'a pas d'auteur j'ai aussi besoin de recup l'id normalement il modifie l'objet que tu lui envoi mais il te le retourne pas
+        Livre livre = LivreEjbLocal.selectionnerLivre(1);
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteur");
+        mv.addObject("livre", livre);
+        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);
+        auteurs.removeAll(livre.getAuteurList());
+        mv.addObject("auteurs", auteurs);//TODO flo orde alphabétique
+        
         return mv;
        
     }
@@ -136,6 +169,14 @@ public class LivreController {
     
     public void setLivreEjbLocal(LivreEjbLocal LivreEjbLocal) {
         this.LivreEjbLocal = LivreEjbLocal;
+    }
+
+    public void setAuteurEjbLocal(AuteurEjbLocal auteurEjbLocal) {
+        this.auteurEjbLocal = auteurEjbLocal;
+    }
+
+    public void setCategorieEjbLocal(CategorieEjbLocal categorieEjbLocal) {
+        this.categorieEjbLocal = categorieEjbLocal;
     }
 
    

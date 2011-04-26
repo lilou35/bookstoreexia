@@ -223,6 +223,28 @@ a.bouton{
      background-color: #0000ff;
  }
  
+ 
+ div.ajoutable{
+     background-color: #9999ff;
+     float: left;
+     margin: 5px;
+     display: inline;
+ }
+ 
+ div.retirable{
+     background-color: #9999ff;
+     float: left;
+     margin: 5px;
+     display: inline;
+ }
+ div.ajouter{
+     background-color: #0099ff;
+ }
+ div.retirer{
+     background-color: #0111ff;
+ }
+ 
+ 
 
 
  

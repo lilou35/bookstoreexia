@@ -27,6 +27,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -51,6 +52,7 @@ public class Livre implements Serializable {
     @Column(name = "livreid")
     private Integer livreid;
     @Size(max = 20)
+    @NotEmpty
     @Column(name = "livretitre")
     private String livretitre;
     @Lob
@@ -67,11 +69,14 @@ public class Livre implements Serializable {
     @Column(name = "livrecouverture")
     private String livrecouverture;
     @Column(name = "livrestock")
+    @NotNull
     private Integer livrestock;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "livreprix")
+    @NotNull
     private Float livreprix;
     @Column(name = "livrestockalerte")
+    @NotNull
     private Integer livrestockalerte;
     @Size(max = 20)
     @Column(name = "livreediteur")
