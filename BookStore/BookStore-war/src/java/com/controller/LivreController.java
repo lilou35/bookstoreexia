@@ -113,9 +113,14 @@ public class LivreController {
         return mv;   
     }
     
+    @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.GET)
+    public ModelAndView afficherListeLivreParLettreGetAdmin(@RequestParam(value="lettre", required=true) String lettre){
+        return afficherListeLivreParLettrePostAdmin(lettre);
+    }
     
     @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.POST)
-    public ModelAndView afficherListeLivreParLettreAdmin(@RequestParam(value="lettre", required=true) String lettre){
+    public ModelAndView afficherListeLivreParLettrePostAdmin(@RequestParam(value="lettre", required=true) String lettre){
+
         ModelAndView mv = new ModelAndView("admin/livre/livreListe");
         List<Livre> livres = LivreEjbLocal.selectionnerLivre(lettre, -1, -1);
         mv.addObject("livres", livres); 
@@ -163,7 +168,7 @@ public class LivreController {
     
     
     private List<Auteur> chargementDesAuteurNonEcrivain(Livre livre){
-        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);//TODO flo orde alphabétique pour les auteurs
+        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);
         auteurs.removeAll(livre.getAuteurList());
         return auteurs;
         
