@@ -314,15 +314,16 @@ public class LivreJpaController {
             Root<Livre> livreRoot = cq.from(Livre.class);
             
             //restriction de la requete
-            cq.select(livreRoot);
-                    if(lettre.length()==1)
+            if(lettre.length()==1)
                     {//si recherche par 1 seul lettre
-                        cq.where(cb.like(livreRoot.get(Livre_.livretitre), lettre+"*"));
+                        lettre+="%";
                     }
                     else{//si recherche par mot complet
-                        cq.where(cb.like(livreRoot.get(Livre_.livretitre), "*"+lettre+"*"));
+                        lettre="%"+lettre+"%";
                     }
-                cq.orderBy(cb.asc(livreRoot.get(Livre_.livretitre)));
+            cq.select(livreRoot)
+                    .where(cb.like(livreRoot.get(Livre_.livretitre), lettre))
+                    .orderBy(cb.asc(livreRoot.get(Livre_.livretitre)));
             
             //resultat de la requete
             Query q = em.createQuery(cq);
