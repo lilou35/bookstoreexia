@@ -5,6 +5,7 @@
 package ejb.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -16,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -81,10 +83,14 @@ public class Livre implements Serializable {
     @Size(max = 20)
     @Column(name = "livreediteur")
     private String livreediteur;
-    @ManyToMany(mappedBy = "livreList", fetch= FetchType.EAGER)
-    private List<Auteur> auteurList;
+    @JoinTable(name = "ecrivain", joinColumns = {
+        @JoinColumn(name = "livreid", referencedColumnName = "livreid")}, inverseJoinColumns = {
+        @JoinColumn(name = "auteurid", referencedColumnName = "auteurid")})
+    @ManyToMany(fetch= FetchType.EAGER)
+//    @ManyToMany(mappedBy = "livreList", fetch= FetchType.EAGER)
+    private List<Auteur> auteurList = new ArrayList<Auteur>(0);
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "livre")
-    private List<Commande> commandeList;
+    private List<Commande> commandeList = new ArrayList<Commande>(0);
     @JoinColumn(name = "categorieid", referencedColumnName = "categorieid")
     @ManyToOne(optional = false)
     private Categorie categorie;

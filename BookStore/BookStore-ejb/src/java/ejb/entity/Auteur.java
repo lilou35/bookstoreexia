@@ -44,10 +44,11 @@ public class Auteur implements Serializable {
     @Size(max = 20)
     @Column(name = "auteurprenom")
     private String auteurprenom;
-    @JoinTable(name = "ecrivain", joinColumns = {
-        @JoinColumn(name = "auteurid", referencedColumnName = "auteurid")}, inverseJoinColumns = {
-        @JoinColumn(name = "livreid", referencedColumnName = "livreid")})
-    @ManyToMany(fetch= FetchType.EAGER)
+//    @JoinTable(name = "ecrivain", joinColumns = {
+//        @JoinColumn(name = "auteurid", referencedColumnName = "auteurid")}, inverseJoinColumns = {
+//        @JoinColumn(name = "livreid", referencedColumnName = "livreid")})
+//    @ManyToMany(fetch= FetchType.EAGER)
+    @ManyToMany(mappedBy = "auteurList", fetch= FetchType.EAGER)
     private List<Livre> livreList;
 
     public Auteur() {
