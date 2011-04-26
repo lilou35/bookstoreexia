@@ -86,7 +86,23 @@ public class LivreController {
      */
     //TODO NicoExia ajouter la vérification client = admin
     
-       
+    private Livre convertToLivre(LivreAdmin livreAdmin){
+        Livre livre = new Livre();
+        livre.setCategorie(categorieEjbLocal.selectionnerCategorie(livreAdmin.getCategorie()));
+        livre.setLivrecouverture(livreAdmin.getLivrecouverture());
+        livre.setLivreediteur(livreAdmin.getLivreediteur());
+        livre.setLivreetat(livreAdmin.getLivreetat());
+        livre.setLivreid(livreAdmin.getLivreid());
+        livre.setLivrenbvente(livreAdmin.getLivrenbvente());
+        livre.setLivreparution(livreAdmin.getLivreparution());
+        livre.setLivreprix(livreAdmin.getLivreprix());
+        livre.setLivreresume(livreAdmin.getLivreresume());
+        livre.setLivresommaire(livreAdmin.getLivresommaire());
+        livre.setLivrestock(livreAdmin.getLivrestock());
+        livre.setLivrestockalerte(livreAdmin.getLivrestockalerte());
+        livre.setLivretitre(livreAdmin.getLivretitre());
+        return livre;
+    } 
     
     @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeLivreAdmin(){
@@ -150,63 +166,21 @@ public class LivreController {
         if(binder.hasErrors()){
             return this.afficherAjouterLivreAdmin();
         }
-        //TODO flo convertir le livreAdmin en Livre
-        //TODO flo ajouter livreForm en base il n'a pas d'auteur j'ai aussi besoin de recup l'id normalement il modifie l'objet que tu lui envoi mais il te le retourne pas
-        Livre livre = LivreEjbLocal.selectionnerLivre(1);
+        
+        Livre livre = this.convertToLivre(livreForm);//récup un objet Livre
+        LivreEjbLocal.addLivre(livre);// commit + récup l'id
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteur");
         mv.addObject("livre", livre);
-        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
-        
-        return mv;
-       
-    }
-    
-    private List<Auteur> chargementDesAuteurNonEcrivain(Livre livre){
-        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);//TODO flo orde alphabétique pour les auteurs
+        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);
         auteurs.removeAll(livre.getAuteurList());
-        return auteurs;
+        mv.addObject("auteurs", auteurs);
         
-    }
-    
-    @RequestMapping(value="ajoutAuteurALivre.htm", method=RequestMethod.GET)
-    public ModelAndView ajoutAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
-        
-        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
-        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
-        
-        if(!livre.getAuteurList().contains(auteur)){
-            livre.getAuteurList().add(auteur);
-        }
-        
-        //TODO flo merttre à jour livre
-        
-        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
-        mv.addObject("livre", livre);
-        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
         return mv;
        
     }
     
     
-    @RequestMapping(value="retirerAuteurALivre.htm", method=RequestMethod.GET)
-    public ModelAndView retirerAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
-        
-        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
-        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
-        
-        if(livre.getAuteurList().contains(auteur)){
-            livre.getAuteurList().remove(auteur);
-        }
-        
-        //TODO flo merttre à jour livre
-        
-        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
-        mv.addObject("livre", livre);
-        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
-        return mv;
-       
-    }
     
     
     @RequestMapping(value="ajoutAuteur.htm", method=RequestMethod.POST)
