@@ -17,8 +17,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import ejb.entity.Journal;
+import ejb.entity.Libraire_;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  *
@@ -206,4 +208,44 @@ public class LibraireJpaController {
         }
     }
 
+    public List<Libraire> loginUnique(String login) {
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Libraire> cq = cb.createQuery( Libraire.class );
+            Root<Libraire> libraireRoot = cq.from(Libraire.class);
+            
+            //restriction de la requete
+            cq.select(libraireRoot)
+                    .where(cb.equal(libraireRoot.get(Libraire_.librairenom), login));
+            
+            //resultat de la requete
+            Query q = em.createQuery(cq);
+            return ((List<Libraire>) q.getResultList());
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Libraire> login(String login, String pass) {
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Libraire> cq = cb.createQuery( Libraire.class );
+            Root<Libraire> libraireRoot = cq.from(Libraire.class);
+            
+            //restriction de la requete
+            cq.select(libraireRoot)
+                    .where(cb.equal(libraireRoot.get(Libraire_.librairenom), login), cb.equal(libraireRoot.get(Libraire_.librairemdp), pass));
+            
+            //resultat de la requete
+            Query q = em.createQuery(cq);
+            return ((List<Libraire>) q.getResultList());
+        } finally {
+            em.close();
+        }
+    }
+    
 }
