@@ -13,7 +13,8 @@
      </tr>
      <tr>
          <td colspan="2">
-             <div class="ajouter" id="ajouter" style="margin: 20px">
+             <div class="ajouter" id="ajouter">
+                 <br/>
                 <c:forEach items="${livre.auteurList}" var="auteur"  >
                     <div class="retirable" data="{idAuteur:'${auteur.auteurid}', idLivre:'${livre.livreid}'}">
                         <br/>
@@ -21,13 +22,15 @@
                         <br/>
                     </div>
                 </c:forEach>
+                 <br/>
             </div>
          </td>
      </tr>
      <tr>
          <td>
              <div> Pour ajouter un auteur faite le glisser au dessus.</div>
-             <div class="retirer" id="retirer" style="margin: 20px">
+             <div class="retirer" id="retirer">
+                 <br/>
              <c:forEach items="${auteurs}" var="auteur" >
                  <div class="ajoutable" data="{idAuteur:'${auteur.auteurid}', idLivre:'${livre.livreid}'}" >
                     <br/>
@@ -35,15 +38,16 @@
                     <br/>
                 </div>
             </c:forEach>
-
+                 <br/>
             </div>
          </td>
          <td>
              <div  align="center">
                 Ajouter un auteur:<br/><br/>
-                Nom: <input type="text" id="nom"/><br/>
-                Prenom: <input type="text" id="prenom"/><br/>
-                <input type="button" value="Ajouter" id="sumbit"/>
+                <span class="error" >${erreur} </span><br/>
+                Nom: <input type="text" id="nom" value="${nom}"/><br/>
+                Prenom: <input type="text" id="prenom" value="${prenom}"/><br/>
+                <input type="button" value="Ajouter" id="sumbit" data="{idLivre:'${livre.livreid}'}" />
             </div>
          </td>
      </tr>

@@ -238,10 +238,13 @@ a.bouton{
      display: inline;
  }
  div.ajouter{
-     background-color: #0099ff;
+     background-color: green;
+     padding: 10px;
  }
+ 
  div.retirer{
-     background-color: #0111ff;
+     background-color: indigo;
+     padding: 10px;
  }
  
  
