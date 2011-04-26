@@ -2,7 +2,7 @@
  <table>
      <tr>
          <td rowspan="3" colspan="2">
-             <div class="article<c:if test="${livre.livrestock<=0}">Rupture</c:if><c:if test="${livre.livreetat=='à Venir'}">Venir</c:if>" id="article-${livre.livreid}" data="{id :'${livre.livreid}'}" >
+             <div class="article<c:if test="${livre.livrestock<=0}">Rupture</c:if><c:if test="${livre.livreetat=='à Venir'}">Venir</c:if>" id="article-${livre.livreid}"  >
                  <img src="<c:url value="/images/${livre.livrecouverture}" />" /><br/>
                  Titre: ${livre.livretitre} <br/>
                  Etat: <c:if test="${livre.livreetat=='Nouveauté'}"><span class="nouveau"></c:if>${livre.livreetat}<c:if test="${livre.livreetat=='Nouveauté'}"></span></c:if> <br/>
@@ -13,9 +13,9 @@
      </tr>
      <tr>
          <td colspan="2">
-             <div class="ajouter">
-                <c:forEach items="${livre.auteurList}" var="auteur" >
-                    <div class="retirable" >
+             <div class="ajouter" id="ajouter" style="margin: 20px">
+                <c:forEach items="${livre.auteurList}" var="auteur"  >
+                    <div class="retirable" data="{idAuteur:'${auteur.auteurid}', idLivre:'${livre.livreid}'}">
                         <br/>
                         ${auteur.auteurprenom} ${auteur.auteurnom}<br/>
                         <br/>
@@ -27,9 +27,9 @@
      <tr>
          <td>
              <div> Pour ajouter un auteur faite le glisser au dessus.</div>
-            <div class="retirer">
+             <div class="retirer" id="retirer" style="margin: 20px">
              <c:forEach items="${auteurs}" var="auteur" >
-                 <div class="ajoutable" >
+                 <div class="ajoutable" data="{idAuteur:'${auteur.auteurid}', idLivre:'${livre.livreid}'}" >
                     <br/>
                     ${auteur.auteurprenom} ${auteur.auteurnom}<br/>
                     <br/>
