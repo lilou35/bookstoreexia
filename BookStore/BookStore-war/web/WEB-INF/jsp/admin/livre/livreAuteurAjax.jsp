@@ -52,6 +52,9 @@
          </td>
      </tr>
  </table>
+<p align="right">
+    <input type="button" value="Terminer" id="teminer" />
+</p>
  
 
 

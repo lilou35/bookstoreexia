@@ -1,6 +1,6 @@
 function cliquable(){
     $("#sumbit").click(function(){
-        alert("action");
+        //alert("action");
         var obj = $(this).metadata({type:'attr',name:'data'});
         $.post("ajoutAuteur.htm", {nomAuteur: $("#nom").val(),prenomAuteur: $("#prenom").val() ,idLivre: obj.idLivre} ,  function(data)
                                                                             {
@@ -12,6 +12,11 @@ function cliquable(){
                                                                             }
                         );
     });
+    
+    $("#terminer").click(function(){
+        
+    });
+    
 }
 
 
