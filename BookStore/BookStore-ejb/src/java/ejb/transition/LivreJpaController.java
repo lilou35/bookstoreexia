@@ -276,6 +276,7 @@ public class LivreJpaController {
             em.close();
         }
     }
+    
     public List<Livre> topDix(int nbr){
         EntityManager em = getEntityManager();
         try {
