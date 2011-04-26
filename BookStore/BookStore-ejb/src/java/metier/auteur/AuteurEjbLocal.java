@@ -21,4 +21,6 @@ public interface AuteurEjbLocal {
     public List<Auteur> selectionnerAuteur(int min, int max);
        
     public Auteur selectionnerAuteur(int id);
+    public void updateAuteur(Auteur Auteur);
+    public void addAuteur(Auteur Auteur);
 }
