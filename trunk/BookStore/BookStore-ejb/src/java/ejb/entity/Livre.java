@@ -58,7 +58,7 @@ public class Livre implements Serializable {
     @Column(name = "livreresume")
     private String livreresume;
     @Column(name = "livrenbvente")
-    private Integer livrenbvente;
+    private Integer livrenbvente = 0;
     @Lob
     @Size(max = 65535)
     @Column(name = "livresommaire")
