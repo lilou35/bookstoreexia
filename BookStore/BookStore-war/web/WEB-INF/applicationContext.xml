@@ -80,6 +80,7 @@ business-interface="metier.livre.LivreEjbLocal" />
 
 <bean id="LoginController" class="com.controller.LoginController" scope="prototype">
 	<property name="clientEjbLocal"><ref bean="ClientEjb"/></property>
+        <property name="libraireEjbLocal"><ref bean="LibraireEjb"/></property>
 
 </bean>
 
