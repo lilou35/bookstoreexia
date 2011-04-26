@@ -87,7 +87,6 @@ public class CategorieController {
             return this.afficherAdminCategorie(categorieForm.getCategorieid());
         }
         
-        //TODO test flo Mette ajour la base avec categorieform
         CategorieEjbLocal.updateCategorie(categorieForm);
         
         return afficherAdminCategories("Modifiactions effectuées");
@@ -112,7 +111,6 @@ public class CategorieController {
             return this.afficherAdminCategorieAjouter();
         }
         
-        //TODO test flo creer une nouvelle categorie avec categorieForm
             CategorieEjbLocal.addCategorie(categorieForm);
             System.out.print("############## catégorie id: "+ categorieForm.getCategorieid() + "#################");
             
