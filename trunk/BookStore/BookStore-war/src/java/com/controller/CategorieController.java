@@ -79,13 +79,37 @@ public class CategorieController {
     }
     
     @RequestMapping(value="adminCategorieModifier.htm", method=RequestMethod.POST)
-    public ModelAndView modifierMonCompte(@Valid @ModelAttribute("categorie") Categorie categorieForm, BindingResult binder){
+    public ModelAndView modifierCategorieAdmin(@Valid @ModelAttribute("categorie") Categorie categorieForm, BindingResult binder){
 
         if(binder.hasErrors()){
             return this.afficherAdminCategorie(categorieForm.getCategorieid());
         }
         
         //TODO flo Mette ajour la base avec categorieform
+        
+        return afficherAdminCategories("Modifiactions effectuées");
+    
+    }
+    
+    
+    
+    @RequestMapping(value="adminCategorieAjouter.htm", method=RequestMethod.GET)
+    public ModelAndView afficherAdminCategorieAjouter(){
+        ModelAndView mv = new ModelAndView("admin/categorie/categorieAjout");
+        
+        mv.addObject("categorie",new Categorie(-1)); 
+        return mv;
+       
+    }
+    
+    @RequestMapping(value="adminCategorieAjouter.htm", method=RequestMethod.POST)
+    public ModelAndView AjouterCategorieAdmin(@Valid @ModelAttribute("categorie") Categorie categorieForm, BindingResult binder){
+
+        if(binder.hasErrors()){
+            return this.afficherAdminCategorieAjouter();
+        }
+        
+        //TODO flo creer une nouvelle categorie avec categorieForm
         
         return afficherAdminCategories("Modifiactions effectuées");
     

@@ -13,7 +13,7 @@ import com.formulaire.LoginForm;
 import com.session.Session;
 import ejb.entity.Client;
 import ejb.entity.Libraire;
-import java.util.ArrayList;
+
 import java.util.List;
 import javax.validation.Valid;
 import metier.Libraire.LibraireEjbLocal;
@@ -218,18 +218,12 @@ public class LoginController {
         }
        
     }
-<<<<<<< .mine
-    
-    public void setLibraireEjbLocal(LibraireEjbLocal LibraireEjbLocal) {
-        this.LibraireEjbLocal = LibraireEjbLocal;
-    }
-    
-=======
 
->>>>>>> .r44
+    
     public void setLibraireEjbLocal(LibraireEjbLocal LibraireEjbLocal) {
         this.LibraireEjbLocal = LibraireEjbLocal;
     }
+    
     
     public void setClientEjbLocal(ClientEjbLocal ClientEjbLocal) {
         this.ClientEjbLocal = ClientEjbLocal;
