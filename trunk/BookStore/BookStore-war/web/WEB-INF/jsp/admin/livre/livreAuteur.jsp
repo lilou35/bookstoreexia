@@ -17,6 +17,7 @@
         <script src="<c:url value="/js/jquery-1.5.1.min.js" />" type="text/javascript" > </script>
         <script src="<c:url value="/js/jquery.metadata.js" />" type="text/javascript" > </script>
         <script src="<c:url value="/js/interface.js" />" type="text/javascript" > </script>
+        <script src="<c:url value="/js/click/auteur.js" />" type="text/javascript" > </script>
       
 
         <title>Auteur de ${livre.livretitre}</title>

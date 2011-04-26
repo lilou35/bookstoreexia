@@ -156,10 +156,54 @@ public class LivreController {
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteur");
         mv.addObject("livre", livre);
-        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);
-        auteurs.removeAll(livre.getAuteurList());
-        mv.addObject("auteurs", auteurs);//TODO flo orde alphabétique
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
         
+        return mv;
+       
+    }
+    
+    private List<Auteur> chargementDesAuteurNonEcrivain(Livre livre){
+        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);//TODO flo orde alphabétique pour les auteurs
+        auteurs.removeAll(livre.getAuteurList());
+        return auteurs;
+        
+    }
+    
+    @RequestMapping(value="ajoutAuteurALivre.htm", method=RequestMethod.GET)
+    public ModelAndView ajoutAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
+        
+        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
+        
+        if(!livre.getAuteurList().contains(auteur)){
+            livre.getAuteurList().add(auteur);
+        }
+        
+        //TODO flo merttre à jour livre
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
+        mv.addObject("livre", livre);
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
+        return mv;
+       
+    }
+    
+    
+    @RequestMapping(value="retirerAuteurALivre.htm", method=RequestMethod.GET)
+    public ModelAndView retirerAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
+        
+        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
+        
+        if(livre.getAuteurList().contains(auteur)){
+            livre.getAuteurList().remove(auteur);
+        }
+        
+        //TODO flo merttre à jour livre
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
+        mv.addObject("livre", livre);
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
         return mv;
        
     }
