@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -41,10 +42,12 @@ public class Categorie implements Serializable {
     @Lob
     @Size(max = 65535)
     @Column(name = "categorietype")
+    @NotEmpty
     private String categorietype;
     @Lob
     @Size(max = 65535)
     @Column(name = "categoriedescription")
+    @NotEmpty
     private String categoriedescription;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorie", fetch= FetchType.EAGER)
     private List<Livre> livreList;
