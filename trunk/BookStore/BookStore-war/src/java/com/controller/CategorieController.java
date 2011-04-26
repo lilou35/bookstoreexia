@@ -69,6 +69,8 @@ public class CategorieController {
        
     }
     
+    
+    
     @RequestMapping(value="adminCategorie.htm", method=RequestMethod.GET)
     public ModelAndView afficherAdminCategorie(@RequestParam(value="id", required=true) int idCategorie){
         ModelAndView mv = new ModelAndView("admin/categorie/categorie");
@@ -85,7 +87,8 @@ public class CategorieController {
             return this.afficherAdminCategorie(categorieForm.getCategorieid());
         }
         
-        //TODO flo Mette ajour la base avec categorieform
+        //TODO test flo Mette ajour la base avec categorieform
+        CategorieEjbLocal.updateCategorie(categorieForm);
         
         return afficherAdminCategories("Modifiactions effectuées");
     
@@ -109,9 +112,11 @@ public class CategorieController {
             return this.afficherAdminCategorieAjouter();
         }
         
-        //TODO flo creer une nouvelle categorie avec categorieForm
-        
-        return afficherAdminCategories("Modifiactions effectuées");
+        //TODO test flo creer une nouvelle categorie avec categorieForm
+            CategorieEjbLocal.addCategorie(categorieForm);
+            System.out.print("############## catégorie id: "+ categorieForm.getCategorieid() + "#################");
+            
+        return afficherAdminCategories("Ajout de la catégorie "+categorieForm.getCategorietype()+" effectuées");
     
     }
     

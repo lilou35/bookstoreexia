@@ -189,7 +189,7 @@ public class LoginController {
             return this.afficherAdminLogin();
         }
         
-        List<Libraire> libraires = LibraireEjbLocal.login(loginForm.getLogin(), loginForm.getPass());
+        List<Libraire> libraires = LibraireEjbLocal.loginLibraire(loginForm.getLogin(), loginForm.getPass());
         if(libraires.isEmpty()){
             ModelAndView mv =new ModelAndView("admin/login/login");
             mv.addObject("erreurLogin", "Le couple Login/Mot de passe n'est pas bon");

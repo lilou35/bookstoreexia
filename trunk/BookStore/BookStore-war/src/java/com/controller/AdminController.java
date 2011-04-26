@@ -57,7 +57,6 @@ public class AdminController {
         if(binder.hasErrors()){
             return this.afficherLogin();
         }
-
         List<Client> clients = ClientEjbLocal.login(loginForm.getLogin(), loginForm.getPass());
         if(clients.isEmpty()){
             ModelAndView mv =new ModelAndView("login/login");
@@ -110,7 +109,7 @@ public class AdminController {
             return this.afficherMonCompte("Les champs ne sont pas valides");
         }
         clientForm.setClientid(session.getClient().getClientid());
-        List<Client> clients = new ArrayList<Client>(0);//TODO flo vérification login unique
+        List<Client> clients = ClientEjbLocal.loginUnique(clientForm.getClientlogin());
         if(clients.size()==0){
             ClientEjbLocal.updateClient(clientForm);
             session.setClient(clientForm);
@@ -144,7 +143,7 @@ public class AdminController {
         }
         
         
-        List<Client> clients = new ArrayList<Client>(0);//TODO flo vérification login unique
+        List<Client> clients = ClientEjbLocal.loginUnique(clientForm.getClientlogin());
         if(clients.size()==0){
             ClientEjbLocal.addClient(clientForm);
             System.out.print("############## client id: "+ clientForm.getClientid() + "#################");
