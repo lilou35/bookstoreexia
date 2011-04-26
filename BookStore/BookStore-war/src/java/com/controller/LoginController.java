@@ -16,6 +16,7 @@ import ejb.entity.Libraire;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
+import metier.Libraire.LibraireEjbLocal;
 import metier.client.ClientEjbLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -41,6 +42,7 @@ public class LoginController {
     
     
     private ClientEjbLocal ClientEjbLocal;
+    private LibraireEjbLocal LibraireEjbLocal;
 
     @RequestMapping(value="login.htm", method=RequestMethod.GET)
     public ModelAndView afficherLogin(){
@@ -58,7 +60,6 @@ public class LoginController {
         if(binder.hasErrors()){
             return this.afficherLogin();
         }
-
         List<Client> clients = ClientEjbLocal.login(loginForm.getLogin(), loginForm.getPass());
         if(clients.isEmpty()){
             ModelAndView mv =new ModelAndView("login/login");
@@ -111,7 +112,7 @@ public class LoginController {
             return this.afficherMonCompte("Les champs ne sont pas valides");
         }
         clientForm.setClientid(session.getClient().getClientid());
-        List<Client> clients = new ArrayList<Client>(0);//TODO flo vérification login unique
+        List<Client> clients = ClientEjbLocal.loginUnique(clientForm.getClientlogin());
         if(clients.size()==0){
             ClientEjbLocal.updateClient(clientForm);
             session.setClient(clientForm);
@@ -145,7 +146,7 @@ public class LoginController {
         }
         
         
-        List<Client> clients = new ArrayList<Client>(0);//TODO flo vérification login unique
+        List<Client> clients = ClientEjbLocal.loginUnique(clientForm.getClientlogin());
         if(clients.size()==0){
             ClientEjbLocal.addClient(clientForm);
             System.out.print("############## client id: "+ clientForm.getClientid() + "#################");
@@ -186,8 +187,8 @@ public class LoginController {
         if(binder.hasErrors()){
             return this.afficherAdminLogin();
         }
-        //TODO flo login des libraire
-        List<Libraire> libraires = new ArrayList<Libraire>(0);//ClientEjbLocal.login(loginForm.getLogin(), loginForm.getPass());
+        
+        List<Libraire> libraires = LibraireEjbLocal.login(loginForm.getLogin(), loginForm.getPass());
         if(libraires.isEmpty()){
             ModelAndView mv =new ModelAndView("admin/login/login");
             mv.addObject("erreurLogin", "Le couple Login/Mot de passe n'est pas bon");
@@ -216,22 +217,12 @@ public class LoginController {
         }
        
     }
-    
-    
-    
-    
 
+    public void setLibraireEjbLocal(LibraireEjbLocal LibraireEjbLocal) {
+        this.LibraireEjbLocal = LibraireEjbLocal;
+    }
+    
     public void setClientEjbLocal(ClientEjbLocal ClientEjbLocal) {
         this.ClientEjbLocal = ClientEjbLocal;
     }
-
-
-
-   
-
-   
-
-
-
-   
 }
