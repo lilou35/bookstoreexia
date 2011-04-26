@@ -16,8 +16,8 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface LibraireEjbRemote {
-   public List<Libraire> login(String login , String pass);
-   public List<Libraire> loginUnique(String login);
+   public List<Libraire> loginLibraire(String login , String pass);
+   public List<Libraire> loginUniqueLibraire(String login);
    public void updateLibraire(Libraire Libraire);
    public void addLibraire(Libraire Libraire);
 }
