@@ -31,7 +31,7 @@
                 <p align="center">
                     <span class="valide">${valide}</span>
                 </p>
-                <a class="bouton" href="adminCategorieAjout.htm"><div id="bouton" class="bouton">Nouvelle Catégorie</div></a><br/>
+                <a class="bouton" href="adminCategorieAjouter.htm"><div id="bouton" class="bouton">Nouvelle Catégorie</div></a><br/>
              
             <div>
                 Modifier un Catégorie:
