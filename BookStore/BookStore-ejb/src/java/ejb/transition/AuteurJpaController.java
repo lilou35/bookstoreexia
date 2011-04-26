@@ -8,6 +8,7 @@ package ejb.transition;
 import ejb.transition.exceptions.NonexistentEntityException;
 import ejb.transition.exceptions.PreexistingEntityException;
 import ejb.entity.Auteur;
+import ejb.entity.Auteur_;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,6 +19,7 @@ import javax.persistence.criteria.Root;
 import ejb.entity.Livre;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  *
@@ -148,8 +150,15 @@ public class AuteurJpaController {
     private List<Auteur> findAuteurEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Auteur.class));
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Auteur> cq = cb.createQuery( Auteur.class );
+            Root<Auteur> auteurRoot = cq.from(Auteur.class);
+            
+            //restriction de la requete
+            cq.select(auteurRoot)
+                    //TODO amélioration flo
+                    .orderBy(cb.asc(auteurRoot.get(Auteur_.auteurnom)),cb.asc(auteurRoot.get(Auteur_.auteurprenom)));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
