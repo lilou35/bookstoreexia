@@ -53,7 +53,7 @@
      </tr>
  </table>
 <p align="right">
-    <input type="button" value="Terminer" id="teminer" />
+    <input type="button" value="Terminer" id="teminer" data="{lettre:'${livre.livretitre}'}" />
 </p>
  
 

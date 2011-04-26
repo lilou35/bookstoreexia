@@ -113,7 +113,7 @@ public class LivreController {
         return mv;   
     }
     
-    @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.GET)
+    @RequestMapping(value="livreListeAdminLettre.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeLivreParLettreGetAdmin(@RequestParam(value="lettre", required=true) String lettre){
         return afficherListeLivreParLettrePostAdmin(lettre);
     }
@@ -174,8 +174,10 @@ public class LivreController {
         
     }
     
+
+    
     @RequestMapping(value="ajouterLivreAdmin.htm", method=RequestMethod.POST)
-    public ModelAndView AjouterLivreAdmin(@Valid @ModelAttribute("livre") LivreAdmin livreForm, BindingResult binder){
+    public ModelAndView ajouterLivreAdmin(@Valid @ModelAttribute("livre") LivreAdmin livreForm, BindingResult binder){
 
         if(binder.hasErrors()){
             return this.afficherAjouterLivreAdmin();
@@ -195,10 +197,48 @@ public class LivreController {
     }
     
     
+        
+    @RequestMapping(value="ajoutAuteurALivre.htm", method=RequestMethod.GET)
+    public ModelAndView ajoutAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
+        
+        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
+        
+        if(!livre.getAuteurList().contains(auteur)){
+            livre.getAuteurList().add(auteur);
+        }
+        
+        //TODO flo merttre à jour livre
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
+        mv.addObject("livre", livre);
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
+        return mv;
+       
+    }
     
+    
+    @RequestMapping(value="retirerAuteurALivre.htm", method=RequestMethod.GET)
+    public ModelAndView retirerAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
+        
+        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
+        
+        if(livre.getAuteurList().contains(auteur)){
+            livre.getAuteurList().remove(auteur);
+        }
+        
+        //TODO flo merttre à jour livre
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
+        mv.addObject("livre", livre);
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
+        return mv;
+       
+    }
     
     @RequestMapping(value="ajoutAuteur.htm", method=RequestMethod.POST)
-    public ModelAndView ajoutAuteurALivreAjax(@RequestParam(value="nomAuteur", required=true) String nom, 
+    public ModelAndView creerAuteurALivreAjax(@RequestParam(value="nomAuteur", required=true) String nom, 
                                                 @RequestParam(value="prenomAuteur", required=true) String prenom,
                                                 @RequestParam(value="idLivre", required=true) int idLivre){
         
