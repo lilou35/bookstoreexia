@@ -135,7 +135,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Date de parution:
+                                Date de parution: 
                             </td>
                             <td>
                                 <form:input path="livreparution" />
@@ -149,13 +149,28 @@
                                 Etat:
                             </td>
                             <td>
-                                <label><form:radiobutton value="Nouveauté" path="livreetat"/>Nouveauté</label>
+                                <label><form:radiobutton  value="Nouveauté" path="livreetat"/>Nouveauté</label>
                                 <label><form:radiobutton value="à Venir" path="livreetat"/>à Venir</label>
                                 <label><form:radiobutton value="en Stock" path="livreetat"/>en Stock</label>
                                 <label><form:radiobutton value="en Réapprovisionnement" path="livreetat"/>en Réapprovisionnement</label>
                             </td>
                             <td>
                                 <form:errors path="livreetat" cssClass="error" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Catégorie:
+                            </td>
+                            <td>
+                                <form:select path="categorie">
+                                    <c:forEach items="${categories}" var="categorie" >
+                                        <form:option value="${categorie.categorieid}">${categorie.categorietype}</form:option>
+                                    </c:forEach>
+                                </form:select>
+                            </td>
+                            <td>
+                                <form:errors path="categorie" cssClass="error" />
                             </td>
                         </tr>
                         <tr>

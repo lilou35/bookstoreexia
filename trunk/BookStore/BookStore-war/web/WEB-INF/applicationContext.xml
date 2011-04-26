@@ -108,6 +108,8 @@ business-interface="metier.livre.LivreEjbLocal" />
 
 <bean id="LivreController" class="com.controller.LivreController" scope="prototype">
 	<property name="livreEjbLocal"><ref bean="LivreEjb"/></property>
+        <property name="auteurEjbLocal"><ref bean="AuteurEjb"/></property>
+        <property name="categorieEjbLocal"><ref bean="CategorieEjb"/></property>
 
 </bean>
 

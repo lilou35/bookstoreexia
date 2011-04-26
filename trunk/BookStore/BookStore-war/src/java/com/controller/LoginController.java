@@ -13,7 +13,6 @@ import com.formulaire.LoginForm;
 import com.session.Session;
 import ejb.entity.Client;
 import ejb.entity.Libraire;
-
 import java.util.List;
 import javax.validation.Valid;
 import metier.Libraire.LibraireEjbLocal;
