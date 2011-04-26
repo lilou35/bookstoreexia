@@ -39,6 +39,7 @@
     <a class="bouton" href="<c:url value="/accueil/accueil.htm" />"><div id="boutonMenu" class="boutonMenu">Accueil</div></a>
     <a class="bouton" href="<c:url value="/categorie/categories.htm" />"><div id="boutonMenu" class="boutonMenu">Categories</div></a>
     <a class="bouton" href="<c:url value="/auteur/auteurs.htm" />"><div id="boutonMenu" class="boutonMenu">Auteurs</div></a>
+    <a class="bouton" href="<c:url value="/livre/livreListe.htm" />"><div id="boutonMenu" class="boutonMenu">Livres</div></a>
 
     
    
