@@ -25,10 +25,10 @@ public class LibraireEjb implements LibraireEjbRemote, LibraireEjbLocal {
 
     LibraireJpaController jpaLibraire = new LibraireJpaController();
 
-    public List<Libraire> login(String login , String pass){
+    public List<Libraire> loginLibraire(String login , String pass){
         return jpaLibraire.login(login, pass);
     }
-    public List<Libraire> loginUnique(String login){
+    public List<Libraire> loginUniqueLibraire(String login){
         return jpaLibraire.loginUnique(login);
     }
     

@@ -5,6 +5,7 @@
 package ejb.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -25,7 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
- * @author Wikola
+ * @author FloFlo
  */
 @Entity
 @Table(name = "categorie")
@@ -50,7 +51,7 @@ public class Categorie implements Serializable {
     @NotEmpty
     private String categoriedescription;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "categorie", fetch= FetchType.EAGER)
-    private List<Livre> livreList;
+    private List<Livre> livreList = new ArrayList<Livre>(0);
 
     public Categorie() {
     }
