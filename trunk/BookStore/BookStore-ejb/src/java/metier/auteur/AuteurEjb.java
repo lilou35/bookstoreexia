@@ -48,13 +48,16 @@ public class AuteurEjb implements AuteurEjbRemote, AuteurEjbLocal {
         }
     }
     
-    public void addAuteur(Auteur Auteur){
+    public Auteur addAuteur(Auteur Auteur){
         try {
             jpaAuteur.create(Auteur);
+            return Auteur;
         } catch (PreexistingEntityException ex) {
             Logger.getLogger(AuteurEjb.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } catch (Exception ex) {
             Logger.getLogger(AuteurEjb.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 }
