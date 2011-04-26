@@ -65,6 +65,12 @@ business-interface="metier.livre.LivreEjbLocal" />
 	<property name="businessInterface"><value>metier.client.ClientEjbLocal</value></property>
 </bean>
 
+<bean id="LibraireEjb"
+		class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+	<property name="jndiName"><value>LibraireEjb</value></property>
+	<property name="businessInterface"><value>metier.client.LibraireEjbLocal</value></property>
+</bean>
+
 <bean id="CategorieEjb"
 		class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
 	<property name="jndiName"><value>CategorieEjb</value></property>
