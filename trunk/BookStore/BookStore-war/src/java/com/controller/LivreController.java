@@ -184,7 +184,7 @@ public class LivreController {
         }
         
         Livre livre = this.convertToLivre(livreForm);//récup un objet Livre
-        LivreEjbLocal.addLivre(livre);// commit + récup l'id
+        livre = LivreEjbLocal.addLivre(livre);// commit + récup l'id
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteur");
         mv.addObject("livre", livre);
@@ -204,11 +204,12 @@ public class LivreController {
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
         
-        if(!livre.getAuteurList().contains(auteur)){
+        if(!livre.getAuteurList().isEmpty() && !livre.getAuteurList().contains(auteur)){
             livre.getAuteurList().add(auteur);
         }
         
-        //TODO flo merttre à jour livre
+        //TODO flo tester merttre à jour livre
+        LivreEjbLocal.updateLivre(livre);
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
         mv.addObject("livre", livre);
@@ -224,11 +225,12 @@ public class LivreController {
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
         
-        if(livre.getAuteurList().contains(auteur)){
+        if((livre.getAuteurList().isEmpty()==false) && (livre.getAuteurList().contains(auteur))){
             livre.getAuteurList().remove(auteur);
         }
         
-        //TODO flo merttre à jour livre
+        //TODO flo tester merttre à jour livre
+        LivreEjbLocal.updateLivre(livre);
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
         mv.addObject("livre", livre);
@@ -255,14 +257,15 @@ public class LivreController {
         auteur.setAuteurnom(nom);
         auteur.setAuteurprenom(prenom);
         
-        //TODO flo (ajouter l'auteur en base ) je ne sais pas si juste en ajoutant l'auteur dans le livre il persistera le nouvel auteur
+        //auteurEjbLocal.addAuteur(auteur);
+        //TODO flo tester (ajouter l'auteur en base ) je ne sais pas si juste en ajoutant l'auteur dans le livre il persistera le nouvel auteur
         
         if(!livre.getAuteurList().contains(auteur)){
             livre.getAuteurList().add(auteur);
         }
         
-        //TODO flo merttre à jour livre
-        
+        //TODO flo tester merttre à jour livre
+        LivreEjbLocal.updateLivre(livre);
         
         mv.addObject("livre", livre);
         mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
