@@ -157,7 +157,7 @@ public class AuteurJpaController {
             
             //restriction de la requete
             cq.select(auteurRoot)
-                    //TODO amélioration flo
+                    //amélioration flo
                     .orderBy(cb.asc(auteurRoot.get(Auteur_.auteurnom)),cb.asc(auteurRoot.get(Auteur_.auteurprenom)));
             Query q = em.createQuery(cq);
             if (!all) {

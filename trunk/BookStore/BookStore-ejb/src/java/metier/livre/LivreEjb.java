@@ -36,6 +36,11 @@ public class LivreEjb implements LivreEjbRemote, LivreEjbLocal {
     public List<Livre> topDix(int nbr){
         return jpaLivre.topDix(nbr);
     }
+    
+    public List<Livre> selectionnerLivre(String recherche, Integer initLigne, Integer maxLigne){
+        return jpaLivre.findLivre(recherche, initLigne, maxLigne);
+    }
+    
     public Livre selectionnerLivre(int id){
         return jpaLivre.findLivre(id);
     }

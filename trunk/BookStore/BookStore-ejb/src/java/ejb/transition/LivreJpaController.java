@@ -326,8 +326,8 @@ public class LivreJpaController {
             
             //resultat de la requete
             Query q = em.createQuery(cq);
-            q.setFirstResult(initLigne);
-            q.setMaxResults(maxLigne);
+            if(initLigne!=-1){ q.setFirstResult(initLigne); }
+            if(maxLigne!=-1){ q.setMaxResults(maxLigne); }
             return ((List<Livre>) q.getResultList());
         } finally {
             em.close();
