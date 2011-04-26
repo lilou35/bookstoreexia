@@ -242,8 +242,15 @@ public class LivreJpaController {
     private List<Livre> findLivreEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Livre.class));
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Livre> cq = cb.createQuery( Livre.class );
+            Root<Livre> livreRoot = cq.from(Livre.class);
+            
+            //restriction de la requete
+            cq.select(livreRoot)
+                    //amélioration flo
+                    .where(cb.greaterThanOrEqualTo(livreRoot.get(Livre_.livrestock),0));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
