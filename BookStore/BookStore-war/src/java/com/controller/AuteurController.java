@@ -50,6 +50,15 @@ public class AuteurController {
     }
     
     
+    /*
+     * #####################################################################################################################
+     *                                      Separation de l'administration
+     * #####################################################################################################################
+     */
+    //TODO NicoExia ajouter la vérification client = admin
+    
+    
+    
 
     public void setAuteurEjbLocal(AuteurEjbLocal AuteurEjbLocal) {
         this.AuteurEjbLocal = AuteurEjbLocal;
