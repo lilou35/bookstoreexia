@@ -263,7 +263,7 @@ public class LivreController {
         auteur.setAuteurnom(nom);
         auteur.setAuteurprenom(prenom);
         
-        //auteurEjbLocal.addAuteur(auteur);
+        auteur = auteurEjbLocal.addAuteur(auteur);
         //TODO flo tester (ajouter l'auteur en base ) je ne sais pas si juste en ajoutant l'auteur dans le livre il persistera le nouvel auteur
         
         if(!livre.getAuteurList().contains(auteur)){
