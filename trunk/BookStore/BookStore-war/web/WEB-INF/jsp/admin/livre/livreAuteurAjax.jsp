@@ -42,12 +42,12 @@
             </div>
          </td>
          <td>
-             <div  align="center">
+             <div id="modifier"  align="center">
                 Ajouter un auteur:<br/><br/>
                 <span class="error" >${erreur} </span><br/>
                 Nom: <input type="text" id="nom" value="${nom}"/><br/>
                 Prenom: <input type="text" id="prenom" value="${prenom}"/><br/>
-                <input type="button" value="Ajouter" id="sumbit" data="{idLivre:'${livre.livreid}'}" />
+                <input type="button" value="<c:if test="${action==null}">Ajouter</c:if>${action}" id="<c:if test="${action==null}">sumbit</c:if>${action}" data="{idLivre:'${livre.livreid}', idAuteur:'${auteurId}'}" />
             </div>
          </td>
      </tr>

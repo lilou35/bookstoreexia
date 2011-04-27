@@ -280,6 +280,53 @@ public class LivreController {
     }
     
     
+    @RequestMapping(value="afficherModifierAuteur.htm", method=RequestMethod.POST)
+    public ModelAndView afficherModifierAuteurAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, 
+                                                @RequestParam(value="idLivre", required=true) int idLivre){
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
+        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
+        
+        mv.addObject("erreur", "Modifier");
+        mv.addObject("action", "Modifier");
+        mv.addObject("nom", auteur.getAuteurnom());
+        mv.addObject("prenom", auteur.getAuteurprenom());
+        mv.addObject("auteurId", auteur.getAuteurid());
+        
+        
+        
+       Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+       
+        mv.addObject("livre", livre);
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
+        return mv;
+       
+    }
+    
+    @RequestMapping(value="modifierAuteur.htm", method=RequestMethod.POST)
+    public ModelAndView modifierAuteurAjax(@RequestParam(value="nomAuteur", required=true) String nom, 
+                                                @RequestParam(value="prenomAuteur", required=true) String prenom,
+                                                @RequestParam(value="idLivre", required=true) int idLivre,
+                                                @RequestParam(value="idAuteur", required=true) int idAuteur){
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
+        Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
+        
+        
+        auteur.setAuteurnom(nom);
+        auteur.setAuteurprenom(prenom);
+        
+        auteurEjbLocal.updateAuteur(auteur);
+        
+        
+       Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+       
+        mv.addObject("livre", livre);
+        mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
+        return mv;
+       
+    }
+    
     
     
     public void setLivreEjbLocal(LivreEjbLocal LivreEjbLocal) {
