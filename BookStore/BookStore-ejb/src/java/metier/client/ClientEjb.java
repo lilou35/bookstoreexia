@@ -28,8 +28,8 @@ public class ClientEjb implements ClientEjbRemote, ClientEjbLocal {
     public List<Client> login(String login , String pass){
         return jpaClient.login(login, pass);
     }
-    public List<Client> loginUnique(String login){
-        return jpaClient.loginUnique(login);
+    public List<Client> loginUnique(Client client){
+        return jpaClient.loginUnique(client);
     }
     
     public void updateClient(Client client){

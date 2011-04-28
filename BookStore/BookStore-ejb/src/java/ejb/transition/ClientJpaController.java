@@ -208,7 +208,7 @@ public class ClientJpaController {
         }
     }
     
-    public List<Client> loginUnique(String login) {
+    public List<Client> loginUnique(Client client) {
         EntityManager em = getEntityManager();
         try {
             //création requete criteria
@@ -218,7 +218,9 @@ public class ClientJpaController {
             
             //restriction de la requete
             cq.select(clientRoot)
-                    .where(cb.equal(clientRoot.get(Client_.clientlogin), login));
+                    .where(cb.equal(clientRoot.get(Client_.clientlogin),client.getClientlogin())
+                             .in(cb.diff(clientRoot.get(Client_.clientid), client.getClientid()))
+                    );
             
             //resultat de la requete
             Query q = em.createQuery(cq);
