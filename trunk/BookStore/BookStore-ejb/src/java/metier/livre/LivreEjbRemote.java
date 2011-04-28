@@ -22,4 +22,5 @@ public interface LivreEjbRemote {
     public String about();
     public void updateLivre(Livre Livre);
     public Livre addLivre(Livre Livre);
+    public List<Livre> stockAlert();
 }

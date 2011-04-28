@@ -10,9 +10,12 @@ import ejb.entity.CommandePK;
 import ejb.entity.Livre;
 import ejb.transition.CommandeJpaController;
 import ejb.transition.LivreJpaController;
+import ejb.transition.exceptions.PreexistingEntityException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 
 /**
@@ -23,6 +26,7 @@ import javax.ejb.Stateless;
 public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
 
     CommandeJpaController jpaCommande = new CommandeJpaController();
+    LivreJpaController jpaLivre = new LivreJpaController();
 
 //    public List<Commande> selectionnerCommande(int min, int max){
 ////        System.out.print("###################### selectionnerLivre #################");
@@ -45,6 +49,48 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
     }
     public Integer newCommandeId(){
         return (lastCommandeId()+ 1);
+    }
+    
+    public Commande verifCommande(Commande commande){
+        if(commande.getLivre().getLivrestock() > commande.getCommandequantite()){//si commande > qte alors commande = qte
+            commande.setCommandequantite(commande.getLivre().getLivrestock());
+        }
+        if(commande.getLivre().getLivrestock() <= 0){//si commande <= 0 alors il n'y a plus de commande
+            commande = null;
+        }
+        return commande;
+    }
+    
+    public void commander(Commande commande){
+        try {
+            Livre livre = commande.getLivre();
+            livre.setLivrestock(livre.getLivrestock() - commande.getCommandequantite());
+            livre.setLivrenbvente(livre.getLivrenbvente() + commande.getCommandequantite());
+            jpaCommande.create(commande);
+            jpaLivre.edit(livre);
+            
+        } catch (PreexistingEntityException ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void decommander(Commande commande){
+        try {
+            Livre livre = commande.getLivre();
+            livre.setLivrestock(livre.getLivrestock() + commande.getCommandequantite());
+            livre.setLivrenbvente(livre.getLivrenbvente() - commande.getCommandequantite());
+            jpaCommande.destroy(commande.getCommandePK());
+            jpaLivre.edit(livre);
+            
+        } catch (PreexistingEntityException ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public List<Commande> listCommande(int commandeId){
+        return jpaCommande.findCommande(commandeId);
     }
     
    public String about(){
