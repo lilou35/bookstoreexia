@@ -75,6 +75,10 @@ public class LivreEjb implements LivreEjbRemote, LivreEjbLocal {
         }
     }
 
+    public List<Livre> stockAlert(){
+        return jpaLivre.stockAlert();
+    }
+    
    public String about(){
        return "tu es bon ";
    }

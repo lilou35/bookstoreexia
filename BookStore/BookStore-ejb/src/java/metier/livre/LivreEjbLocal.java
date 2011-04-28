@@ -22,4 +22,5 @@ public interface LivreEjbLocal {
     public List<Livre> selectionnerLivre(String recherche, Integer initLigne, Integer maxLigne);
     public void updateLivre(Livre Livre);
     public Livre addLivre(Livre Livre);
+    public List<Livre> stockAlert();
 }

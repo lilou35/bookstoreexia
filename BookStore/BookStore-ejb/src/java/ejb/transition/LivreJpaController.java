@@ -305,6 +305,27 @@ public class LivreJpaController {
         }
     }
     
+    public List<Livre> stockAlert(){
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Livre> cq = cb.createQuery( Livre.class );
+            Root<Livre> livreRoot = cq.from(Livre.class);
+            
+            //restriction de la requete
+            cq.select(livreRoot)
+                .where(cb.lessThan(livreRoot.get(Livre_.livrestock), livreRoot.get(Livre_.livrestockalerte)))
+                .orderBy(cb.asc(livreRoot.get(Livre_.livretitre)));
+            
+            //resultat de la requete
+            Query q = em.createQuery(cq);
+            return ((List<Livre>) q.getResultList());
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<Livre> findLivre(String lettre, Integer initLigne, Integer maxLigne) {
         EntityManager em = getEntityManager();
         try {

@@ -228,6 +228,26 @@ public class CommandeJpaController {
         }
     }
 
+    public List<Commande> findCommande(int commandeId){
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Commande> rt = cq.from(Commande.class);
+            
+            //restriction de la requete
+            cq.select(rt)
+                .where(cb.equal(rt.get(Commande_.commandeid), commandeId));
+            
+            //resultat de la requete          
+            Query q = em.createQuery(cq);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+            
     public int getCommandeCount() {
         EntityManager em = getEntityManager();
         try {
