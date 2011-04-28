@@ -23,6 +23,6 @@ public interface CommandeEjbLocal {
     public void commander(Commande commande);
     public void decommander(Commande commande);
     public List<Commande> listCommande(int commandeId);
-    public Commande verifCommande(Commande commande);
+    public int verifCommande(Commande commande);
 //    public List<Livre> selectionnerLivre(int min, int max);
 }
