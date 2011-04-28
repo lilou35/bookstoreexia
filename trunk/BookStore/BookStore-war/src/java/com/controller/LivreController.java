@@ -146,13 +146,35 @@ public class LivreController {
        
     }
     
-//    @RequestMapping(value="modifierLivreAdmin.htm", method=RequestMethod.POST)
-//    public ModelAndView afficherModifierLivreAdmin(@RequestParam(value="id", required=true) int idLivre){
-//        ModelAndView mv = new ModelAndView("admin/livre/livreAjax");
-//        mv.addObject("livre", LivreEjbLocal.selectionnerLivre(idLivre));
-//        return mv;
-//       
-//    }
+    @RequestMapping(value="afficherModifierLivreAdmin.htm", method=RequestMethod.GET)
+    public ModelAndView afficherModifierLivreAdmin(@RequestParam(value="id", required=true) int idLivre){
+        ModelAndView mv = new ModelAndView("admin/livre/livreModifier");
+        mv.addObject("livre", LivreEjbLocal.selectionnerLivre(idLivre));
+        mv.addObject("categories", categorieEjbLocal.selectionnerCategories(-1, -1));
+        return mv;
+       
+    }
+    
+    
+    @RequestMapping(value="modifierLivreAdmin.htm", method=RequestMethod.POST)
+    public ModelAndView modifierLivreAdmin(@Valid @ModelAttribute("livre") LivreAdmin livreForm, BindingResult binder){
+
+        if(binder.hasErrors()){
+            return this.afficherAjouterLivreAdmin();
+        }
+        
+        Livre livre = this.convertToLivre(livreForm);//récup un objet Livre
+        LivreEjbLocal.updateLivre(livre);// commit + récup l'id
+        
+        ModelAndView mv = new ModelAndView("admin/livre/livreAuteur");
+        mv.addObject("livre", livre);
+        List<Auteur> auteurs = auteurEjbLocal.selectionnerAuteur(-1, -1);
+        auteurs.removeAll(livre.getAuteurList());
+        mv.addObject("auteurs", auteurs);
+        
+        return mv;
+       
+    }
     
     @RequestMapping(value="ajouterLivreAdmin.htm", method=RequestMethod.GET)
     public ModelAndView afficherAjouterLivreAdmin(){
@@ -263,7 +285,8 @@ public class LivreController {
         auteur.setAuteurnom(nom);
         auteur.setAuteurprenom(prenom);
         
-        auteur = auteurEjbLocal.addAuteur(auteur);
+        //auteur = 
+                auteurEjbLocal.addAuteur(auteur);
         //TODO flo tester (ajouter l'auteur en base ) je ne sais pas si juste en ajoutant l'auteur dans le livre il persistera le nouvel auteur
         
         if(!livre.getAuteurList().contains(auteur)){
@@ -287,7 +310,7 @@ public class LivreController {
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
         
-        mv.addObject("erreur", "Modifier");
+        
         mv.addObject("action", "Modifier");
         mv.addObject("nom", auteur.getAuteurnom());
         mv.addObject("prenom", auteur.getAuteurprenom());
@@ -312,11 +335,19 @@ public class LivreController {
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
         
+         if(nom.isEmpty()|| prenom.isEmpty()){
+            mv.addObject("erreur", "les 2 champs sont obligatoires");
+            mv.addObject("nom", nom);
+            mv.addObject("prenom", prenom);
+            mv.addObject("action", "Modifier");
+        }
+         else{
+             auteur.setAuteurnom(nom);
+            auteur.setAuteurprenom(prenom);
+
+            auteurEjbLocal.updateAuteur(auteur);
+         }
         
-        auteur.setAuteurnom(nom);
-        auteur.setAuteurprenom(prenom);
-        
-        auteurEjbLocal.updateAuteur(auteur);
         
         
        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
