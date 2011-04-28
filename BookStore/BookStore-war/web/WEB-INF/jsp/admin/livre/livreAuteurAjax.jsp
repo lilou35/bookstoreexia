@@ -43,7 +43,7 @@
          </td>
          <td>
              <div id="modifier"  align="center">
-                Ajouter un auteur:<br/><br/>
+                <c:if test="${action==null}">Ajouter un auteur:</c:if>${action}<br/><br/>
                 <span class="error" >${erreur} </span><br/>
                 Nom: <input type="text" id="nom" value="${nom}"/><br/>
                 Prenom: <input type="text" id="prenom" value="${prenom}"/><br/>
