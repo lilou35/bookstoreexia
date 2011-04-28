@@ -218,20 +218,19 @@ public class ClientJpaController {
             Root<Client> clientRoot = cq.from(Client.class);
             
             //restriction de la requete
-            if(client.getClientid() != -1){
-                cq.select(clientRoot)
-                    .where(cb.equal(clientRoot.get(Client_.clientlogin),client.getClientlogin())
-                             .in(cb.diff(clientRoot.get(Client_.clientid), client.getClientid()))
-                    );
-            }
-            else{
                 cq.select(clientRoot)
                     .where(cb.equal(clientRoot.get(Client_.clientlogin),client.getClientlogin()));
-            }
+            
             //resultat de la requete
             Query q = em.createQuery(cq);
-            
-            return ((List<Client>) q.getResultList());
+            List<Client> listClient = q.getResultList();
+            for(Client c : listClient)
+            {
+                if(c.getClientid().intValue() == client.getClientid().intValue()){
+                  listClient.remove(c);//TODO voir pk ça marche pas ...
+                } 
+            }
+            return listClient;
         } finally {
             em.close();
         }
