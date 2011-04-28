@@ -76,6 +76,7 @@
                                 <input name="lettre" type="submit"  value="X">
                                 <input name="lettre" type="submit"  value="Y">
                                 <input name="lettre" type="submit"  value="Z">
+                                <input id="alerte" value="Alerte" type="button">
                             </form>
                             
                             

@@ -79,6 +79,8 @@ public class LivreController {
         return mv;
        
     }
+    
+    
 
     
      /*
@@ -118,6 +120,24 @@ public class LivreController {
     @RequestMapping(value="livreListeAdminLettre.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeLivreParLettreGetAdmin(@RequestParam(value="lettre", required=true) String lettre){
         return afficherListeLivreParLettrePostAdmin(lettre);
+    }
+    
+    
+     @RequestMapping(value="alerteLivreListe.htm", method=RequestMethod.GET)
+    public ModelAndView afficherListeLivreEnAlerte(){
+        ModelAndView mv = new ModelAndView("admin/livre/livreListe");
+        List<Livre> livres = LivreEjbLocal.stockAlert();
+        mv.addObject("livres", livres); 
+        if(livres.isEmpty()){
+            mv.addObject("message", "il n'y a pas de livre an alerte:");
+        }
+        else{
+            mv.addObject("message", "Vous avez des livres en alerte:");
+        }
+        
+        
+        return mv;
+       
     }
     
     @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.POST)
