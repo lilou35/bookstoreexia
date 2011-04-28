@@ -111,7 +111,7 @@ public class LoginController {
             return this.afficherMonCompte("Les champs ne sont pas valides");
         }
         clientForm.setClientid(session.getClient().getClientid());
-        List<Client> clients = ClientEjbLocal.loginUnique(clientForm.getClientlogin());
+        List<Client> clients = ClientEjbLocal.loginUnique(clientForm);
         if(clients.size()==0){
             ClientEjbLocal.updateClient(clientForm);
             session.setClient(clientForm);
@@ -145,7 +145,7 @@ public class LoginController {
         }
         
         
-        List<Client> clients = ClientEjbLocal.loginUnique(clientForm.getClientlogin());
+        List<Client> clients = ClientEjbLocal.loginUnique(clientForm);
         if(clients.size()==0){
             ClientEjbLocal.addClient(clientForm);
             System.out.print("############## client id: "+ clientForm.getClientid() + "#################");

@@ -129,10 +129,10 @@ public class PanierController {
     public ModelAndView terminerCommande() {//@RequestParam(value="carte", required=true) int carte){
         //TODO NicoExia vérif carte
          if(session.getClient()==null){
-             return afficherPanier();
+             return afficherPanier("vous devez vous inscrire");
          }
          if(session.getPanier().getPanier().isEmpty()){
-             return afficherPanier();
+             return afficherPanier("vous devez avoir au moins 1 livre dans le panier");
          }
          
 //         if(String.valueOf(carte).length()< 10){
@@ -154,7 +154,7 @@ public class PanierController {
              commande.setJournal(null);
              commande.setLivre(article.getLivre());
              commande.setCommandeid(commandeEjbLocal.newCommandeId());
-             commmande.setCommandequantite(article.getQtt());
+             commande.setCommandequantite(article.getQtt());
              //commandes.add(commande);
              commandeEjbLocal.commander(commande);
          }
