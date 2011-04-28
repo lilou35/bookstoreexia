@@ -51,14 +51,15 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
         return (lastCommandeId()+ 1);
     }
     
-    public Commande verifCommande(Commande commande){
-        if(commande.getLivre().getLivrestock() > commande.getCommandequantite()){//si commande > qte alors commande = qte
+    public int verifCommande(Commande commande){
+        int stockApres = commande.getLivre().getLivrestock() - commande.getCommandequantite();
+        if(stockApres < 0){//si commande > qte alors commande = qte
             commande.setCommandequantite(commande.getLivre().getLivrestock());
         }
         if(commande.getLivre().getLivrestock() <= 0){//si commande <= 0 alors il n'y a plus de commande
             commande = null;
         }
-        return commande;
+        return stockApres;
     }
     
     public void commander(Commande commande){
