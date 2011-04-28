@@ -15,23 +15,35 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Wikola
+ * @author FloFlo
  */
 @Entity
 @Table(name = "parametres")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Parametres.findAll", query = "SELECT p FROM Parametres p")})
+    @NamedQuery(name = "Parametres.findAll", query = "SELECT p FROM Parametres p"),
+    @NamedQuery(name = "Parametres.findByParaId", query = "SELECT p FROM Parametres p WHERE p.paraId = :paraId"),
+    @NamedQuery(name = "Parametres.findByParanblivrepage", query = "SELECT p FROM Parametres p WHERE p.paranblivrepage = :paranblivrepage"),
+    @NamedQuery(name = "Parametres.findByParanblivreaccueil", query = "SELECT p FROM Parametres p WHERE p.paranblivreaccueil = :paranblivreaccueil"),
+    @NamedQuery(name = "Parametres.findByParaimage", query = "SELECT p FROM Parametres p WHERE p.paraimage = :paraimage"),
+    @NamedQuery(name = "Parametres.findByParastockdefault", query = "SELECT p FROM Parametres p WHERE p.parastockdefault = :parastockdefault"),
+    @NamedQuery(name = "Parametres.findByParaalertedefault", query = "SELECT p FROM Parametres p WHERE p.paraalertedefault = :paraalertedefault")})
 public class Parametres implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
+    @Column(name = "paraId")
+    private Integer paraId;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "paranblivrepage")
-    private Integer paranblivrepage;
+    private int paranblivrepage;
     @Column(name = "paranblivreaccueil")
     private Integer paranblivreaccueil;
     @Column(name = "paraimage")
@@ -44,15 +56,28 @@ public class Parametres implements Serializable {
     public Parametres() {
     }
 
-    public Parametres(Integer paranblivrepage) {
+    public Parametres(Integer paraId) {
+        this.paraId = paraId;
+    }
+
+    public Parametres(Integer paraId, int paranblivrepage) {
+        this.paraId = paraId;
         this.paranblivrepage = paranblivrepage;
     }
 
-    public Integer getParanblivrepage() {
+    public Integer getParaId() {
+        return paraId;
+    }
+
+    public void setParaId(Integer paraId) {
+        this.paraId = paraId;
+    }
+
+    public int getParanblivrepage() {
         return paranblivrepage;
     }
 
-    public void setParanblivrepage(Integer paranblivrepage) {
+    public void setParanblivrepage(int paranblivrepage) {
         this.paranblivrepage = paranblivrepage;
     }
 
@@ -91,7 +116,7 @@ public class Parametres implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (paranblivrepage != null ? paranblivrepage.hashCode() : 0);
+        hash += (paraId != null ? paraId.hashCode() : 0);
         return hash;
     }
 
@@ -102,7 +127,7 @@ public class Parametres implements Serializable {
             return false;
         }
         Parametres other = (Parametres) object;
-        if ((this.paranblivrepage == null && other.paranblivrepage != null) || (this.paranblivrepage != null && !this.paranblivrepage.equals(other.paranblivrepage))) {
+        if ((this.paraId == null && other.paraId != null) || (this.paraId != null && !this.paraId.equals(other.paraId))) {
             return false;
         }
         return true;
@@ -110,7 +135,7 @@ public class Parametres implements Serializable {
 
     @Override
     public String toString() {
-        return "ejb.entity.Parametres[ paranblivrepage=" + paranblivrepage + " ]";
+        return "ejb.entity.Parametres[ paraId=" + paraId + " ]";
     }
     
 }
