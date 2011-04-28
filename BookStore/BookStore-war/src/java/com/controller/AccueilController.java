@@ -53,7 +53,7 @@ public class AccueilController {
     public ModelAndView admin(){
         ModelAndView mv = new ModelAndView("admin/admin");
 
-        mv.addObject("livres", LivreEjbLocal.topDix(10));
+        mv.addObject("livres", LivreEjbLocal.stockAlert());
 
         return mv;
        
