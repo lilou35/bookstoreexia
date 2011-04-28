@@ -34,9 +34,30 @@
                      <td></td>
                  </tr>
         </table>
+         <div>
+             <c:if test="${sessionScope['scopedTarget.session'].client.clientid==null}">
+                <a class="bouton" href="<c:url value="/login/inscription.htm" />"><div id="bouton" class="bouton">Nouveau Client</div></a>
+                <a class="bouton" href="<c:url value="/login/login.htm" />"><div id="bouton" class="bouton">Déjà client</div></a>
+            </c:if>
+            <c:if test="${sessionScope['scopedTarget.session'].client.clientid!=null}">
+                Vous êtes ${sessionScope['scopedTarget.session'].client.clientprenom} ${sessionScope['scopedTarget.session'].client.clientnom} sinon merci de <a class="bouton" href="<c:url value="/login/deconnexion.htm" />"><div id="bouton" class="bouton">Cliquer ici</div></a> <br/>
+                <fieldset>
+                    <legend> Adresse de livraison: </legend>
+                    ${sessionScope['scopedTarget.session'].client.clientrue}<br/>
+                    ${sessionScope['scopedTarget.session'].client.clientcodepostal}${sessionScope['scopedTarget.session'].client.clientville}
+                </fieldset>
+                    Si cette adresse de vous convient pas vous pouvez la changer ici: <a class="bouton" href="<c:url value="/login/monCompte.htm" />"><div id="bouton" class="bouton">Changer mon adresse</div></a>
+                    <br/>
+                    <br/>
+                    <input type="text" id="carte" size="10"/>
+                    <a class="bouton" href="<c:url value="/panier/terminerCommande.htm" />"><div id="boutonMenu" class="boutonMenu">Terminer votre Commande</div></a>
+                
+            </c:if>
+                    
+        </div>
    </c:otherwise>
 </c:choose>
-
+        
 
 
 
