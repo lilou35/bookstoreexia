@@ -211,19 +211,26 @@ public class ClientJpaController {
     public List<Client> loginUnique(Client client) {
         EntityManager em = getEntityManager();
         try {
+            
             //création requete criteria
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Client> cq = cb.createQuery( Client.class );
             Root<Client> clientRoot = cq.from(Client.class);
             
             //restriction de la requete
-            cq.select(clientRoot)
+            if(client.getClientid() != -1){
+                cq.select(clientRoot)
                     .where(cb.equal(clientRoot.get(Client_.clientlogin),client.getClientlogin())
                              .in(cb.diff(clientRoot.get(Client_.clientid), client.getClientid()))
                     );
-            
+            }
+            else{
+                cq.select(clientRoot)
+                    .where(cb.equal(clientRoot.get(Client_.clientlogin),client.getClientlogin()));
+            }
             //resultat de la requete
             Query q = em.createQuery(cq);
+            
             return ((List<Client>) q.getResultList());
         } finally {
             em.close();
