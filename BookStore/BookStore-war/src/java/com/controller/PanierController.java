@@ -194,13 +194,11 @@ public class PanierController {
      
    @RequestMapping(value="listeCommande.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeCommande(@RequestParam(value="etat", required=false) String etat){
+       //TODO flo date du jour
         Calendar Today = Calendar.getInstance();
         Date dateJ = Today.getTime();
          ModelAndView mv = new ModelAndView("admin/commande/commandeListe");
          if(etat== null || etat=="Du Jour"){
-             //TODO NicoExia (test ça pour voir ...)
-//             Calendar Today = Calendar.getInstance();
-//             Date dateJ = Today.getTime();
             //TODO NicoExia choper la date du jour 
 //            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 //            String date = format.format(new Date());
@@ -246,7 +244,7 @@ public class PanierController {
    private ModelAndView rafraichirCommandeListe(String etat){
        ModelAndView mv = new ModelAndView("admin/commande/commande");
 
-         mv.addObject("commandes",commandeEjbLocal.listCommande(1) ); //TODO flo liste des commande en fonction de leur etat group by
+         mv.addObject("commandes",commandeEjbLocal.listCommandeGroupBy(etat, null)); //TODO flo liste des commande en fonction de leur etat group by
 
          return mv;
    }
@@ -288,7 +286,9 @@ public class PanierController {
        
        Journal journal = new Journal(-1);
        journal.setJournaldescription(raison);
-       journal.setJournaldate(new Date());//TODO flo nico Date 
+       Calendar Today = Calendar.getInstance();
+       Date dateJ = Today.getTime();
+       journal.setJournaldate(dateJ);//TODO flo nico Date 
        journal.setLibraire(new Libraire(session.getClient().getClientid()));
        journal = commandeEjbLocal.addJournal(journal);//TODO NicoExia modifier journal
        
