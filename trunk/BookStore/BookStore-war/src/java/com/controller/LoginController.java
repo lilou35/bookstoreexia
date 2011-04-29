@@ -13,6 +13,7 @@ import com.formulaire.LoginForm;
 import com.session.Session;
 import ejb.entity.Client;
 import ejb.entity.Libraire;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import metier.Libraire.LibraireEjbLocal;
@@ -111,7 +112,8 @@ public class LoginController {
             return this.afficherMonCompte("Les champs ne sont pas valides");
         }
         clientForm.setClientid(session.getClient().getClientid());
-        List<Client> clients = ClientEjbLocal.loginUnique(clientForm);
+        List<Client> clients = new ArrayList<Client>(0);
+        clients.addAll(ClientEjbLocal.loginUnique(clientForm));
         if(clients.size()==0){
             ClientEjbLocal.updateClient(clientForm);
             session.setClient(clientForm);
@@ -146,7 +148,8 @@ public class LoginController {
         }
         
         
-        List<Client> clients = ClientEjbLocal.loginUnique(clientForm);
+        List<Client> clients = new ArrayList<Client>(0);
+        clients.addAll(ClientEjbLocal.loginUnique(clientForm));
         if(clients.size()==0){
             ClientEjbLocal.addClient(clientForm);
             System.out.print("############## client id: "+ clientForm.getClientid() + "#################");

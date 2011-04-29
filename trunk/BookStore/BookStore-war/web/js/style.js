@@ -1,13 +1,17 @@
-$(document).ready(function(){
-
-    $("div[id='javascript']").css("display", "none");
+function arrondi(){
     $("div[id='corps']").css("display", "none");
     $("div[id='corps']").corner("round 10px");
     $("div[id='titre']").corner("round top 10px");
     $("div[id='contenu']").corner("round bottom 10px");
     $("div[id='boutonMenu']").corner("round 10px");
     $("div[id='bouton']").corner("round 10px");
+}
 
+$(document).ready(function(){
+
+    $("div[id='javascript']").css("display", "none");
+    
+    arrondi();
 
 
 
