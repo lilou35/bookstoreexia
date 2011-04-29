@@ -51,7 +51,8 @@ function evenement(){
     
     $("input[id='terminer']").click(function(){
         if($('#carte').val().length<=10 ){
-            $('#erreurCarte').html("Vous n'avez pas saisie au moin 10 chiffres")
+            $('#erreurCarte').html("Vous n'avez pas saisie au moin 10 chiffres");
+            //evenement();
         }
         else{
             

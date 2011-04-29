@@ -16,6 +16,7 @@ import com.formulaire.Article;
 import com.session.Panier;
 import ejb.entity.Commande;
 import ejb.entity.CommandePK;
+import ejb.entity.Journal;
 import java.util.ArrayList;
 import metier.commande.CommandeEjbLocal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,30 +143,30 @@ public class PanierController {
          
          //création de la commande
          
-         List<Commande> commandes = new ArrayList<Commande>(0);
+         
          int id = commandeEjbLocal.newCommandeId();//TODO flo si il n'y a pas de commande
          for(Article article: session.getPanier().getPanier()){
              CommandePK commandePK = new CommandePK();
              commandePK.setClientid(session.getClient().getClientid());
-             commandePK.setJournalId(-1);
+             commandePK.setJournalId(1);
              commandePK.setLivreid(article.getLivre().getLivreid());
              Commande commande = new Commande(commandePK);
              commande.setClient(session.getClient());
              commande.setCommandedate(null);// valeur par défaut dans la base
              commande.setCommandeetat("validée");
-             commande.setJournal(null);
+             commande.setJournal(new Journal(1));
              commande.setLivre(article.getLivre());
              commande.setCommandeid(id);
              commande.setCommandequantite(article.getQtt());
              
              commandeEjbLocal.commander(commande);
-             commandes.add(commande);
+             
          }
         
          System.out.print("############### numéro de carte:" + carte + "###############");
          
          ModelAndView mv = new ModelAndView("commande/detailCommande");
-         mv.addObject("commandes", commandes);//commandeEjbLocal.selectionnerCommande(id) ); //TODO flo selectionner par commandeid
+         mv.addObject("commandes",commandeEjbLocal.listCommande(id) ); 
          
          session.setPanier(new Panier());
          return mv;
