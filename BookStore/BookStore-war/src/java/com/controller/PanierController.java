@@ -194,20 +194,21 @@ public class PanierController {
      
    @RequestMapping(value="listeCommande.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeCommande(@RequestParam(value="etat", required=false) String etat){
-        
+        Calendar Today = Calendar.getInstance();
+        Date dateJ = Today.getTime();
          ModelAndView mv = new ModelAndView("admin/commande/commandeListe");
          if(etat== null || etat=="Du Jour"){
              //TODO NicoExia (test ça pour voir ...)
-             Calendar Today = Calendar.getInstance();
-             Date test = Today.getTime();
+//             Calendar Today = Calendar.getInstance();
+//             Date dateJ = Today.getTime();
             //TODO NicoExia choper la date du jour 
 //            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 //            String date = format.format(new Date());
 
-             mv.addObject("commandes",commandeEjbLocal.listCommande(1) ); //TODO flo liste des commande du jour
+             mv.addObject("commandes",commandeEjbLocal.listCommandeGroupBy("", dateJ)); //TODO flo liste des commande du jour
          }
          else{
-             mv.addObject("commandes",commandeEjbLocal.listCommande(1) ); //TODO flo liste des commande en fonction de leur etat group by
+             mv.addObject("commandes",commandeEjbLocal.listCommandeGroupBy(etat, null)); //TODO flo liste des commande en fonction de leur etat group by
              mv.addObject("message", "Commande à l'état: ");
              mv.addObject("etat", etat);
          }
