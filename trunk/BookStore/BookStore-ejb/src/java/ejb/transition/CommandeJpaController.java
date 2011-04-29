@@ -22,6 +22,7 @@ import ejb.entity.Livre;
 import ejb.entity.Journal;
 import ejb.entity.Client;
 import ejb.entity.Commande_;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -290,19 +291,30 @@ public class CommandeJpaController {
         EntityManager em = getEntityManager();
         try {
             //création requete criteria
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery cq = cb.createQuery();
-            Root<Commande> rt = cq.from(Commande.class);
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaQuery cq = cb.createQuery();
+//            Root<Commande> rt = cq.from(Commande.class);
             
             //restriction de la requete
-            cq.select(rt);
-                cq.groupBy(rt.get(Commande_.commandeid), rt.get(Commande_.commandeetat));
-                if(!etat.isEmpty() && date!=null){
-                    cq.having(cb.equal(rt.get(Commande_.commandeetat), etat));
-                }
+//            cq.select(rt);
+//                cq.groupBy(rt.get(Commande_.commandeid), rt.get(Commande_.commandeetat));
+//                if(!etat.isEmpty() && date!=null){
+//                    cq.having(cb.equal(rt.get(Commande_.commandeetat), etat));
+//                }
+            String sql = "SELECT * FROM Commande where 1=1";
+            if(etat!=""){
+                sql+=" and `commandeetat`='"+etat+"'";
+            }
+            if(date!=null){
+                Date dateDebut = new Date(date.getYear(), date.getMonth(), date.getDate());
+                date.setDate(+1);
+                Date dateFin = new Date(date.getYear(), date.getMonth(), date.getDate());
+                sql+=" and `commandedate`>'"+dateDebut+"' and `commandedate`<'"+dateFin+"'";
+            }
+            //resultat de la requete  
             
-            //resultat de la requete          
-            Query q = em.createQuery(cq);
+            Query q = em.createQuery(sql); 
+            //Query q = em.createQuery(cq);
             return q.getResultList();
         } finally {
             em.close();
