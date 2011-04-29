@@ -67,6 +67,9 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
             Livre livre = commande.getLivre();
             livre.setLivrestock(livre.getLivrestock() - commande.getCommandequantite());
             livre.setLivrenbvente(livre.getLivrenbvente() + commande.getCommandequantite());
+            if(livre.getLivrestock()<=0){
+                livre.setLivreetat("en Réapprovisionnement");
+            }
             jpaCommande.create(commande);
             jpaLivre.edit(livre);
             
@@ -81,6 +84,9 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
             Livre livre = commande.getLivre();
             livre.setLivrestock(livre.getLivrestock() + commande.getCommandequantite());
             livre.setLivrenbvente(livre.getLivrenbvente() - commande.getCommandequantite());
+            if(livre.getLivreetat().equals("en Réapprovisionnement") && livre.getLivrestock()>=0){
+                livre.setLivreetat("en Stock");
+            }
             jpaCommande.destroy(commande.getCommandePK());
             jpaLivre.edit(livre);
             
@@ -92,6 +98,9 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
     }
     public List<Commande> listCommande(int commandeId){
         return jpaCommande.findCommande(commandeId);
+    }
+    public List<Commande> listCommandeGroupBy (String etat){
+        return jpaCommande.GroupByCommandeId(etat);
     }
     
    public String about(){
