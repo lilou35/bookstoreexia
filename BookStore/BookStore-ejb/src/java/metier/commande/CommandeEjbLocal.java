@@ -7,6 +7,7 @@ package metier.commande;
 
 import ejb.entity.Commande;
 import ejb.entity.CommandePK;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -24,6 +25,7 @@ public interface CommandeEjbLocal {
     public void decommander(Commande commande);
     public List<Commande> listCommande(int commandeId);
     public int verifCommande(Commande commande);
-    public List<Commande> listCommandeGroupBy (String etat);
+    public List<Commande> listCommandeGroupBy (String etat, Date date);
+    public void updateCommande(Commande commande);
 //    public List<Livre> selectionnerLivre(int min, int max);
 }

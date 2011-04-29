@@ -10,9 +10,12 @@ import ejb.entity.CommandePK;
 import ejb.entity.Livre;
 import ejb.transition.CommandeJpaController;
 import ejb.transition.LivreJpaController;
+import ejb.transition.exceptions.IllegalOrphanException;
+import ejb.transition.exceptions.NonexistentEntityException;
 import ejb.transition.exceptions.PreexistingEntityException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,11 +99,22 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
             Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void updateCommande(Commande commande){
+        try {
+            jpaCommande.edit(commande);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public List<Commande> listCommande(int commandeId){
         return jpaCommande.findCommande(commandeId);
     }
-    public List<Commande> listCommandeGroupBy (String etat){
-        return jpaCommande.GroupByCommandeId(etat);
+    public List<Commande> listCommandeGroupBy (String etat, Date date){
+        return jpaCommande.GroupByCommandeId(etat, date);
     }
     
    public String about(){
