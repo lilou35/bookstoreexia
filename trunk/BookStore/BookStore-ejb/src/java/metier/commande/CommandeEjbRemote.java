@@ -7,6 +7,7 @@ package metier.commande;
 
 import ejb.entity.Commande;
 import ejb.entity.CommandePK;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -25,5 +26,6 @@ public interface CommandeEjbRemote {
     public List<Commande> listCommande(int commandeId);
     public int verifCommande(Commande commande);
     public String about();
-    public List<Commande> listCommandeGroupBy (String etat);
+    public List<Commande> listCommandeGroupBy (String etat, Date date);
+    public void updateCommande(Commande commande);
 }

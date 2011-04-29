@@ -22,6 +22,7 @@ import ejb.entity.Livre;
 import ejb.entity.Journal;
 import ejb.entity.Client;
 import ejb.entity.Commande_;
+import java.util.Date;
 
 /**
  *
@@ -285,7 +286,7 @@ public class CommandeJpaController {
         }
     }
 
-    public List<Commande> GroupByCommandeId (String etat){
+    public List<Commande> GroupByCommandeId (String etat, Date date){
         EntityManager em = getEntityManager();
         try {
             //création requete criteria
@@ -296,7 +297,7 @@ public class CommandeJpaController {
             //restriction de la requete
             cq.select(rt);
                 cq.groupBy(rt.get(Commande_.commandeid), rt.get(Commande_.commandeetat));
-                if(!etat.isEmpty() && etat!=null){
+                if(!etat.isEmpty() && date!=null){
                     cq.having(cb.equal(rt.get(Commande_.commandeetat), etat));
                 }
             
