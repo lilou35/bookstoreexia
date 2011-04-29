@@ -83,6 +83,12 @@ business-interface="metier.livre.LivreEjbLocal" />
 	<property name="businessInterface"><value>metier.auteur.AuteurEjbLocal</value></property>
 </bean>
 
+<bean id="CommandeEjb"
+		class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+	<property name="jndiName"><value>CommandeEjb</value></property>
+	<property name="businessInterface"><value>metier.commande.CommandeEjbLocal</value></property>
+</bean>
+
 
 <bean id="LoginController" class="com.controller.LoginController" scope="prototype">
 	<property name="clientEjbLocal"><ref bean="ClientEjb"/></property>
@@ -115,6 +121,7 @@ business-interface="metier.livre.LivreEjbLocal" />
 
 <bean id="PanierController" class="com.controller.PanierController" scope="prototype">
 	<property name="livreEjbLocal"><ref bean="LivreEjb"/></property>
+        <property name="commandeEjbLocal"><ref bean="CommandeEjb"/></property>
 
 </bean>
 

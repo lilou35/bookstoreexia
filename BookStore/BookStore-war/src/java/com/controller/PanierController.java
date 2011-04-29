@@ -126,8 +126,8 @@ public class PanierController {
      
      
      @RequestMapping(value="terminerCommande.htm", method=RequestMethod.POST)
-    public ModelAndView terminerCommande() {//@RequestParam(value="carte", required=true) int carte){
-        //TODO NicoExia vérif carte
+    public ModelAndView terminerCommande(@RequestParam(value="carte", required=true) int carte){
+        
          if(session.getClient()==null){
              return afficherPanier("vous devez vous inscrire");
          }
@@ -135,13 +135,15 @@ public class PanierController {
              return afficherPanier("vous devez avoir au moins 1 livre dans le panier");
          }
          
-//         if(String.valueOf(carte).length()< 10){
-//             return afficherPanier("Vous n'avez pas saisie 10 chiffres");            
-//         }
+         if(String.valueOf(carte).length()< 10){
+             return afficherPanier("Vous n'avez pas saisie 10 chiffres");            
+         }
          
          
          //création de la commande
-         //List<Commande> commandes = new ArrayList<Commande>(0);
+         
+         
+         int id = commandeEjbLocal.newCommandeId();
          for(Article article: session.getPanier().getPanier()){
              CommandePK commandePK = new CommandePK();
              commandePK.setClientid(session.getClient().getClientid());
@@ -153,15 +155,17 @@ public class PanierController {
              commande.setCommandeetat("validée");
              commande.setJournal(null);
              commande.setLivre(article.getLivre());
-             commande.setCommandeid(commandeEjbLocal.newCommandeId());
+             commande.setCommandeid(id);
              commande.setCommandequantite(article.getQtt());
-             //commandes.add(commande);
+             
              commandeEjbLocal.commander(commande);
+             
          }
         
-//         System.out.print("############### numéro de carte:" + carte + "###############");
+         System.out.print("############### numéro de carte:" + carte + "###############");
          
-         ModelAndView mv = new ModelAndView("panier/commandeValide");
+         ModelAndView mv = new ModelAndView("panier/detailCommande");
+         mv.addObject("commandes", commandeEjbLocal.selectionnerCommande(id) ); //TODO flo selectionner par commandeid
          return mv;
        
     }
@@ -170,11 +174,10 @@ public class PanierController {
         this.LivreEjbLocal = LivreEjbLocal;
     }
 
-   
+    public void setCommandeEjbLocal(PanierController commandeEjbLocal) {
+        this.commandeEjbLocal = commandeEjbLocal;
+    }
 
    
 
-
-
-   
 }

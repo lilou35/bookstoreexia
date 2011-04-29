@@ -11,7 +11,7 @@ $(document).ready(function(){
     
     evenement();
     
-
+    
 
 
 });
@@ -42,6 +42,16 @@ function evenement(){
     $("input[id='retirer']").click(function(){
         var obj = $(this).metadata({type:'attr',name:'data'});
         $.post("retirer.htm", {id: obj.id} ,  function(data)
+                                                {
+                                                    //alert(data);
+                                                    modifierArticles(data);
+                                                }
+            );
+    });
+    
+    $("input[id='terminer']").click(function(){
+        
+        $.post("terminerCommande.htm", {carte: $('#carte').val()} ,  function(data)
                                                 {
                                                     //alert(data);
                                                     modifierArticles(data);
