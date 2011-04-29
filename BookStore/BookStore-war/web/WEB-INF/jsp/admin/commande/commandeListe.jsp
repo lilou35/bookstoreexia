@@ -22,6 +22,7 @@
         <script src="<c:url value="/js/click/chargementCommandeAdmin.js" />" type="text/javascript" > </script>
         <script src="<c:url value="/js/click/etatCommande.js" />" type="text/javascript" > </script>
         <script src="<c:url value="/js/alerts.js" />" type="text/javascript" > </script>
+        <link href="<c:url value="/css/alerts.css" />" rel="stylesheet" type="text/css" media="screen" />
         
 
         <title>Liste des Commmande</title>
@@ -70,29 +71,15 @@
                         </td>
                     </tr>
                 </table>
-                <c:if test="${commandes!=null}">
-                    <div class="listeCommande" >
-                         <c:forEach items="${commandes}" var="commande" >
-                             <div id="commande-${commande.commandeid}" class="commande" data="{id :'${commande.commandeid}'}" >
-                                Id de la commande: ${commande.commandeid}<br/>
-                                Etat de la commande: ${commande.commandeid}<br/>                                
-                                Statu: ${commande.commandeetat}<br/>                              
-                                Date de commande: ${commande.commandedate}<br/>
-                                Date de livraison: ${commande.commandedatelivraison}
-                             </div>
-                        </c:forEach>
-
-                    </div>
-
-                   
-                </c:if>
+                        <%@include file="commande.jsp" %>
+                
 
 
 
 
 
 
-                </table>
+            
 
 
 
