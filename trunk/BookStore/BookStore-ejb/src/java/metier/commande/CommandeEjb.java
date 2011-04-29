@@ -7,8 +7,10 @@ package metier.commande;
 
 import ejb.entity.Commande;
 import ejb.entity.CommandePK;
+import ejb.entity.Journal;
 import ejb.entity.Livre;
 import ejb.transition.CommandeJpaController;
+import ejb.transition.JournalJpaController;
 import ejb.transition.LivreJpaController;
 import ejb.transition.exceptions.IllegalOrphanException;
 import ejb.transition.exceptions.NonexistentEntityException;
@@ -30,6 +32,7 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
 
     CommandeJpaController jpaCommande = new CommandeJpaController();
     LivreJpaController jpaLivre = new LivreJpaController();
+    JournalJpaController jpaJournal = new JournalJpaController();
 
 //    public List<Commande> selectionnerCommande(int min, int max){
 ////        System.out.print("###################### selectionnerLivre #################");
@@ -90,7 +93,7 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
             if(livre.getLivreetat().equals("en Réapprovisionnement") && livre.getLivrestock()>=0){
                 livre.setLivreetat("en Stock");
             }
-            jpaCommande.destroy(commande.getCommandePK());
+            jpaCommande.edit(commande);
             jpaLivre.edit(livre);
             
         } catch (PreexistingEntityException ex) {
@@ -115,6 +118,31 @@ public class CommandeEjb implements CommandeEjbRemote, CommandeEjbLocal {
     }
     public List<Commande> listCommandeGroupBy (String etat, Date date){
         return jpaCommande.GroupByCommandeId(etat, date);
+    }
+    
+    public void updateJournal(Journal journal){
+        try {
+            jpaJournal.edit(journal);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Journal addJournal(Journal journal){
+        try {
+            jpaJournal.create(journal);
+            return journal;
+        } catch (PreexistingEntityException ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (Exception ex) {
+            Logger.getLogger(CommandeEjb.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
    public String about(){
