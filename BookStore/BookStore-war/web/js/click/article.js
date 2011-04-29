@@ -50,12 +50,18 @@ function evenement(){
     });
     
     $("input[id='terminer']").click(function(){
+        if($('#carte').val().length<=10 ){
+            $('#erreurCarte').html("Vous n'avez pas saisie au moin 10 chiffres")
+        }
+        else{
+            
         
         $.post("terminerCommande.htm", {carte: $('#carte').val()} ,  function(data)
                                                 {
                                                     //alert(data);
-                                                    modifierArticles(data);
+                                                   modifierArticles(data);
                                                 }
             );
+        }
     });
 }

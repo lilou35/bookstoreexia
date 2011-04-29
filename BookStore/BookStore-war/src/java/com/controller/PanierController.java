@@ -13,10 +13,10 @@ import metier.livre.LivreEjbLocal;
 import ejb.entity.Livre;
 import java.util.List;
 import com.formulaire.Article;
+import com.session.Panier;
 import ejb.entity.Commande;
 import ejb.entity.CommandePK;
 import java.util.ArrayList;
-import java.util.Date;
 import metier.commande.CommandeEjbLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -56,22 +56,22 @@ public class PanierController {
     
     
      @RequestMapping(value="panier.htm", method=RequestMethod.GET)
-    public ModelAndView afficherPanier(String messageCarte){
+    public ModelAndView afficherPanier(){
         
         ModelAndView mv = new ModelAndView("panier/panier");
         List<Article> panier = session.getPanier().getPanier();
         mv.addObject("panier", panier);
-        mv.addObject("messageCarte", messageCarte);
         mv.addObject("total", calculPrixTotal(panier));
         
         return mv;
        
     }
      
-     private ModelAndView afficherArticles(){
+     private ModelAndView afficherArticles(String messageCarte){
         ModelAndView mv = new ModelAndView("panier/articles");
         List<Article> panier = session.getPanier().getPanier();
         mv.addObject("panier", panier);
+        mv.addObject("messageCarte", messageCarte);
         mv.addObject("total", calculPrixTotal(panier));
                 
         return mv;
@@ -85,7 +85,7 @@ public class PanierController {
         
         session.getPanier().ajouterLivre(livre);
         
-        return afficherArticles();
+        return afficherArticles("");
        
     }
     
@@ -96,7 +96,7 @@ public class PanierController {
         
         session.getPanier().moinsUnQttLivre(livre);
         
-        return afficherArticles();
+        return afficherArticles("");
        
     }
     
@@ -107,7 +107,7 @@ public class PanierController {
         
         session.getPanier().retirerLivre(livre);
         
-        return afficherArticles();
+        return afficherArticles("");
        
     }
      
@@ -126,24 +126,24 @@ public class PanierController {
      
      
      @RequestMapping(value="terminerCommande.htm", method=RequestMethod.POST)
-    public ModelAndView terminerCommande(@RequestParam(value="carte", required=true) int carte){
+    public ModelAndView terminerCommande(@RequestParam(value="carte", required=true) String carte){
         
          if(session.getClient()==null){
-             return afficherPanier("vous devez vous inscrire");
+             return afficherArticles("vous devez vous inscrire");
          }
          if(session.getPanier().getPanier().isEmpty()){
-             return afficherPanier("vous devez avoir au moins 1 livre dans le panier");
+             return afficherArticles("Vous devez avoir au moins 1 livre dans le panier");
          }
          
-         if(String.valueOf(carte).length()< 10){
-             return afficherPanier("Vous n'avez pas saisie 10 chiffres");            
+         if(carte.length()< 10){
+             return afficherArticles("Vous n'avez pas saisie 10 chiffres");            
          }
          
          
          //création de la commande
          
-         
-         int id = commandeEjbLocal.newCommandeId();
+         List<Commande> commandes = new ArrayList<Commande>(0);
+         int id = commandeEjbLocal.newCommandeId();//TODO flo si il n'y a pas de commande
          for(Article article: session.getPanier().getPanier()){
              CommandePK commandePK = new CommandePK();
              commandePK.setClientid(session.getClient().getClientid());
@@ -159,13 +159,15 @@ public class PanierController {
              commande.setCommandequantite(article.getQtt());
              
              commandeEjbLocal.commander(commande);
-             
+             commandes.add(commande);
          }
         
          System.out.print("############### numéro de carte:" + carte + "###############");
          
-         ModelAndView mv = new ModelAndView("panier/detailCommande");
-         mv.addObject("commandes", commandeEjbLocal.selectionnerCommande(id) ); //TODO flo selectionner par commandeid
+         ModelAndView mv = new ModelAndView("commande/detailCommande");
+         mv.addObject("commandes", commandes);//commandeEjbLocal.selectionnerCommande(id) ); //TODO flo selectionner par commandeid
+         
+         session.setPanier(new Panier());
          return mv;
        
     }
@@ -174,7 +176,7 @@ public class PanierController {
         this.LivreEjbLocal = LivreEjbLocal;
     }
 
-    public void setCommandeEjbLocal(PanierController commandeEjbLocal) {
+    public void setCommandeEjbLocal(CommandeEjbLocal commandeEjbLocal) {
         this.commandeEjbLocal = commandeEjbLocal;
     }
 

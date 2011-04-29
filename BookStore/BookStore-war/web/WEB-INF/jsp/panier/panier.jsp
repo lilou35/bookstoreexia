@@ -20,6 +20,7 @@
         <script src="<c:url value="/js/mouse/panier.js" />" type="text/javascript" > </script>
 
 
+
         <title>Panier</title>
     </head>
 
@@ -38,7 +39,7 @@
        
 
 
-
+                    
             </div>
 
 
