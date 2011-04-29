@@ -254,7 +254,7 @@ public class LivreController {
             livre.getAuteurList().add(auteur);
         }
         
-        //TODO flo tester merttre à jour livre
+        
         LivreEjbLocal.updateLivre(livre);
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
@@ -276,7 +276,7 @@ public class LivreController {
             livre.getAuteurList().remove(auteur);
         }
         
-        //TODO flo tester merttre à jour livre
+        
         LivreEjbLocal.updateLivre(livre);
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
@@ -306,13 +306,13 @@ public class LivreController {
         auteur.setAuteurprenom(prenom);
         
         auteur = auteurEjbLocal.addAuteur(auteur);
-        //TODO flo tester (ajouter l'auteur en base ) je ne sais pas si juste en ajoutant l'auteur dans le livre il persistera le nouvel auteur
+        
         
         if(!livre.getAuteurList().contains(auteur)){
             livre.getAuteurList().add(auteur);
         }
         
-        //TODO flo tester merttre à jour livre
+        
         LivreEjbLocal.updateLivre(livre);
         
         mv.addObject("livre", livre);

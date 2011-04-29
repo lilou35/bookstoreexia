@@ -18,6 +18,7 @@ import ejb.entity.Commande;
 import ejb.entity.CommandePK;
 import ejb.entity.Journal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import metier.commande.CommandeEjbLocal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,7 +146,7 @@ public class PanierController {
          //création de la commande
          
          
-         int id = commandeEjbLocal.newCommandeId();//TODO flo si il n'y a pas de commande
+         int id = commandeEjbLocal.newCommandeId();
          Date date = new Date();
          for(Article article: session.getPanier().getPanier()){
              CommandePK commandePK = new CommandePK();
@@ -195,6 +196,9 @@ public class PanierController {
         
          ModelAndView mv = new ModelAndView("admin/commande/commandeListe");
          if(etat== null || etat=="Du Jour"){
+             //TODO NicoExia (test ça pour voir ...)
+             Calendar Today = Calendar.getInstance();
+             Date test = Today.getTime();
             //TODO NicoExia choper la date du jour 
 //            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 //            String date = format.format(new Date());
