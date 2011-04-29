@@ -18,6 +18,7 @@ import ejb.entity.Commande;
 import ejb.entity.CommandePK;
 import ejb.entity.Journal;
 import java.util.ArrayList;
+import java.util.Date;
 import metier.commande.CommandeEjbLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -145,6 +146,7 @@ public class PanierController {
          
          
          int id = commandeEjbLocal.newCommandeId();//TODO flo si il n'y a pas de commande
+         Date date = new Date();
          for(Article article: session.getPanier().getPanier()){
              CommandePK commandePK = new CommandePK();
              commandePK.setClientid(session.getClient().getClientid());
@@ -152,7 +154,8 @@ public class PanierController {
              commandePK.setLivreid(article.getLivre().getLivreid());
              Commande commande = new Commande(commandePK);
              commande.setClient(session.getClient());
-             commande.setCommandedate(null);// valeur par défaut dans la base
+             commande.setCommandedate(date);// valeur par défaut dans la base
+             commande.setCommandedatelivraison(date);
              commande.setCommandeetat("validée");
              commande.setJournal(new Journal(1));
              commande.setLivre(article.getLivre());
@@ -172,6 +175,71 @@ public class PanierController {
          return mv;
        
     }
+     
+     
+     
+     
+     
+     
+     /*
+     * #####################################################################################################################
+     *                                      Separation de l'administration
+     * #####################################################################################################################
+     */
+    //TODO NicoExia ajouter la vérification client = admin
+     
+     
+     
+   @RequestMapping(value="listeCommande.htm", method=RequestMethod.GET)
+    public ModelAndView afficherListeCommande(@RequestParam(value="etat", required=false) String etat){
+        
+         ModelAndView mv = new ModelAndView("admin/commande/commandeListe");
+         if(etat== null || etat=="Du Jour"){
+            //TODO NicoExia choper la date du jour 
+//            DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+//            String date = format.format(new Date());
+
+             mv.addObject("commandes",commandeEjbLocal.listCommande(1) ); //TODO flo liste des commande du jour
+         }
+         else{
+             mv.addObject("commandes",commandeEjbLocal.listCommande(1) ); //TODO flo liste des commande en fonction de leur etat group by
+             mv.addObject("message", "Commande à l'état: ");
+             mv.addObject("etat", etat);
+         }
+         
+         
+         
+         return mv;
+       
+    }
+   
+   @RequestMapping(value="listeCommandeRecherche.htm", method=RequestMethod.POST)
+    public ModelAndView afficherListeCommandeRechercheId(@RequestParam(value="id", required=false) int id){
+        
+         ModelAndView mv = new ModelAndView("admin/commande/commandeListe");
+         List<Commande> commandes = new ArrayList<Commande>(0);
+         commandes.add(commandeEjbLocal.listCommande(id).get(0));
+         if(commandes.isEmpty()){
+             mv.addObject("message", "Aucune Commande ne porte cette Id");
+         }
+         mv.addObject("commandes", commandes);
+         
+         return mv;
+    }
+   
+   @RequestMapping(value="detailCommande.htm", method=RequestMethod.POST)
+    public ModelAndView afficherDetailCommande(@RequestParam(value="id", required=true) int id){
+        
+         ModelAndView mv = new ModelAndView("admin/commande/detailCommande");
+         mv.addObject("commandes",commandeEjbLocal.listCommande(id) ); 
+         
+         return mv;
+       
+    }
+     
+     
+     
+     
 
     public void setLivreEjbLocal(LivreEjbLocal LivreEjbLocal) {
         this.LivreEjbLocal = LivreEjbLocal;

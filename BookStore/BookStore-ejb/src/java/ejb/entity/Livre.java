@@ -5,6 +5,8 @@
 package ejb.entity;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -234,7 +236,7 @@ public class Livre implements Serializable {
     public Date getLivreparution() {
         return livreparution;
     }
-
+    
     public void setLivreparution(Date livreparution) {
         this.livreparution = livreparution;
     }
