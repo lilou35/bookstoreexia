@@ -120,6 +120,7 @@ public class LoginController {
             mv.addObject("valide", "Modification Effectuées");
             return mv;
        }
+        
         else{
             return afficherMonCompte("Le login existe déjà, utilisé votre adresse Email");
         }

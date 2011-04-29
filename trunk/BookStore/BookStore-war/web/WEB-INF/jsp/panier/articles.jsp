@@ -50,7 +50,7 @@
                     <br/>
                     <br/>
                     <input type="text" id="carte" size="10"/>
-                    <a class="bouton" href="<c:url value="/panier/terminerCommande.htm" />"><div id="boutonMenu" class="boutonMenu">Terminer votre Commande</div></a>
+                    <input type="buton" id="terminer" />Terminer votre Commande</div></a>
                 
             </c:if>
                     
