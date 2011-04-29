@@ -207,8 +207,9 @@ public class LoginController {
         else{
 
            //chargement des parametres en session
-            Client client = new Client(-1);
+            Client client = new Client(libraires.get(0).getLibraireid());
             client.setClientnom(libraires.get(0).getLibrairenom());
+            client.setClientmdp(libraires.get(0).getLibrairemdp());
             session.setAdmin(true);
             session.setClient(client);
             

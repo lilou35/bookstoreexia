@@ -17,6 +17,7 @@ import com.session.Panier;
 import ejb.entity.Commande;
 import ejb.entity.CommandePK;
 import ejb.entity.Journal;
+import ejb.entity.Libraire;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -158,7 +159,7 @@ public class PanierController {
              commande.setCommandedate(date);// valeur par défaut dans la base
              commande.setCommandedatelivraison(date);
              commande.setCommandeetat("validée");
-             commande.setJournal(new Journal(1));
+             commande.setJournal(new Journal(1));//TODO NicoExia créer journal
              commande.setLivre(article.getLivre());
              commande.setCommandeid(id);
              commande.setCommandequantite(article.getQtt());
@@ -240,8 +241,89 @@ public class PanierController {
          return mv;
        
     }
+   
+   private ModelAndView rafraichirCommandeListe(String etat){
+       ModelAndView mv = new ModelAndView("admin/commande/commande");
+
+         mv.addObject("commandes",commandeEjbLocal.listCommande(1) ); //TODO flo liste des commande en fonction de leur etat group by
+
+         return mv;
+   }
+   
+   @RequestMapping(value="valider.htm", method=RequestMethod.POST)
+    public ModelAndView validerCommande(@RequestParam(value="id", required=true) int id){
+       
+       List<Commande> commandes = commandeEjbLocal.listCommande(id);
+       String etat = commandes.get(0).getCommandeetat();
+       for(Commande commande: commandes){
+           commande.setCommandeetat("Validée");
+           commandeEjbLocal.updateCommande(commande);
+       }
+
+         return rafraichirCommandeListe(etat);
+       
+    }
+   
+     @RequestMapping(value="preparer.htm", method=RequestMethod.POST)
+    public ModelAndView preparerCommande(@RequestParam(value="id", required=true) int id){
+       
+       List<Commande> commandes = commandeEjbLocal.listCommande(id);
+       String etat = commandes.get(0).getCommandeetat();
+       for(Commande commande: commandes){
+           commande.setCommandeetat("en Préparation");
+           commandeEjbLocal.updateCommande(commande);
+       }
+
+         return rafraichirCommandeListe(etat);
+       
+    }
      
+     @RequestMapping(value="annuler.htm", method=RequestMethod.POST)
+    public ModelAndView annulerCommande(@RequestParam(value="id", required=true) int id,
+                                        @RequestParam(value="raison", required=true) String raison){
+       
+       List<Commande> commandes = commandeEjbLocal.listCommande(id);
+       String etat = commandes.get(0).getCommandeetat();
+       
+       Journal journal = new Journal(-1);
+       journal.setJournaldescription(raison);
+       journal.setJournaldate(new Date());//TODO flo nico Date 
+       journal.setLibraire(new Libraire(session.getClient().getClientid()));
+       journal = commandeEjbLocal.addJournal(journal);//TODO NicoExia modifier journal
+       
+       for(Commande commande: commandes){
+           commande.setJournal(journal);
+           commande.getCommandePK().setJournalId(journal.getJournalId());
+           commande.setCommandeetat("Annulée");
+           
+           
+           commandeEjbLocal.decommander(commande);
+           
+           
+           
+       }
+
+         return rafraichirCommandeListe(etat);
+       
+    }
      
+     @RequestMapping(value="envoyer.htm", method=RequestMethod.POST)
+    public ModelAndView preparerCommande(@RequestParam(value="id", required=true) int id,
+                                        @RequestParam(value="envoi", required=true) String envoi){
+       
+       List<Commande> commandes = commandeEjbLocal.listCommande(id);
+       String etat = commandes.get(0).getCommandeetat();
+       
+       Date date = new Date(envoi);
+       for(Commande commande: commandes){
+           commande.setCommandeetat("Envoyée");
+           commande.setCommandedatelivraison(date);
+           commandeEjbLocal.updateCommande(commande);
+       }
+
+         return rafraichirCommandeListe(etat);
+       
+    }     
      
      
 
