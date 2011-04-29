@@ -235,11 +235,11 @@ public class CommandeJpaController {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
             Root<Commande> rt = cq.from(Commande.class);
-            
+
             //restriction de la requete
             cq.select(rt)
                 .where(cb.equal(rt.get(Commande_.commandeid), commandeId));
-            
+
             //resultat de la requete          
             Query q = em.createQuery(cq);
             return q.getResultList();
@@ -275,10 +275,37 @@ public class CommandeJpaController {
             
             //resultat de la requete          
             Query q = em.createQuery(cq);
-            return ((Commande) q.getSingleResult()).getCommandeid();
+            List<Commande> listCommande = q.getResultList();
+            if(listCommande.isEmpty()){
+                return 1; //si aucune commande alors on commence par 1
+            }
+            else { return listCommande.get(0).getCommandeid();}
         } finally {
             em.close();
         }
     }
 
+    public List<Commande> GroupByCommandeId (String etat){
+        EntityManager em = getEntityManager();
+        try {
+            //création requete criteria
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Commande> rt = cq.from(Commande.class);
+            
+            //restriction de la requete
+            cq.select(rt);
+                cq.groupBy(rt.get(Commande_.commandeid), rt.get(Commande_.commandeetat));
+                if(!etat.isEmpty() && etat!=null){
+                    cq.having(cb.equal(rt.get(Commande_.commandeetat), etat));
+                }
+            
+            //resultat de la requete          
+            Query q = em.createQuery(cq);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

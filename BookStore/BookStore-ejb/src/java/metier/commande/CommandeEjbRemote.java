@@ -25,4 +25,5 @@ public interface CommandeEjbRemote {
     public List<Commande> listCommande(int commandeId);
     public int verifCommande(Commande commande);
     public String about();
+    public List<Commande> listCommandeGroupBy (String etat);
 }

@@ -223,11 +223,12 @@ public class ClientJpaController {
             
             //resultat de la requete
             Query q = em.createQuery(cq);
-            List<Client> listClient = q.getResultList();
+            List<Client> listClient = new ArrayList<Client>(0);
+                    listClient = q.getResultList();
             for(Client c : listClient)
             {
-                if(c.getClientid().intValue() == client.getClientid().intValue()){
-                  listClient.remove(c);//TODO voir pk ça marche pas ...
+                if(c.getClientid().intValue() == client.getClientid().intValue() && listClient.size()==1){
+                  listClient = new ArrayList<Client>(0);
                 } 
             }
             return listClient;

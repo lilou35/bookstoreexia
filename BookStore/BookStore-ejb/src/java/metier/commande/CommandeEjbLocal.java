@@ -24,5 +24,6 @@ public interface CommandeEjbLocal {
     public void decommander(Commande commande);
     public List<Commande> listCommande(int commandeId);
     public int verifCommande(Commande commande);
+    public List<Commande> listCommandeGroupBy (String etat);
 //    public List<Livre> selectionnerLivre(int min, int max);
 }
