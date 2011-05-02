@@ -9,6 +9,7 @@ package com.controller;
 
 
 import com.formulaire.LivreAdmin;
+import com.session.Session;
 import ejb.entity.Auteur;
 import ejb.entity.Commande;
 import ejb.entity.Livre;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import metier.auteur.AuteurEjbLocal;
 import metier.categorie.CategorieEjbLocal;
 import metier.livre.LivreEjbLocal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -43,6 +45,9 @@ public class LivreController {
     private CategorieEjbLocal categorieEjbLocal;
     
     private AuteurEjbLocal auteurEjbLocal;
+    
+    @Autowired
+    private Session session;
 
     @RequestMapping(value="chargementLivre.htm", method=RequestMethod.POST)
     public ModelAndView chargementLivreAjax(@RequestParam(value="id", required=true) int idLivre){
@@ -88,7 +93,10 @@ public class LivreController {
      *                                      Separation de l'administration
      * #####################################################################################################################
      */
-    //TODO NicoExia ajouter la vérification client = admin
+    private ModelAndView refuser(){
+        ModelAndView mv = new ModelAndView("admin/refuser");
+        return mv;
+    }
     
     private Livre convertToLivre(LivreAdmin livreAdmin){
         Livre livre = new Livre();
@@ -110,6 +118,9 @@ public class LivreController {
     
     @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeLivreAdmin(){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/livre/livreListe");
 
         mv.addObject("message", "Selectionner une Lettre");
@@ -119,12 +130,18 @@ public class LivreController {
     
     @RequestMapping(value="livreListeAdminLettre.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeLivreParLettreGetAdmin(@RequestParam(value="lettre", required=true) String lettre){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         return afficherListeLivreParLettrePostAdmin(lettre);
     }
     
     
      @RequestMapping(value="alerteLivreListe.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeLivreEnAlerte(){
+         if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/livre/livreListe");
         List<Livre> livres = LivreEjbLocal.stockAlert();
         mv.addObject("livres", livres); 
@@ -142,7 +159,9 @@ public class LivreController {
     
     @RequestMapping(value="livreListeAdmin.htm", method=RequestMethod.POST)
     public ModelAndView afficherListeLivreParLettrePostAdmin(@RequestParam(value="lettre", required=true) String lettre){
-
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/livre/livreListe");
         List<Livre> livres = LivreEjbLocal.selectionnerLivre(lettre, -1, -1);
         mv.addObject("livres", livres); 
@@ -160,6 +179,9 @@ public class LivreController {
     
     @RequestMapping(value="chargementLivreAdmin.htm", method=RequestMethod.POST)
     public ModelAndView chargementLivreAdminAjax(@RequestParam(value="id", required=true) int idLivre){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/livre/livreAjax");
         mv.addObject("livre", LivreEjbLocal.selectionnerLivre(idLivre));
         return mv;
@@ -168,6 +190,9 @@ public class LivreController {
     
     @RequestMapping(value="afficherModifierLivreAdmin.htm", method=RequestMethod.GET)
     public ModelAndView afficherModifierLivreAdmin(@RequestParam(value="id", required=true) int idLivre){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/livre/livreModifier");
         mv.addObject("livre", LivreEjbLocal.selectionnerLivre(idLivre));
         mv.addObject("categories", categorieEjbLocal.selectionnerCategories(-1, -1));
@@ -179,6 +204,9 @@ public class LivreController {
     @RequestMapping(value="modifierLivreAdmin.htm", method=RequestMethod.POST)
     public ModelAndView modifierLivreAdmin(@Valid @ModelAttribute("livre") LivreAdmin livreForm, BindingResult binder){
 
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         if(binder.hasErrors()){
             return this.afficherAjouterLivreAdmin();
         }
@@ -198,6 +226,9 @@ public class LivreController {
     
     @RequestMapping(value="ajouterLivreAdmin.htm", method=RequestMethod.GET)
     public ModelAndView afficherAjouterLivreAdmin(){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/livre/livreAjouter");
         LivreAdmin livre = new LivreAdmin(-1);
         livre.setLivrestock(20);//TODO NicoExia paramètre
@@ -223,6 +254,9 @@ public class LivreController {
     @RequestMapping(value="ajouterLivreAdmin.htm", method=RequestMethod.POST)
     public ModelAndView ajouterLivreAdmin(@Valid @ModelAttribute("livre") LivreAdmin livreForm, BindingResult binder){
 
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         if(binder.hasErrors()){
             return this.afficherAjouterLivreAdmin();
         }
@@ -244,7 +278,9 @@ public class LivreController {
         
     @RequestMapping(value="ajoutAuteurALivre.htm", method=RequestMethod.GET)
     public ModelAndView ajoutAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
-        
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
         livre.setCommandeList(new ArrayList<Commande>(0));
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
@@ -267,6 +303,9 @@ public class LivreController {
     
     @RequestMapping(value="retirerAuteurALivre.htm", method=RequestMethod.GET)
     public ModelAndView retirerAuteurALivreAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, @RequestParam(value="idLivre", required=true) int idLivre){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         
         Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
         livre.setCommandeList(new ArrayList<Commande>(0));
@@ -290,6 +329,9 @@ public class LivreController {
     public ModelAndView creerAuteurALivreAjax(@RequestParam(value="nomAuteur", required=true) String nom, 
                                                 @RequestParam(value="prenomAuteur", required=true) String prenom,
                                                 @RequestParam(value="idLivre", required=true) int idLivre){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
         
@@ -325,6 +367,9 @@ public class LivreController {
     @RequestMapping(value="afficherModifierAuteur.htm", method=RequestMethod.POST)
     public ModelAndView afficherModifierAuteurAjax(@RequestParam(value="idAuteur", required=true) int idAuteur, 
                                                 @RequestParam(value="idLivre", required=true) int idLivre){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
@@ -350,6 +395,9 @@ public class LivreController {
                                                 @RequestParam(value="prenomAuteur", required=true) String prenom,
                                                 @RequestParam(value="idLivre", required=true) int idLivre,
                                                 @RequestParam(value="idAuteur", required=true) int idAuteur){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         
         ModelAndView mv = new ModelAndView("admin/livre/livreAuteurAjax");
         Auteur auteur = auteurEjbLocal.selectionnerAuteur(idAuteur);
@@ -374,6 +422,22 @@ public class LivreController {
         mv.addObject("livre", livre);
         mv.addObject("auteurs", chargementDesAuteurNonEcrivain(livre));
         return mv;
+       
+    }
+    
+    
+    @RequestMapping(value="supprimer.htm", method=RequestMethod.POST)
+    public ModelAndView supprimerLivreAdmin(@RequestParam(value="id", required=true) int idLivre){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
+        
+        Livre livre = LivreEjbLocal.selectionnerLivre(idLivre);
+        livre.setLivrestock(-1);
+        LivreEjbLocal.updateLivre(livre);
+        ModelAndView mv = new ModelAndView("admin/livre/supprimer");
+        return mv;
+        
        
     }
     

@@ -8,9 +8,11 @@ package com.controller;
 
 
 
+import com.session.Session;
 import ejb.entity.Categorie;
 import javax.validation.Valid;
 import metier.categorie.CategorieEjbLocal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,7 +31,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value="/categorie/*")
 public class CategorieController {
 
-    
+    @Autowired
+    private Session session;
     
     private CategorieEjbLocal CategorieEjbLocal;
 
@@ -58,10 +61,17 @@ public class CategorieController {
      *                                      Separation de l'administration
      * #####################################################################################################################
      */
-    //TODO NicoExia ajouter la vérification client = admin
+
+    private ModelAndView refuser(){
+        ModelAndView mv = new ModelAndView("admin/refuser");
+        return mv;
+    }
+    
     @RequestMapping(value="adminCategories.htm", method=RequestMethod.GET)
     public ModelAndView afficherAdminCategories(String message){
-        
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/categorie/categorieListe");
         mv.addObject("valide", message);
         mv.addObject("categories", CategorieEjbLocal.selectionnerCategories(-1, -1)); 
@@ -73,6 +83,10 @@ public class CategorieController {
     
     @RequestMapping(value="adminCategorie.htm", method=RequestMethod.GET)
     public ModelAndView afficherAdminCategorie(@RequestParam(value="id", required=true) int idCategorie){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
+        
         ModelAndView mv = new ModelAndView("admin/categorie/categorie");
         
         mv.addObject("categorie", CategorieEjbLocal.selectionnerCategorie(idCategorie)); 
@@ -82,6 +96,10 @@ public class CategorieController {
     
     @RequestMapping(value="adminCategorieModifier.htm", method=RequestMethod.POST)
     public ModelAndView modifierCategorieAdmin(@Valid @ModelAttribute("categorie") Categorie categorieForm, BindingResult binder){
+        
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
 
         if(binder.hasErrors()){
             return this.afficherAdminCategorie(categorieForm.getCategorieid());
@@ -97,6 +115,9 @@ public class CategorieController {
     
     @RequestMapping(value="adminCategorieAjouter.htm", method=RequestMethod.GET)
     public ModelAndView afficherAdminCategorieAjouter(){
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/categorie/categorieAjout");
         
         mv.addObject("categorie",new Categorie(-1)); 
@@ -107,6 +128,10 @@ public class CategorieController {
     @RequestMapping(value="adminCategorieAjouter.htm", method=RequestMethod.POST)
     public ModelAndView AjouterCategorieAdmin(@Valid @ModelAttribute("categorie") Categorie categorieForm, BindingResult binder){
 
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
+        
         if(binder.hasErrors()){
             return this.afficherAdminCategorieAjouter();
         }

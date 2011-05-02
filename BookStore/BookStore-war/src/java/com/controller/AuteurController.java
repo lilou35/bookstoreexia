@@ -55,7 +55,7 @@ public class AuteurController {
      *                                      Separation de l'administration
      * #####################################################################################################################
      */
-    //TODO NicoExia ajouter la vérification client = admin
+
     
     
     

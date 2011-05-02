@@ -174,7 +174,7 @@ public class LoginController {
      *                                      Separation de l'administration
      * #####################################################################################################################
      */
-    //TODO NicoExia ajouter l'ejb du libraire
+    
     
     
     @RequestMapping(value="adminLogin.htm", method=RequestMethod.GET)

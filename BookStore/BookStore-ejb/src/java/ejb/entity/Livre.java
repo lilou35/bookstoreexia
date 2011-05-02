@@ -91,7 +91,7 @@ public class Livre implements Serializable {
     @ManyToMany(fetch= FetchType.EAGER)
 //    @ManyToMany(mappedBy = "livreList", fetch= FetchType.EAGER)
     private List<Auteur> auteurList = new ArrayList<Auteur>(0);
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livre")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livre", fetch= FetchType.EAGER)
     private List<Commande> commandeList = new ArrayList<Commande>(0);
     @JoinColumn(name = "categorieid", referencedColumnName = "categorieid")
     @ManyToOne(optional = false)
