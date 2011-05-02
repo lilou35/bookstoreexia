@@ -47,10 +47,19 @@ public class AccueilController {
      *                                      Separation de l'administration
      * #####################################################################################################################
      */
-    //TODO NicoExia ajouter la vérification client = admin
+    
+    
+    private ModelAndView refuser(){
+        ModelAndView mv = new ModelAndView("admin/refuser");
+        return mv;
+    }
     
     @RequestMapping(value="admin.htm", method=RequestMethod.GET)
     public ModelAndView admin(){
+        
+        if(!session.getAdmin()){
+           return refuser(); 
+        }
         ModelAndView mv = new ModelAndView("admin/admin");
 
         mv.addObject("livres", LivreEjbLocal.stockAlert());

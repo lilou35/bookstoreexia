@@ -150,16 +150,22 @@ public class PanierController {
          int id = commandeEjbLocal.newCommandeId();
          Date date = new Date();
          for(Article article: session.getPanier().getPanier()){
+             Journal journal = new Journal(-1);
+             journal.setJournaldate(date);
+             journal.setJournaldescription("Création de la commande");
+             journal.setLibraire(new Libraire(1));
+             journal = commandeEjbLocal.addJournal(journal);
+             
              CommandePK commandePK = new CommandePK();
              commandePK.setClientid(session.getClient().getClientid());
-             commandePK.setJournalId(1);
+             commandePK.setJournalId(journal.getJournalId());
              commandePK.setLivreid(article.getLivre().getLivreid());
              Commande commande = new Commande(commandePK);
              commande.setClient(session.getClient());
              commande.setCommandedate(date);// valeur par défaut dans la base
              commande.setCommandedatelivraison(date);
              commande.setCommandeetat("validée");
-             commande.setJournal(new Journal(1));//TODO NicoExia créer journal
+             commande.setJournal(journal);
              commande.setLivre(article.getLivre());
              commande.setCommandeid(id);
              commande.setCommandequantite(article.getQtt());
@@ -188,12 +194,19 @@ public class PanierController {
      *                                      Separation de l'administration
      * #####################################################################################################################
      */
-    //TODO NicoExia ajouter la vérification client = admin
+     
+    private ModelAndView refuser(){
+        ModelAndView mv = new ModelAndView("admin/refuser");
+        return mv;
+    }
      
      
      
    @RequestMapping(value="listeCommande.htm", method=RequestMethod.GET)
     public ModelAndView afficherListeCommande(@RequestParam(value="etat", required=false) String etat){
+       if(!session.getAdmin()){
+           return refuser(); 
+        }
        //TODO flo date du jour
         Calendar Today = Calendar.getInstance();
         Date dateJ = Today.getTime();
@@ -219,6 +232,9 @@ public class PanierController {
    
    @RequestMapping(value="listeCommandeRecherche.htm", method=RequestMethod.POST)
     public ModelAndView afficherListeCommandeRechercheId(@RequestParam(value="id", required=false) int id){
+       if(!session.getAdmin()){
+           return refuser(); 
+        }
         
          ModelAndView mv = new ModelAndView("admin/commande/commandeListe");
          List<Commande> commandes = new ArrayList<Commande>(0);
@@ -233,6 +249,9 @@ public class PanierController {
    
    @RequestMapping(value="detailCommande.htm", method=RequestMethod.POST)
     public ModelAndView afficherDetailCommande(@RequestParam(value="id", required=true) int id){
+       if(!session.getAdmin()){
+           return refuser(); 
+        }
         
          ModelAndView mv = new ModelAndView("admin/commande/detailCommande");
          mv.addObject("commandes",commandeEjbLocal.listCommande(id) ); 
@@ -242,6 +261,9 @@ public class PanierController {
     }
    
    private ModelAndView rafraichirCommandeListe(String etat){
+       if(!session.getAdmin()){
+           return refuser(); 
+        }
        ModelAndView mv = new ModelAndView("admin/commande/commande");
 
          mv.addObject("commandes",commandeEjbLocal.listCommandeGroupBy(etat, null)); //TODO flo liste des commande en fonction de leur etat group by
@@ -251,6 +273,9 @@ public class PanierController {
    
    @RequestMapping(value="valider.htm", method=RequestMethod.POST)
     public ModelAndView validerCommande(@RequestParam(value="id", required=true) int id){
+       if(!session.getAdmin()){
+           return refuser(); 
+        }
        
        List<Commande> commandes = commandeEjbLocal.listCommande(id);
        String etat = commandes.get(0).getCommandeetat();
@@ -265,6 +290,9 @@ public class PanierController {
    
      @RequestMapping(value="preparer.htm", method=RequestMethod.POST)
     public ModelAndView preparerCommande(@RequestParam(value="id", required=true) int id){
+         if(!session.getAdmin()){
+           return refuser(); 
+        }
        
        List<Commande> commandes = commandeEjbLocal.listCommande(id);
        String etat = commandes.get(0).getCommandeetat();
@@ -280,21 +308,29 @@ public class PanierController {
      @RequestMapping(value="annuler.htm", method=RequestMethod.POST)
     public ModelAndView annulerCommande(@RequestParam(value="id", required=true) int id,
                                         @RequestParam(value="raison", required=true) String raison){
+         if(!session.getAdmin()){
+           return refuser(); 
+        }
        
        List<Commande> commandes = commandeEjbLocal.listCommande(id);
        String etat = commandes.get(0).getCommandeetat();
        
-       Journal journal = new Journal(-1);
-       journal.setJournaldescription(raison);
+       
+       
        Calendar Today = Calendar.getInstance();
        Date dateJ = Today.getTime();
-       journal.setJournaldate(dateJ);//TODO flo nico Date 
-       journal.setLibraire(new Libraire(session.getClient().getClientid()));
-       journal = commandeEjbLocal.addJournal(journal);//TODO NicoExia modifier journal
+       Libraire libraire = new Libraire(session.getClient().getClientid());
+       libraire.setLibrairenom(session.getClient().getClientnom());
+       libraire.setLibrairemdp(session.getClient().getClientmdp());
+       
+       
        
        for(Commande commande: commandes){
-           commande.setJournal(journal);
-           commande.getCommandePK().setJournalId(journal.getJournalId());
+           commande.getJournal().setJournaldate(dateJ);
+           commande.getJournal().setJournaldescription(raison);
+           commande.getJournal().setLibraire(libraire);
+           
+           
            commande.setCommandeetat("Annulée");
            
            
@@ -311,6 +347,9 @@ public class PanierController {
      @RequestMapping(value="envoyer.htm", method=RequestMethod.POST)
     public ModelAndView preparerCommande(@RequestParam(value="id", required=true) int id,
                                         @RequestParam(value="envoi", required=true) String envoi){
+         if(!session.getAdmin()){
+           return refuser(); 
+        }
        
        List<Commande> commandes = commandeEjbLocal.listCommande(id);
        String etat = commandes.get(0).getCommandeetat();

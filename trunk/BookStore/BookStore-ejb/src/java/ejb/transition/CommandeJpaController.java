@@ -22,6 +22,8 @@ import ejb.entity.Livre;
 import ejb.entity.Journal;
 import ejb.entity.Client;
 import ejb.entity.Commande_;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -301,18 +303,26 @@ public class CommandeJpaController {
 //                if(!etat.isEmpty() && date!=null){
 //                    cq.having(cb.equal(rt.get(Commande_.commandeetat), etat));
 //                }
-            String sql = "SELECT * FROM Commande where 1=1";
+            String sql = "SELECT c FROM Commande c where ( (c.commandeid!=0) ";
             if(etat!=""){
-                sql+=" and `commandeetat`='"+etat+"'";
+                sql+=" and (c.commandeetat='"+etat+"')";
             }
             if(date!=null){
                 Date dateDebut = new Date(date.getYear(), date.getMonth(), date.getDate());
-                date.setDate(+1);
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String dateDebutString  = format.format(dateDebut)+ " 00:00:00";
+
+                date.setDate(date.getDate()+1);
+                if(dateDebut.after(date)){
+                    date.setMonth(date.getMonth()+1);
+                }
                 Date dateFin = new Date(date.getYear(), date.getMonth(), date.getDate());
-                sql+=" and `commandedate`>'"+dateDebut+"' and `commandedate`<'"+dateFin+"'";
+                String dateFinString  = format.format(dateFin) + " 00:00:00";
+                
+                sql+=" and (c.commandedate>'"+dateDebutString+"') and (c.commandedate<'"+dateFinString+"')";
             }
             //resultat de la requete  
-            
+            sql += " );";
             Query q = em.createQuery(sql); 
             //Query q = em.createQuery(cq);
             return q.getResultList();

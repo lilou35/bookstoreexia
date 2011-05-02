@@ -16,6 +16,10 @@
 
         <script src="<c:url value="/js/jquery-1.5.1.min.js" />" type="text/javascript" > </script>
         <script src="<c:url value="/js/interface.js" />" type="text/javascript" > </script>
+        <script src="<c:url value="/js/jquery.metadata.js" />" type="text/javascript" > </script>
+        <script src="<c:url value="/js/alerts.js" />" type="text/javascript" > </script>
+        <link href="<c:url value="/css/alerts.css" />" rel="stylesheet" type="text/css" media="screen" />
+        <script src="<c:url value="/js/click/modifierLivre.js" />" type="text/javascript" > </script>
 
 
         <title>Modifier un Livre</title>
@@ -176,6 +180,16 @@
                         <tr>
                             <td colspan="3" align="center">
                                 <input type="submit" value="Valider">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="center">
+                                </br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="center">
+                                <input type="button" id="supprimer" value="Supprimer" data="{id : '${livre.livreid}'}"/>
                             </td>
                         </tr>
                     </table>

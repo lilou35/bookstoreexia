@@ -35,22 +35,23 @@
          
     </c:if>
     
-   
+  <c:if test="${sessionScope['scopedTarget.session'].admin==true}" >
     <a class="bouton" href="<c:url value="/accueil/admin.htm" />"><div id="boutonMenu" class="boutonMenu">Accueil</div></a>
     <a class="bouton" href="<c:url value="/categorie/adminCategories.htm" />"><div id="boutonMenu" class="boutonMenu">Categories</div></a>
     <a class="bouton" href="<c:url value="/auteur/adminAuteurs.htm" />"><div id="boutonMenu" class="boutonMenu">Auteurs</div></a>
     <a class="bouton" href="<c:url value="/livre/livreListeAdmin.htm" />"><div id="boutonMenu" class="boutonMenu">Livres</div></a>
     <a class="bouton" href="<c:url value="/panier/listeCommande.htm" />"><div id="boutonMenu" class="boutonMenu">Commandes</div></a>
+  </c:if>
 
     
    
     <c:if test="${sessionScope['scopedTarget.session'].client.clientid==null}">
-        <a class="bouton" href="<c:url value="/login/login.htm" />"><div id="boutonMenu" class="boutonMenu">Connexion</div></a>
+        <a class="bouton" href="<c:url value="/login/adminLogin.htm" />"><div id="boutonMenu" class="boutonMenu">Connexion</div></a>
     </c:if>
     <c:if test="${sessionScope['scopedTarget.session'].client.clientid!=null}">
         <a class="bouton" href="<c:url value="/login/deconnexion.htm" />"><div id="boutonMenu" class="boutonMenu">Déconnexion</div></a>
     </c:if>
-    
+    <a class="bouton" href="<c:url value="/accueil/accueil.htm" />"><div id="boutonMenu" class="boutonMenu">Retour au Site</div></a>
     
     
    
