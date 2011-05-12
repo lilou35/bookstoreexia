@@ -4,7 +4,7 @@ body
     margin: auto; /*centrer page */
     margin-top: 5px; /* Pour eviter de coller avec le haut de la fen�tre du navigateur*/
     height:auto;
-    background-color:#B2E853;
+    background-color:#FFFFFF;
     /*font-size: 13px;*/
 }
 
@@ -94,12 +94,13 @@ a.bouton{
 #tete
 {
     width:1024px;
-    height:80px;
+    height:90px;
     margin: auto;
     margin-bottom: 20px;
     border-bottom: #000000;
     border-bottom-style: ridge;
     padding-bottom: 5px;
+    text-align: center;
 /*    background-color: #0066FF;*/
 }
 
@@ -165,7 +166,7 @@ a.bouton{
      background-color: #9999ff;
      float: left;
      margin: 5px;
-     display: inline;
+     display: inline-block;
      
  }
  
@@ -173,7 +174,7 @@ a.bouton{
      background-color: #ff00ff;
      float: left;
      margin: 5px;
-     display: inline;
+     display: inline-block;
      
  }
  
@@ -181,7 +182,7 @@ a.bouton{
      background-color: #0000ff;
      float: left;
      margin: 5px;
-     display: inline;
+     display: inline-block;
      
  }
  
@@ -197,6 +198,10 @@ a.bouton{
      display: inline;
  }
  
+ .commande{
+     border: #ff6600;
+     border-bottom-style: dotted;
+ }
  .panierLien{
     text-decoration: none;
     color: #000000;

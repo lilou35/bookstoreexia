@@ -5,15 +5,21 @@
             <th>Titre</th>
             <th>Résumé</th>
             <th>nb Vente</th>
+            <th>Auteur</th>
             <th>Etat</th>
-            <th>parution</th>
-            <th>couvetrure</th>
+            <th>Parution</th>
+            <th>Couvetrure</th>
         </tr>
 
         <tr>
             <td> ${livre.livretitre} </td>
             <td> ${livre.livreresume}</td>
             <td> ${livre.livrenbvente}</td>
+            <td> 
+                <c:forEach items="${livre.auteurList}" var="auteur" >
+                    ${auteur.auteurnom} ${auteur.auteurprenom} <br/>
+                </c:forEach>
+            </td>
             <td> <c:if test="${livre.livreetat=='Nouveauté'}"><span class="nouveau"></c:if>${livre.livreetat}<c:if test="${livre.livreetat=='Nouveauté'}"></span></c:if></td>
             <td> ${livre.livreparution}</td>
             <td> <img src="<c:url value="/images/${livre.livrecouverture}" />" /></td>

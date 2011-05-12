@@ -215,7 +215,7 @@ public class LoginController {
             
            
 
-            ModelAndView mv = new ModelAndView("admin/admin");
+            ModelAndView mv = new ModelAndView("admin/login/connexion");
             return mv;
 
            

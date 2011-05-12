@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `livre` (
   `livreprix` float DEFAULT NULL,
   `livrestockalerte` int(11) DEFAULT NULL,
   `livreediteur` varchar(20) DEFAULT NULL,
-  `livreetat` varchar(50) DEFAULT 'nouveauté',
+  `livreetat` varchar(50) DEFAULT NULL,
   `categorieid` int(11) NOT NULL,
   PRIMARY KEY (`livreid`),
   KEY `FK_Livre_categorieid` (`categorieid`)
