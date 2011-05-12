@@ -343,7 +343,7 @@ public class LivreJpaController {
                         lettre="%"+lettre+"%";
                     }
             cq.select(livreRoot)
-                    .where(cb.like(livreRoot.get(Livre_.livretitre), lettre))
+                    .where(cb.like(livreRoot.get(Livre_.livretitre), lettre),cb.and(cb.greaterThanOrEqualTo(livreRoot.get(Livre_.livrestock), 0 )))
                     .orderBy(cb.asc(livreRoot.get(Livre_.livretitre)));
             
             //resultat de la requete

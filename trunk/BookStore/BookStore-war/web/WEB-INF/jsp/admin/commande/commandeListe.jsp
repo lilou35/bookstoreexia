@@ -57,7 +57,7 @@
                                 <input name="etat" type="submit"  value="en Préparation">
                                 <input name="etat" type="submit"  value="Annulée">
                                 <input name="etat" type="submit"  value="Envoyée">
-                                <input name="etat" type="submit"  value="Du Jour">                                
+                                <input name="etat" type="submit"  value="Du Jour" disabled>                                
                             </form>
                             
                             
@@ -84,10 +84,18 @@
 
 
             </div>
-            <div id="valider"> <br/>valide<br/><br/></div>
-            <div id="preparer"> <br/>préparation<br/><br/></div>
-            <div id="annuler"> <br/><br/>annulée<br/></div>
-            <div id="envoyer"> <br/><br/>envoyé<br/></div>
+                        <table width="100%">
+                            <tr align="center">
+                                <td><div id="valider" style=" width: 150px; background-color: #009900;"> <br/>Validée<br/><br/></div></td>
+                                <td><div id="preparer" style=" width: 150px; background-color: #0000ff;"> <br/>En Préparation<br/><br/></div></td>
+                                <td><div id="annuler" style=" width: 150px; background-color: #ff0000;"> <br/>Annulée<br/><br/></div></td>
+                                <td><div id="envoyer" style=" width: 150px; background-color: darkorchid;"> <br/>Envoyée<br/><br/></div></td>
+                            </tr>
+                        </table>
+            
+            
+            
+            
             
         </div>
     </body>

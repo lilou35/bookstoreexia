@@ -8,17 +8,7 @@
 
 
 <div id="tete">
-    <table  cellspacing="0" cellpadding="0">
-        <tr>
-            <td align="left">
-               
-            </td>
-            <td align="center" width="100%">
-                
-            </td>
-
-        </tr>
-    </table>
+    <img src="<c:url value="/images/ban.png"/>" />
 </div>
 <div id="javascript" align="center">
     <img border="none" src="<c:url value="/css/images/important.gif" />"/> Le Javascript n'est pas activé<img border="none" src="<c:url value="/css/images/important.gif" />"/>

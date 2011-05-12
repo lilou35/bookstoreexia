@@ -270,6 +270,14 @@ public class PanierController {
 
          return mv;
    }
+    
+   private void journalDeLog(Commande commande){
+       System.out.print("################### Journal de log pour la commande:"+ commande.getCommandeid() +" ################### "
+               +" Changement d'état:"+ commande.getCommandeetat()+" ################### "
+               +" Description du changment: "+ commande.getJournal().getJournaldescription()+" ################### "
+               +" le "+ commande.getJournal().getJournaldate()+" ################### "
+               +" par "+ commande.getJournal().getLibraire().getLibrairenom());
+   }
    
    @RequestMapping(value="valider.htm", method=RequestMethod.POST)
     public ModelAndView validerCommande(@RequestParam(value="id", required=true) int id){
@@ -283,8 +291,8 @@ public class PanierController {
            commande.setCommandeetat("Validée");
            commandeEjbLocal.updateCommande(commande);
        }
-
-         return rafraichirCommandeListe(etat);
+       journalDeLog(commandes.get(0));
+        return rafraichirCommandeListe(etat);
        
     }
    
@@ -300,7 +308,7 @@ public class PanierController {
            commande.setCommandeetat("en Préparation");
            commandeEjbLocal.updateCommande(commande);
        }
-
+       journalDeLog(commandes.get(0));
          return rafraichirCommandeListe(etat);
        
     }
@@ -339,7 +347,7 @@ public class PanierController {
            
            
        }
-
+       journalDeLog(commandes.get(0));
          return rafraichirCommandeListe(etat);
        
     }
@@ -360,7 +368,7 @@ public class PanierController {
            commande.setCommandedatelivraison(date);
            commandeEjbLocal.updateCommande(commande);
        }
-
+       journalDeLog(commandes.get(0));
          return rafraichirCommandeListe(etat);
        
     }     
